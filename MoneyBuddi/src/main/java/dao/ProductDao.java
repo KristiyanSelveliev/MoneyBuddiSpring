@@ -1,4 +1,4 @@
-package com.example.s9.model.dao;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.s9.model.Product;
+import model.Product;
 
 @Component
 public class ProductDao {

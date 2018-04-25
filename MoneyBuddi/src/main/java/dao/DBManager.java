@@ -1,4 +1,4 @@
-package com.example.s9.model.dao;
+package dao;
 
 import java.sql.Connection;
 

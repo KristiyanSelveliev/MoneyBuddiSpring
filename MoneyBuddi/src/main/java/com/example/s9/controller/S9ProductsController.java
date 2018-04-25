@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.s9.model.Product;
-import com.example.s9.model.dao.ProductDao;
+import dao.ProductDao;
+import model.Product;
 
 @Controller
 public class S9ProductsController {

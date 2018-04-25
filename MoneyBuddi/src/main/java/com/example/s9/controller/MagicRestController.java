@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.s9.model.Product;
-import com.example.s9.model.dao.ProductDao;
+import dao.ProductDao;
+import model.Product;
 
 @RestController
 public class MagicRestController {

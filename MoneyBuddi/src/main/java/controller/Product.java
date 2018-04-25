@@ -1,4 +1,4 @@
-package com.example.controller;
+package controller;
 
 public class Product {
 	private String name;

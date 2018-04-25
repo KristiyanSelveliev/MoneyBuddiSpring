@@ -1,4 +1,4 @@
-package com.example.s9.model;
+package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.s9.model;
+package model;
 
 public class Papagal {
 
