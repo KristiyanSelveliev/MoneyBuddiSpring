@@ -1,8 +1,10 @@
+<%@page import="com.model.dao.AccountDao"%>
+<%@page import="com.model.Account"%>
+<%@page import="com.model.User"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.Account"%>
+<%@page import="com.model.Account"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.AccountDao"%>
-<%@page import="model.User"%>
+<%@page import="com.model.dao.AccountDao"%>
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>

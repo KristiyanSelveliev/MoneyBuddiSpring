@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@page import="model.User"%>
+    <%@page import="com.model.User"%>
     <%@page import="java.util.ArrayList"%>
-    <%@page import="model.Budget"%>
-    <%@page import="dao.BudgetDao"%>
+    <%@page import="com.model.Budget"%>
+    <%@page import="com.model.dao.BudgetDao"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

@@ -1,7 +1,7 @@
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="model.Category"%>
+<%@page import="com.model.Category"%>
 <%@page import="java.util.Map"%>
-<%@page import="model.Transaction"%>
+<%@page import="com.model.Transaction"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
