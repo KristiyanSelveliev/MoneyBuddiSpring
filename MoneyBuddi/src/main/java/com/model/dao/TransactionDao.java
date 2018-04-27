@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.controller.manager.DBManager;
 import com.exceptions.InvalidDataException;
 import com.model.Account;
@@ -22,9 +25,11 @@ import com.model.User;
 import com.model.Transaction.TransactionType;
 
 import javafx.util.converter.LocalDateStringConverter;
-
+@Component
 public class TransactionDao implements ITransactionDao {
 
+	@Autowired
+	private CurrencyDAO currencyDAO;
 	private static TransactionDao instance;
 	private Connection connection;
 
@@ -140,14 +145,14 @@ public class TransactionDao implements ITransactionDao {
 					if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.EXPENSE)) {
 						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
 					} else if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.INCOME)) {
 						transactions.add(new Income(rs.getLong("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -173,7 +178,7 @@ public class TransactionDao implements ITransactionDao {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-							CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 							AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 							rs.getDate("date").toLocalDate(),
 							CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -196,7 +201,7 @@ public class TransactionDao implements ITransactionDao {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-							CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 							AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 							rs.getDate("date").toLocalDate(),
 							CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -222,7 +227,7 @@ public class TransactionDao implements ITransactionDao {
 					if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.EXPENSE)) {
 						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -230,7 +235,7 @@ public class TransactionDao implements ITransactionDao {
 					} else if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.INCOME)) {
 						transactions.add(new Income(rs.getLong("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -258,7 +263,7 @@ public class TransactionDao implements ITransactionDao {
 					if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.EXPENSE)) {
 						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -266,7 +271,7 @@ public class TransactionDao implements ITransactionDao {
 					} else if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.INCOME)) {
 						transactions.add(new Income(rs.getInt("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -298,7 +303,7 @@ public class TransactionDao implements ITransactionDao {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 						transactions.add(new Expense(rs.getInt("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
@@ -329,7 +334,7 @@ public class TransactionDao implements ITransactionDao {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 						transactions.add(new Income(rs.getInt("id"), rs.getDouble("amount"),
-								CurrencyDAO.getInstance().getCurrencyById(rs.getInt("currency_id")),
+								currencyDAO.getCurrencyById(rs.getInt("currency_id")),
 								AccountDao.getInstance().getAccountById(rs.getInt("account_id")),
 								rs.getDate("date").toLocalDate(),
 								CategoryDAO.getInstance().getCategoryByID(rs.getInt("category_id"))));

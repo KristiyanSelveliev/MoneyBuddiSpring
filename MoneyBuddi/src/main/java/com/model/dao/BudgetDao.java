@@ -8,14 +8,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.controller.manager.DBManager;
 import com.exceptions.InvalidDataException;
 import com.model.Budget;
 import com.model.User;
-
+@Component
 public class BudgetDao implements IBudgetDAO{
-	
-	
+	@Autowired
+	private CurrencyDAO currencyDAO;
 	private static BudgetDao instance;
 	private Connection connection;
 
@@ -100,7 +103,7 @@ public class BudgetDao implements IBudgetDAO{
 							               CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id")), 
 							               rs.getDouble("amount"), 
 							               UserDao.getInstance().getUserById(rs.getLong("user_id")), 
-							               CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+							               currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 							               rs.getDate("begin_date").toLocalDate(), 
 							               rs.getDate("end_date").toLocalDate()));
 					
@@ -125,7 +128,7 @@ public class BudgetDao implements IBudgetDAO{
 				               CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id")), 
 				               rs.getDouble("amount"), 
 				               UserDao.getInstance().getUserById(rs.getLong("user_id")), 
-				               CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")),
+				               currencyDAO.getCurrencyById(rs.getLong("currency_id")),
 				               rs.getDate("begin_date").toLocalDate(), 
 				               rs.getDate("end_date").toLocalDate());
 					return b;

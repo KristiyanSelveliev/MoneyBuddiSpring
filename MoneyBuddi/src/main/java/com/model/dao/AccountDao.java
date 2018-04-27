@@ -8,13 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.controller.manager.DBManager;
 import com.model.Account;
 import com.model.Currency;
 import com.model.User;
-
+@Component
 public class AccountDao implements IAccountDao {
-
+	@Autowired
+    private CurrencyDAO currencyDAO;
 	private static AccountDao instance;
 	private Connection connection;
 
@@ -97,7 +101,7 @@ public class AccountDao implements IAccountDao {
 								rs.getString("name"),//account name
 								rs.getDouble("balance"),//account balance
 								UserDao.getInstance().getUserById(rs.getLong("user_id")),//user
-								CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")));//Currency
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")));//Currency
 			}else {
 				throw new SQLException("No such account");
 			}
@@ -125,7 +129,7 @@ public class AccountDao implements IAccountDao {
 						                 rs.getString("name"),
 						                 rs.getDouble("balance"),
 						                 UserDao.getInstance().getUserById(rs.getLong("user_id")),
-						                 CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id"))));
+						                 currencyDAO.getCurrencyById(rs.getLong("currency_id"))));
 			}
 		}finally {
 			ps.close();
@@ -144,7 +148,7 @@ public class AccountDao implements IAccountDao {
 							           rs.getString("name"),
 							           rs.getDouble("balance"),
 							           UserDao.getInstance().getUserById(rs.getLong("user_id")),
-							           CurrencyDAO.getInstance().getCurrencyById(rs.getLong("currency_id")));
+							           currencyDAO.getCurrencyById(rs.getLong("currency_id")));
 				}
 			}
 		}

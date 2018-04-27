@@ -7,31 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
+
 import com.controller.manager.DBManager;
 import com.model.Currency;
 import com.model.Currency.CurrencyType;
 
-
+@Component
 public class CurrencyDAO implements ICurrencyDAO{
-	
-	private static CurrencyDAO instance;
-	private Connection connection;
-
-	public synchronized static CurrencyDAO getInstance() {
-		if (instance == null) {
-			instance = new CurrencyDAO();
-		}
-		return instance;
-	}
-
-	private CurrencyDAO() {
-		connection = DBManager.getInstance().getConnection();
-	}
+	@Autowired
+	DriverManagerDataSource db;
 
 	@Override
 	public Currency getCurrencyById(long id) throws SQLException {
    
-		try(PreparedStatement ps=connection.prepareStatement("SELECT id,type FROM currencies WHERE id=?")){
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,type FROM currencies WHERE id=?")){
 			ps.setLong(1, id);
 			
 			try(ResultSet rs=ps.executeQuery();){
@@ -56,7 +48,7 @@ public class CurrencyDAO implements ICurrencyDAO{
 
 	@Override
 	public Currency getCurrencyByType(CurrencyType type) throws SQLException {
-		try(PreparedStatement ps=connection.prepareStatement("SELECT id,type FROM currencies WHERE type=?")){
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,type FROM currencies WHERE type=?")){
 			ps.setString(1, type.toString());
 			
 			try(ResultSet rs=ps.executeQuery();){
@@ -74,7 +66,7 @@ public class CurrencyDAO implements ICurrencyDAO{
 	@Override
 	public Collection<Currency> getAllCurrencies() throws SQLException {
 		Collection<Currency> currencies=new ArrayList();
-		try(PreparedStatement ps=connection.prepareStatement("SELECT id,type FROM currencies ")){
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,type FROM currencies ")){
 		
 			
 			try(ResultSet rs=ps.executeQuery();){
