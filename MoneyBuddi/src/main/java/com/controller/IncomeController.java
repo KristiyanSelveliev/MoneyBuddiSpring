@@ -16,7 +16,7 @@ import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Category;
 import com.model.Currency;
-import com.model.Expense;
+import com.model.Income;
 import com.model.Transaction;
 import com.model.User;
 import com.model.Transaction.TransactionType;
@@ -26,7 +26,7 @@ import com.model.dao.TransactionDao;
 import com.model.dao.UserDao;
 
 @Controller
-public class ExpenseController {
+public class IncomeController {
 
 	@Autowired
 	TransactionDao transactionDao;
@@ -39,7 +39,7 @@ public class ExpenseController {
 	@Autowired
 	TransactionManager transactionManager;
 	
-	@RequestMapping(value = "/addexpense", method = RequestMethod.GET)
+	@RequestMapping(value = "/addincome", method = RequestMethod.GET)
 	public String showExpenseCategories(HttpSession session, HttpServletRequest request) {
 		// retrieve all categories from db and pass them to the request
 		try {
@@ -48,16 +48,16 @@ public class ExpenseController {
 			User user = (User) session.getAttribute("user");
 			long userId = user.getId();
 			List<Category> categories = categoryDao
-				.getAllCategoriesByUserAndType(userDao.getUserById(userId), TransactionType.EXPENSE);
+				.getAllCategoriesByUserAndType(userDao.getUserById(userId), TransactionType.INCOME);
 			// add them to request
 			request.setAttribute("categories", categories);
-			return "addexpense";
+			return "addincome";
 		} catch (Exception e) {
 			return "error";
 		}
 	}
 
-	@RequestMapping(value = "/addexpense", method = RequestMethod.POST)
+	@RequestMapping(value = "/addincome", method = RequestMethod.POST)
 	public String addExpense(HttpSession session, HttpServletRequest request) {
 		try {
 			//if the entered value is not null or empty
@@ -72,9 +72,9 @@ public class ExpenseController {
 				Currency currency=account.getCurrency();
 				
 				//create transaction (needed: amount, currency, acount, date, category, type=income) 
-				Transaction expense=new Expense(amount,currency,account,LocalDate.now(),category);
+				Transaction income=new Income(amount,currency,account,LocalDate.now(),category);
 				//save it to db
-				transactionManager.addTransaction(expense,null);
+				transactionManager.addTransaction(income,null);
 				//forward to main.jsp
 				return "main";
 			}else {
@@ -88,5 +88,6 @@ public class ExpenseController {
 			return "errorWhenLogged";
 		}
 	}
+	
 	
 }
