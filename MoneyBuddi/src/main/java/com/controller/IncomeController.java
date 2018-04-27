@@ -55,6 +55,7 @@ public class IncomeController {
 			request.setAttribute("categories", categories);
 			return "addincome";
 		} catch (Exception e) {
+			request.setAttribute("exception", e);
 			return "error";
 		}
 	}
@@ -69,7 +70,7 @@ public class IncomeController {
 				double amount=Double.parseDouble(amountAsString);
 				long categoryId=Long.parseLong(request.getParameter("categoryId"));
 				Category category=categoryDao.getCategoryByID(categoryId);
-				long accountId=(long)request.getSession().getAttribute("accountId");
+				long accountId=(long)session.getAttribute("accountId");
 				Account account=accountDao.getAccountById(accountId);
 				Currency currency=account.getCurrency();
 				
@@ -92,7 +93,7 @@ public class IncomeController {
 	}
 	
 	@RequestMapping(value = "/showincome", method = RequestMethod.GET)
-	public String showExpense(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String showExpense( HttpServletRequest request, HttpServletResponse response) {
 		try {
 			  //show expense for the selected account
 			  User user=(User)request.getSession().getAttribute("user");
