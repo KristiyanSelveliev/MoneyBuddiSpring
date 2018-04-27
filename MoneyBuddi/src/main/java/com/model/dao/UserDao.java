@@ -5,32 +5,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
+
 import com.controller.manager.DBManager;
 import com.exceptions.InvalidDataException;
 import com.model.User;
 import com.util.security.BCrypt;
 
 import java.sql.Connection;
-
+@Component
 public class UserDao implements IUserDao {
-
-	private static UserDao instance;
-	private Connection connection;
-
-	public static UserDao getInstance() {
-		if (instance == null) {
-			instance = new UserDao();
-		}
-		return instance;
-	}
-
-	private UserDao() {
-		connection = DBManager.getInstance().getConnection();
-	}
+	
+	@Autowired
+	DriverManagerDataSource db;
+	
 
 	@Override
 	public synchronized void saveUser(User u) throws SQLException {
-		PreparedStatement s = connection.prepareStatement(
+		PreparedStatement s = db.getConnection().prepareStatement(
 				"INSERT INTO users (username, " + "password, email, age)" 
 		+ " VALUES (?,?,?,?)",
 				Statement.RETURN_GENERATED_KEYS);
@@ -58,7 +52,7 @@ public class UserDao implements IUserDao {
 	public void deleteUser(User u) throws SQLException {
 		PreparedStatement s = null;
 		try {
-			s = connection.prepareStatement("DELETE FROM users WHERE id=?");
+			s = db.getConnection().prepareStatement("DELETE FROM users WHERE id=?");
 			s.setLong(1, u.getId());
 			s.executeUpdate();
 		} catch (Exception e) {
@@ -74,7 +68,7 @@ public class UserDao implements IUserDao {
 	public void updateUser(User u) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement("UPDATE users SET username=?,"
+			ps = db.getConnection().prepareStatement("UPDATE users SET username=?,"
 					+ "password=?, email=?, age=? WHERE id=? ");
 			ps.setString(1, u.getUsername());
 			ps.setString(2, u.getPassword());
@@ -97,7 +91,7 @@ public class UserDao implements IUserDao {
 		User user = null;
 		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement("SELECT username,password,"
+			ps = db.getConnection().prepareStatement("SELECT username,password,"
 					+ "email,age FROM users WHERE id=?");
 			ps.setLong(1, id);
 			ResultSet result = ps.executeQuery();
@@ -120,7 +114,7 @@ public class UserDao implements IUserDao {
 		User user = null;
 		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement("SELECT id,password,"
+			ps = db.getConnection().prepareStatement("SELECT id,password,"
 					+ "email,age FROM users WHERE username=?");
 			ps.setString(1, username);
 			ResultSet result = ps.executeQuery();
@@ -145,7 +139,7 @@ public class UserDao implements IUserDao {
 	public boolean checkIfEmailExists(String email) throws SQLException {
 		// checks if the email already exists in DB
 		// returns number of affected rows from the query
-		PreparedStatement ps = connection.prepareStatement("SELECT id FROM" + " users WHERE email=?");
+		PreparedStatement ps =db.getConnection().prepareStatement("SELECT id FROM" + " users WHERE email=?");
 		ps.setString(1, email);
 		ResultSet rs= ps.executeQuery();
 		if(rs.next()) {
@@ -160,7 +154,7 @@ public class UserDao implements IUserDao {
 		PreparedStatement ps=null;
 		try{  
 			
-			ps=connection.prepareStatement(  
+			ps=db.getConnection().prepareStatement(  
 			    "SELECT id FROM users WHERE username=? AND password=?");  
 		
 			ps.setString(1,username);  
@@ -184,7 +178,7 @@ public class UserDao implements IUserDao {
 	InvalidDataException {
 		String sql = "SELECT id, username, password, email, age FROM users WHERE username = ?";
 				
-		PreparedStatement ps = connection.prepareStatement(sql);
+		PreparedStatement ps = db.getConnection().prepareStatement(sql);
 		ps.setString(1, username);
 		
 		ResultSet result = ps.executeQuery();

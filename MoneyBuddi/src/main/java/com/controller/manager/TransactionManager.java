@@ -2,6 +2,8 @@ package com.controller.manager;
 
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Budget;
@@ -10,6 +12,8 @@ import com.model.Transaction.TransactionType;
 import com.model.dao.TransactionDao;
 
 public class TransactionManager {
+	@Autowired
+	private TransactionDao transactionDAO;
 	
 	private static TransactionManager instance;
 	
@@ -65,7 +69,7 @@ public class TransactionManager {
 			
 		  }
 		
-			TransactionDao.getInstance().addTransaction(transaction, budget);
+			transactionDAO.addTransaction(transaction, budget);
 			
 			System.out.println("Transaction "+transaction.getCurrency().getType().toString()+" "+transaction.getAmount());
 			System.out.println("Account " +transaction.getAccount().getCurrency().getType().toString()+" "+accountAmount);	

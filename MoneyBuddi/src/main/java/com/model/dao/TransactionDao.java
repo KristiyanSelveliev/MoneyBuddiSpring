@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import com.controller.manager.DBManager;
@@ -30,27 +31,30 @@ public class TransactionDao implements ITransactionDao {
 
 	@Autowired
 	private CurrencyDAO currencyDAO;
-	private static TransactionDao instance;
-	private Connection connection;
-
-	public synchronized static TransactionDao getInstance() {
-		if (instance == null) {
-			instance = new TransactionDao();
-		}
-		return instance;
-	}
-
-	private TransactionDao() {
-		connection = DBManager.getInstance().getConnection();
-	}
+	
+	@Autowired
+	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	private AccountDao accountDAO;
+	
+	@Autowired
+	private BudgetDao budgetDAO;
+	
+	@Autowired 
+	private TransactionTypeDAO transactionTypeDAO;
+	
+	@Autowired
+	private DriverManagerDataSource db;
+	
 
 	@Override
 
 	public synchronized void addTransaction(Transaction transaction,Budget budget) throws SQLException {
 		try {
-			connection.setAutoCommit(false);
+			db.getConnection().setAutoCommit(false);
 
-		PreparedStatement s = connection.prepareStatement(
+		PreparedStatement s = db.getConnection().prepareStatement(
 				"INSERT INTO transactions (amount, date, currency_id,"
 				+ "account_id, category_id,transaction_type_id) "
 				+ "VALUES (?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
@@ -60,7 +64,7 @@ public class TransactionDao implements ITransactionDao {
 			s.setLong(3, transaction.getCurrency().getId());
 			s.setLong(4, transaction.getAccount().getId());
 			s.setLong(5, transaction.getCategory().getId());
-			s.setInt(6, TransactionTypeDAO.getInstance().getIdByTranscationType(transaction.getType()));
+			s.setInt(6, transactionTypeDAO.getIdByTranscationType(transaction.getType()));
 
 			System.out.println("transaction type: " + transaction.getType());
 			int rows = s.executeUpdate();
@@ -75,19 +79,19 @@ public class TransactionDao implements ITransactionDao {
 			transaction.setId((int) generatedKey.getLong(1));
 
 			Account acc = transaction.getAccount();
-			AccountDao.getInstance().updateAccount(acc);
+			accountDAO.updateAccount(acc);
 			if(budget!=null) {
-			BudgetDao.getInstance().updateBudget(budget);
+			budgetDAO.updateBudget(budget);
 			}
-			connection.commit();
+			db.getConnection().commit();
 
 			s.close();
 			System.out.println("Transaction successfully added in DB");
 		} catch (SQLException e) {
-			connection.rollback();
+			db.getConnection().rollback();
 			throw new SQLException("Srry transaction can't be executed");
 		} finally {
-			connection.setAutoCommit(true);
+			db.getConnection().setAutoCommit(true);
 		}
 
 	}
@@ -97,7 +101,7 @@ public class TransactionDao implements ITransactionDao {
 	public void deleteTransaction(Transaction transaction) throws SQLException {
 		PreparedStatement s = null;
 		try {
-			s = connection.prepareStatement("DELETE FROM transactions WHERE id=?");
+			s = db.getConnection().prepareStatement("DELETE FROM transactions WHERE id=?");
 			s.setLong(1, transaction.getId());
 			s.executeUpdate();
 		} catch (Exception e) {
@@ -113,7 +117,7 @@ public class TransactionDao implements ITransactionDao {
 	public void changeTransaction(Transaction transaction) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement("UPDATE transactions SET amount=?, date=?,"
+			ps = db.getConnection().prepareStatement("UPDATE transactions SET amount=?, date=?,"
 					+ "currency_id=?, account_id=?, category_id=?, transaction_type_id=? " + "WHERE id=?");
 			ps.setDouble(1, transaction.getAmount());
 			ps.setDate(2, transaction.getDate());
@@ -136,26 +140,26 @@ public class TransactionDao implements ITransactionDao {
 	@Override
 	public ArrayList<Transaction> getAllTransactionsByUser(User u) throws SQLException, InvalidDataException {
 		ArrayList<Transaction> transactions = new ArrayList();
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where account_id in(select id from accounts where user_id=?)")) {
 			ps.setLong(1, u.getId());
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
+					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.EXPENSE)) {
 						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
-					} else if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
+					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.INCOME)) {
 						transactions.add(new Income(rs.getLong("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 
 					}
 				}
@@ -169,7 +173,7 @@ public class TransactionDao implements ITransactionDao {
 	public ArrayList<Transaction> getAllExpenseTransactions(User u) throws Exception {
 		ArrayList<Transaction> transactions = new ArrayList();
 		// the id of expense in my db is 2
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where account_id in(select id from accounts where user_id=?)"
 						+ "AND transaction_type_id=?")) {
@@ -179,9 +183,9 @@ public class TransactionDao implements ITransactionDao {
 				while (rs.next()) {
 					transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
 							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-							AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+							accountDAO.getAccountById(rs.getLong("account_id")),
 							rs.getDate("date").toLocalDate(),
-							CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+							categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 				}
 			}
 		}
@@ -192,7 +196,7 @@ public class TransactionDao implements ITransactionDao {
 	public ArrayList<Transaction> getAllIncomeTransactions(User u) throws Exception {
 		ArrayList<Transaction> transactions = new ArrayList();
 		// the id of income in my db is 1
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where account_id in(select id from accounts where user_id=?)"
 						+ "AND transaction_type_id=?")) {
@@ -202,9 +206,9 @@ public class TransactionDao implements ITransactionDao {
 				while (rs.next()) {
 					transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
 							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-							AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+							accountDAO.getAccountById(rs.getLong("account_id")),
 							rs.getDate("date").toLocalDate(),
-							CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+							categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 				}
 			}
 		}
@@ -217,28 +221,28 @@ public class TransactionDao implements ITransactionDao {
 		LocalDate now = LocalDate.now();
 		LocalDate begin = now.minusDays(days);// this will show only the transaction from the begin date to now
 		ArrayList<Transaction> transactions = new ArrayList();
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where date>? and account_id in(select id from accounts where user_id=?)")) {
 			ps.setDate(1, Date.valueOf(begin));
 			ps.setLong(2, u.getId());
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
+					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.EXPENSE)) {
 						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 
-					} else if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
+					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.INCOME)) {
 						transactions.add(new Income(rs.getLong("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 
 					}
 				}
@@ -253,28 +257,28 @@ public class TransactionDao implements ITransactionDao {
 			throws SQLException, InvalidDataException {
 
 		ArrayList<Transaction> transactions = new ArrayList();
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps =db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where date=? and account_id in(select id from accounts where user_id=?)")) {
 			ps.setDate(1, Date.valueOf(date));
 			ps.setLong(2, u.getId());
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
+					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.EXPENSE)) {
 						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 
-					} else if (TransactionTypeDAO.getInstance().getTypeById(rs.getInt("transaction_type_id"))
+					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
 							.equals(TransactionType.INCOME)) {
 						transactions.add(new Income(rs.getInt("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 
 					}
 				}
@@ -290,7 +294,7 @@ public class TransactionDao implements ITransactionDao {
 		LocalDate now=LocalDate.now();
 		int year=now.getYear();
 		int month=now.getMonthValue();
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 						+ "transaction_type_id FROM transactions "
 						+ "Where (date BETWEEN ? AND ?)"
@@ -304,9 +308,9 @@ public class TransactionDao implements ITransactionDao {
 				while (rs.next()) {
 						transactions.add(new Expense(rs.getInt("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getLong("account_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getLong("category_id"))));
+								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 
 				}
 			}
@@ -321,7 +325,7 @@ public class TransactionDao implements ITransactionDao {
 		LocalDate now=LocalDate.now();
 		int year=now.getYear();
 		int month=now.getMonthValue();
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 						+ "transaction_type_id FROM transactions "
 						+ "Where (date BETWEEN ? AND ?)"
@@ -335,9 +339,9 @@ public class TransactionDao implements ITransactionDao {
 				while (rs.next()) {
 						transactions.add(new Income(rs.getInt("id"), rs.getDouble("amount"),
 								currencyDAO.getCurrencyById(rs.getInt("currency_id")),
-								AccountDao.getInstance().getAccountById(rs.getInt("account_id")),
+								accountDAO.getAccountById(rs.getInt("account_id")),
 								rs.getDate("date").toLocalDate(),
-								CategoryDAO.getInstance().getCategoryByID(rs.getInt("category_id"))));
+								categoryDAO.getCategoryByID(rs.getInt("category_id"))));
 
 				}
 			}

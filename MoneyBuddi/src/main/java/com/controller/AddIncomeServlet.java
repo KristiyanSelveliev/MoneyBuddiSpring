@@ -26,7 +26,7 @@ import com.model.dao.UserDao;
 
 @WebServlet("/addincome")
 public class AddIncomeServlet extends HttpServlet {
-   
+   /*
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//retrieve all categories from db and pass them to the request
@@ -78,4 +78,5 @@ public class AddIncomeServlet extends HttpServlet {
 			request.getRequestDispatcher("errorWhenLogged.jsp").forward(request, response);
 		}
 	}
+	*/
 }

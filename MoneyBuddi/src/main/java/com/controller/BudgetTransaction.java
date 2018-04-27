@@ -24,7 +24,7 @@ import com.model.dao.TransactionDao;
 
 @WebServlet("/budgetTransaction")
 public class BudgetTransaction extends HttpServlet {
-	
+	/*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -79,4 +79,5 @@ public class BudgetTransaction extends HttpServlet {
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 	}
+	*/
 }

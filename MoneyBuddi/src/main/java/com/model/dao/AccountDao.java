@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import com.controller.manager.DBManager;
@@ -19,25 +20,20 @@ import com.model.User;
 public class AccountDao implements IAccountDao {
 	@Autowired
     private CurrencyDAO currencyDAO;
-	private static AccountDao instance;
-	private Connection connection;
-
-	public static AccountDao getInstance() {
-		if (instance == null) {
-			instance = new AccountDao();
-		}
-		return instance;
-	}
-
-	private AccountDao() {
-		 connection = DBManager.getInstance().getConnection();
-	}
+	
+	@Autowired
+    private UserDao userDAO;
+	
+	@Autowired
+	private DriverManagerDataSource db;
+	
+	
 	
 	@Override
 	public void addAccount(Account account) throws SQLException {
 		PreparedStatement s = null;
 		try {
-			s = connection.prepareStatement("INSERT INTO accounts (name, balance,"
+			s = db.getConnection().prepareStatement("INSERT INTO accounts (name, balance,"
 					+ "user_id, currency_id)"
 					+ "VALUES(?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, account.getName());
@@ -65,7 +61,7 @@ public class AccountDao implements IAccountDao {
 
 	@Override
 	public void updateAccount(Account account) throws SQLException {
-		PreparedStatement ps=connection.prepareStatement("UPDATE accounts SET "
+		PreparedStatement ps=db.getConnection().prepareStatement("UPDATE accounts SET "
 				+ "name=?, balance=?, user_id=?, currency_id=? "
 				+ "WHERE id=?");
 		ps.setString(1, account.getName());
@@ -79,7 +75,7 @@ public class AccountDao implements IAccountDao {
 	@Override
 	public void deleteAccount(Account account) throws SQLException {
 		String sql="DELETE FROM accounts WHERE id=?";
-		PreparedStatement ps=connection.prepareStatement(sql);
+		PreparedStatement ps=db.getConnection().prepareStatement(sql);
 		ps.setLong(1, account.getId());
 		ps.executeUpdate();
 		ps.close();
@@ -90,7 +86,7 @@ public class AccountDao implements IAccountDao {
 		Account account = null;
 		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement("SELECT id,name,balance ,"
+			ps = db.getConnection().prepareStatement("SELECT id,name,balance ,"
 					+ "user_id, currency_id "
 					+ "FROM accounts WHERE name=? AND user_id=?");
 			ps.setString(1, name);
@@ -100,7 +96,7 @@ public class AccountDao implements IAccountDao {
 			account=new Account(rs.getLong("id"),//account id
 								rs.getString("name"),//account name
 								rs.getDouble("balance"),//account balance
-								UserDao.getInstance().getUserById(rs.getLong("user_id")),//user
+								userDAO.getUserById(rs.getLong("user_id")),//user
 								currencyDAO.getCurrencyById(rs.getLong("currency_id")));//Currency
 			}else {
 				throw new SQLException("No such account");
@@ -119,7 +115,7 @@ public class AccountDao implements IAccountDao {
 		ArrayList<Account> accounts=new ArrayList<>();
 		PreparedStatement ps=null;
 		try {
-			ps=connection.prepareStatement("SELECT id, name, "
+			ps=db.getConnection().prepareStatement("SELECT id, name, "
 					+ "balance,user_id, currency_id FROM accounts WHERE user_id=?");
 			ps.setLong(1, u.getId());
 			
@@ -128,7 +124,7 @@ public class AccountDao implements IAccountDao {
 				accounts.add(new Account(rs.getLong("id"),
 						                 rs.getString("name"),
 						                 rs.getDouble("balance"),
-						                 UserDao.getInstance().getUserById(rs.getLong("user_id")),
+						                 userDAO.getUserById(rs.getLong("user_id")),
 						                 currencyDAO.getCurrencyById(rs.getLong("currency_id"))));
 			}
 		}finally {
@@ -140,14 +136,14 @@ public class AccountDao implements IAccountDao {
 
 	@Override
 	public Account getAccountById(long id) throws SQLException, com.exceptions.InvalidDataException {
-		try(PreparedStatement ps=connection.prepareStatement("SELECT id,name,balance,user_id,currency_id FROM accounts WHERE id=?")){
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,name,balance,user_id,currency_id FROM accounts WHERE id=?")){
 			ps.setLong(1, id);
 			try(ResultSet rs=ps.executeQuery()){
 				if(rs.next()) {
 					return new Account(rs.getLong("id"),
 							           rs.getString("name"),
 							           rs.getDouble("balance"),
-							           UserDao.getInstance().getUserById(rs.getLong("user_id")),
+							           userDAO.getUserById(rs.getLong("user_id")),
 							           currencyDAO.getCurrencyById(rs.getLong("currency_id")));
 				}
 			}

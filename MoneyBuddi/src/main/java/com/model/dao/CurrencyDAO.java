@@ -17,8 +17,9 @@ import com.model.Currency.CurrencyType;
 
 @Component
 public class CurrencyDAO implements ICurrencyDAO{
+	
 	@Autowired
-	DriverManagerDataSource db;
+	private DriverManagerDataSource db;
 
 	@Override
 	public Currency getCurrencyById(long id) throws SQLException {
