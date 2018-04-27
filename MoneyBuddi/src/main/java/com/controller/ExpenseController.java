@@ -1,9 +1,11 @@
 package com.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +91,18 @@ public class ExpenseController {
 		}
 	}
 	
+	@RequestMapping(value = "/showexpense", method = RequestMethod.GET)
+	public String showExpense(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			  //show expense for the selected account
+			  User user=(User)request.getSession().getAttribute("user");
+			  ArrayList<Transaction> expenseTransactions=transactionDao.getAllExpenseTransactions(user);
+			  //add them to request and forward it
+			  request.setAttribute("expenseTransactions", expenseTransactions);
+			  return "showExpenseTransactions";
+		  }catch(Exception e) {
+			  request.setAttribute("exception", e);
+			  return "error";
+		  }
+	}
 }
