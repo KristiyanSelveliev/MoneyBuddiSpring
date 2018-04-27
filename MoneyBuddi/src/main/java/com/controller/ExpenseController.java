@@ -31,15 +31,15 @@ import com.model.dao.UserDao;
 public class ExpenseController {
 
 	@Autowired
-	TransactionDao transactionDao;
+	private TransactionDao transactionDao;
 	@Autowired
-	CategoryDAO categoryDao;
+	private CategoryDAO categoryDao;
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 	@Autowired
-	AccountDao accountDao;
+	private AccountDao accountDao;
 	@Autowired
-	TransactionManager transactionManager;
+	private TransactionManager transactionManager;
 	
 	@RequestMapping(value = "/addexpense", method = RequestMethod.GET)
 	public String showExpenseCategories(HttpSession session, HttpServletRequest request) {
@@ -93,10 +93,10 @@ public class ExpenseController {
 	}
 	
 	@RequestMapping(value = "/showexpense", method = RequestMethod.GET)
-	public String showExpense( HttpServletRequest request, HttpServletResponse response) {
+	public String showExpense( HttpServletRequest request, HttpSession session) {
 		try {
 			  //show expense for the selected account
-			  User user=(User)request.getSession().getAttribute("user");
+			  User user=(User)session.getAttribute("user");
 			  ArrayList<Transaction> expenseTransactions=transactionDao.getAllExpenseTransactions(user);
 			  //add them to request and forward it
 			  request.setAttribute("expenseTransactions", expenseTransactions);
