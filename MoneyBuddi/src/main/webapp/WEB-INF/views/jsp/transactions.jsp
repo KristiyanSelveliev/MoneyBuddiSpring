@@ -61,8 +61,8 @@
                         <p>Transactions</p>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="profile.jsp">
+                <li >
+                    <a href="profile">
                         <i class="pe-7s-user"></i>
                         <p>User Profile</p>
                     </a>

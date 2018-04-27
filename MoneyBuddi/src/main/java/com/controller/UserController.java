@@ -41,7 +41,7 @@ public class UserController {
 	private BudgetDao budgetDAO;
 	
 	
-	@RequestMapping(value = "/login2", method = RequestMethod.GET)
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String login2() throws Exception {
 
 		return "profile";

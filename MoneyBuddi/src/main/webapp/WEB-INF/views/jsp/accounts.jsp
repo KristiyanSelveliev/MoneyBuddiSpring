@@ -59,8 +59,8 @@
                         <p>Transactions</p>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="profile.jsp">
+                <li >
+                    <a href="profile">
                         <i class="pe-7s-user"></i>
                         <p>User Profile</p>
                     </a>
@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="budgets.jsp">
+                    <a href="budgetss.jsp">
                         <i class="pe-7s-cash"></i>
                         <p>Budgets</p>
                     </a>

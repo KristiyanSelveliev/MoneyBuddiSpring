@@ -3,6 +3,7 @@ package com.controller.manager;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.exceptions.InvalidDataException;
 import com.model.Account;
@@ -10,7 +11,7 @@ import com.model.Budget;
 import com.model.Transaction;
 import com.model.Transaction.TransactionType;
 import com.model.dao.TransactionDao;
-
+@Component
 public class TransactionManager {
 	@Autowired
 	private TransactionDao transactionDAO;
