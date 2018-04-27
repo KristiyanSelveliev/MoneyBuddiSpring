@@ -1,20 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MoneyBuddi</title>
+ <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/MoneyBuddi.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="css/blue.css">
+  
+
+  
+ 
+  
 </head>
-<body>
-	<form action="register" method="post">
-		Username<input type=text name="username" required><br>
-		Password<input type=password name="password1" required><br>
-		Confirm Password<input type=password name="password2" required><br>
-		Email<input type=email name="email" required><br>
-		Age<input type=number name="age" required><br>
-		<input type=submit value="Register">
-		<a href="index.jsp">Login here</a>&nbsp;if you already have an account!
-	</form>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a ><b>Money</b>Buddi</a>
+  </div>
+
+  <div class="register-box-body">
+   
+    <form action="register" method="post">
+      <div class="form-group has-feedback" >
+        <input type="text" class="form-control" name="username" placeholder="Username" required>
+        
+      </div>
+      <div class="form-group has-feedback">
+        <input type="email" class="form-control" name="email" placeholder="Email" required>
+      
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password1" placeholder="Password" required>
+         
+       
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password2" placeholder="Retype password" required>
+       
+      </div>
+       
+      <div class="form-group has-feedback">
+        <input type="number" class="form-control" name="age"placeholder="Age" required>
+       
+      </div>
+      
+      <div class="row">
+       
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+    
+    <a href="login.html" class="text-center">I already have an account</a>
+  </div>
+  <!-- /.form-box -->
+</div>
+<!-- /.register-box -->
+
+
 </body>
 </html>
