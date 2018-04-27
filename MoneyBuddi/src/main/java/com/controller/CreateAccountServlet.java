@@ -26,7 +26,7 @@ import com.model.dao.CurrencyDAO;
 @WebServlet("/createAccount")
 public class CreateAccountServlet extends HttpServlet {
 	
-    
+   /* 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
@@ -74,5 +74,5 @@ public class CreateAccountServlet extends HttpServlet {
 	
 		
 	}
-
+*/
 }

@@ -17,6 +17,7 @@ import com.model.dao.TransactionDao;
 
 @WebServlet("/showIncome")
 public class ShowIncomeServlet extends HttpServlet {
+	/*
   @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  try {
@@ -31,4 +32,5 @@ public class ShowIncomeServlet extends HttpServlet {
 		  request.getRequestDispatcher("error.jsp").forward(request, response);
 	  }
 	}
+	*/
 }

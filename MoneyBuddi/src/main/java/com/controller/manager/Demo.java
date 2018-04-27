@@ -1,8 +1,15 @@
 package com.controller.manager;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
+
+import com.config.SpringWebConfig;
 import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Budget;
@@ -20,6 +27,7 @@ import com.model.dao.CurrencyDAO;
 import com.model.dao.TransactionDao;
 import com.model.dao.TransactionTypeDAO;
 import com.model.dao.UserDao;
+
 
 public class Demo {
 	
@@ -158,7 +166,12 @@ public class Demo {
 		//for(TransactionType t:TransactionTypeDAO.getInstance().getAllTransactionTypes()) {
 		//	System.out.println(t);
 		//}
+		//Connection c=DBManager.getInstance().getConnection();
+		//System.out.println(c);
+		
+		
 			
+		
 	}
 
 }

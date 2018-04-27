@@ -24,7 +24,7 @@ import com.model.dao.CurrencyDAO;
 @WebServlet("/createBudget")
 public class CreateBudgetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+       /*
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -76,5 +76,5 @@ public class CreateBudgetServlet extends HttpServlet {
           }
 
 	}
-
+*/
 }

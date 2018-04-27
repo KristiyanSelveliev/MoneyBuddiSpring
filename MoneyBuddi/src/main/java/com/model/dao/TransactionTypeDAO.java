@@ -7,31 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
+
 import com.controller.manager.DBManager;
 import com.model.Transaction.TransactionType;
-
+@Component
 public class TransactionTypeDAO implements ITransactionTypeDAO{
 	
-	
-	private static TransactionTypeDAO instance;
-	private Connection connection;
-
-	public synchronized static TransactionTypeDAO getInstance() {
-		if (instance == null) {
-			instance = new TransactionTypeDAO();
-		}
-		return instance;
-	}
-
-	private TransactionTypeDAO() {
-		connection = DBManager.getInstance().getConnection();
-	}
+	@Autowired
+	DriverManagerDataSource db;
 	
 
 	@Override
 	public TransactionType getTypeById(int id) throws SQLException {
 		
-		try(PreparedStatement ps=connection.prepareStatement("SELECT id,name FROM transaction_types WHERE id=?");){
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,name FROM transaction_types WHERE id=?");){
 			ps.setInt(1, id);
 			try(ResultSet rs=ps.executeQuery()){
 				
@@ -54,7 +46,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO{
 	@Override
 	public int getIdByTranscationType(TransactionType t) throws SQLException {
 		String type=t.toString();
-		try(PreparedStatement ps=connection.prepareStatement("SELECT id FROM transaction_types WHERE name=?")){
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id FROM transaction_types WHERE name=?")){
 			ps.setString(1, type);
 			
 			try(ResultSet rs=ps.executeQuery()){
@@ -70,7 +62,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO{
 	@Override
 	public List<TransactionType> getAllTransactionTypes() throws SQLException {
          List<TransactionType> types=new ArrayList();
-         try(PreparedStatement ps=connection.prepareStatement("SELECT name FROM transaction_types")){
+         try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT name FROM transaction_types")){
         	 try(ResultSet rs=ps.executeQuery()){
         		 while(rs.next()) {
         			 String type_name=rs.getString("name");

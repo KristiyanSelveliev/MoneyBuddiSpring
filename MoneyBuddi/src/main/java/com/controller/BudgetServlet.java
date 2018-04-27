@@ -18,7 +18,7 @@ import com.model.dao.BudgetDao;
 
 @WebServlet("/budget")
 public class BudgetServlet extends HttpServlet {
-
+/*
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -41,5 +41,5 @@ public class BudgetServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+*/
 }

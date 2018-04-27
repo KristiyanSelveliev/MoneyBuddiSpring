@@ -20,7 +20,7 @@ import com.model.dao.TransactionTypeDAO;
 
 @WebServlet("/createCategory")
 public class CreateCategoryServlet extends HttpServlet {
-	
+	/*
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -65,5 +65,5 @@ public class CreateCategoryServlet extends HttpServlet {
 	
 		
 	}
-
+*/
 }

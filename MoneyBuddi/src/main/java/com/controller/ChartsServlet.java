@@ -18,7 +18,7 @@ import com.model.dao.TransactionDao;
 
 @WebServlet("/charts")
 public class ChartsServlet extends HttpServlet {
-	
+	/*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//get all transactions for current month
 		User u=(User)request.getSession().getAttribute("user");
@@ -64,5 +64,5 @@ public class ChartsServlet extends HttpServlet {
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 	}
-
+*/
 }

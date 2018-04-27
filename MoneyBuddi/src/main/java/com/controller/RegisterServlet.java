@@ -16,7 +16,7 @@ import com.util.security.BCrypt;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-
+/*
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			//get data
@@ -58,5 +58,5 @@ public class RegisterServlet extends HttpServlet {
 		}
 	}
 
-	
+	*/
 }
