@@ -14,7 +14,7 @@ import com.model.dao.UserDao;
 import com.util.UserValidator;
 import com.util.security.BCrypt;
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 /*
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
