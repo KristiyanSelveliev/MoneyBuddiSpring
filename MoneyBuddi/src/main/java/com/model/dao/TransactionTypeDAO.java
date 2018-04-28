@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ import com.model.Transaction.TransactionType;
 public class TransactionTypeDAO implements ITransactionTypeDAO{
 	
 	@Autowired
-	DriverManagerDataSource db;
+	DataSource db;
 	
 
 	@Override

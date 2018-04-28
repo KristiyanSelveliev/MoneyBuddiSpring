@@ -44,7 +44,7 @@
 	</div><br>
 	
 	<div>
-		<form action="budget" method="GET">
+		<form action="budgets" method="GET">
 			<input type="submit" value="Budgets" />
 		</form>
 	</div>

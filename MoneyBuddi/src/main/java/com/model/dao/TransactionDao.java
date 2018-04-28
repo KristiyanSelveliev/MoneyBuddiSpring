@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -45,7 +47,7 @@ public class TransactionDao implements ITransactionDao {
 	private TransactionTypeDAO transactionTypeDAO;
 	
 	@Autowired
-	private DriverManagerDataSource db;
+	private DataSource db;
 	
 
 	@Override

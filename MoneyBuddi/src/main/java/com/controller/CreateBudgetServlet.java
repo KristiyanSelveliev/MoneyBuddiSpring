@@ -21,7 +21,7 @@ import com.model.dao.CategoryDAO;
 import com.model.dao.CurrencyDAO;
 
 
-@WebServlet("/createBudget")
+//@WebServlet("/createBudget")
 public class CreateBudgetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        /*
