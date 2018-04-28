@@ -31,9 +31,5 @@ public class BudgetController {
 		return "budgetss";
 		
 	}
-	
-	
-	
 
 }
->>>>>>> 575cab2a8876792e647648514d7ab6861404018b
