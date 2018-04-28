@@ -24,15 +24,13 @@
    		 <th>%</th>
        </tr>
 	  <% 
-	  Map<Category,Double> incomeByMonth=(Map<Category,Double>)request.getAttribute("incomeByMonth");
+	  Map<String,Double> incomeByMonth=(Map<String,Double>)request.getAttribute("incomeByMonth");
 	  double totalAmountIncome=0;
-	  int transactionsCountIncome=0;
-	  for(Map.Entry<Category,Double> e : incomeByMonth.entrySet()){
+	  for(Map.Entry<String,Double> e : incomeByMonth.entrySet()){
 	 	totalAmountIncome+=e.getValue();
-	 	transactionsCountIncome++;
 			%>
 			<tr>
-	   			 <td><%= e.getKey().getCategory() %></td>
+	   			 <td><%= e.getKey() %></td>
 	    		 <td><%= e.getValue() %></td>
 	    		 <% 
 	    		 double percentsIncome=(e.getValue())*100/(double)request.getAttribute("totalIncomeAmount");
@@ -46,7 +44,7 @@
 	</table>
 
 	  <h3>Total : <%= totalAmountIncome %></h3>
-	  <h3>Number of transactions : <%= transactionsCountIncome %></h3>
+	  <h3>Number of transactions : <%= request.getAttribute("transactionsCountIncome") %></h3>
 		</div>
 	</div>
 	
@@ -61,15 +59,13 @@
    		 <th>%</th>
        </tr>
 	  <% 
-	  Map<Category,Double> expenseByMonth=(Map<Category,Double>)request.getAttribute("expenseByMonth");
+	  Map<String,Double> expenseByMonth=(Map<String,Double>)request.getAttribute("expenseByMonth");
 	  double totalAmountExpense=0;
-	  int transactionsCountExpense=0;
-	  for(Map.Entry<Category,Double> e : expenseByMonth.entrySet()){
+	  for(Map.Entry<String,Double> e : expenseByMonth.entrySet()){
 		  totalAmountExpense+=e.getValue();
-		  transactionsCountExpense++;
 			%>
 			<tr>
-	   			 <td><%= e.getKey().getCategory() %></td>
+	   			 <td><%= e.getKey() %></td>
 	    		 <td><%= e.getValue() %></td>
 	    		 <% 
 	    		 double percentsExpense=(e.getValue())*100/(double)request.getAttribute("totalExpenseAmount");
@@ -83,7 +79,7 @@
 	</table>
 
 	  <h3>Total : <%= totalAmountExpense %></h3>
-	  <h3>Number of transactions : <%= transactionsCountExpense %></h3>
+	  <h3>Number of transactions : <%= request.getAttribute("transactionsCountExpense") %></h3>
 		
 		</div>
 	</div>
