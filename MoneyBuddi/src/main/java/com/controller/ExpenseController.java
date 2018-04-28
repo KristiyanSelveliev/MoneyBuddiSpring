@@ -49,6 +49,10 @@ public class ExpenseController {
 			// get the user id from session and then retrieve from db by that id
 			User user = (User) session.getAttribute("user");
 			long userId = user.getId();
+			
+			ArrayList<Account> accounts=accountDao.getAllAccountsForUser(user);
+			request.setAttribute("accounts", accounts);
+			
 			List<Category> categories = categoryDao
 				.getAllCategoriesByUserAndType(userDao.getUserById(userId), TransactionType.EXPENSE);
 			// add them to request
@@ -70,10 +74,11 @@ public class ExpenseController {
 				double amount=Double.parseDouble(amountAsString);
 				long categoryId=Long.parseLong(request.getParameter("categoryId"));
 				Category category=categoryDao.getCategoryByID(categoryId);
-				long accountId=(long)session.getAttribute("accountId");
+
+				long accountId=Long.parseLong(request.getParameter("accountId"));
 				Account account=accountDao.getAccountById(accountId);
 				Currency currency=account.getCurrency();
-				
+
 				//create transaction (needed: amount, currency, acount, date, category, type=income) 
 				Transaction expense=new Expense(amount,currency,account,LocalDate.now(),category);
 				//save it to db

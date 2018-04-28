@@ -1,3 +1,5 @@
+<%@page import="com.model.Account"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.model.Category"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -13,6 +15,16 @@
 	<div>
 		<form action="addincome" method="post">
 			<input type="number" name="amount" required><br>
+			<select name="accountId" required>
+				<%
+				ArrayList<Account> accounts=(ArrayList<Account>)request.getAttribute("accounts");
+				long accountId=0;
+				for(Account a: accounts){
+				%>
+		    		<option value="<%= accountId=a.getId() %>"><%= a.getName() %></option>
+				<%} 
+				%>
+			</select>
 			<select name="categoryId" value="choose category" required><br>
 				<% List<Category> categories=(List<Category>)request.getAttribute("categories");
 					for(Category c : categories){

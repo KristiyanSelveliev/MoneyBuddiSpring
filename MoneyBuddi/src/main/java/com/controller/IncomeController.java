@@ -49,6 +49,8 @@ public class IncomeController {
 			// get the user id from session and then retrieve from db by that id
 			User user = (User) session.getAttribute("user");
 			long userId = user.getId();
+			ArrayList<Account> accounts=accountDao.getAllAccountsForUser(user);
+			request.setAttribute("accounts", accounts);
 			List<Category> categories = categoryDao
 				.getAllCategoriesByUserAndType(userDao.getUserById(userId), TransactionType.INCOME);
 			// add them to request
@@ -70,7 +72,7 @@ public class IncomeController {
 				double amount=Double.parseDouble(amountAsString);
 				long categoryId=Long.parseLong(request.getParameter("categoryId"));
 				Category category=categoryDao.getCategoryByID(categoryId);
-				long accountId=(long)session.getAttribute("accountId");
+				long accountId=Long.parseLong(request.getParameter("accountId"));
 				Account account=accountDao.getAccountById(accountId);
 				Currency currency=account.getCurrency();
 				
