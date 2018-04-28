@@ -50,7 +50,7 @@
             </div>
              <ul class="nav">
                 <li>
-                    <a href="transactions.jsp">
+                    <a href="transactions">
                         <i class="pe-7s-graph"></i>
                         <p>Transactions</p>
                     </a>
@@ -80,7 +80,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="budgets.jsp">
+                    <a href="budgets">
                         <i class="pe-7s-cash"></i>
                         <p>Budgets</p>
                     </a>
@@ -172,9 +172,9 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+                             <form action="logout" method="get">
+                                <button type="submit" class=" btn  btn-warning " > Log out</button>
+                              </form>
                         </li>
 						<li class="separator hidden-lg hidden-md"></li>
                     </ul>

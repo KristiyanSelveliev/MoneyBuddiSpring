@@ -56,7 +56,7 @@
 
             <ul class="nav">
                 <li>
-                    <a href="transactions.jsp">
+                    <a href="transactions">
                         <i class="pe-7s-graph"></i>
                         <p>Transactions</p>
                     </a>
@@ -155,9 +155,9 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+                               <form action="logout" method="get">
+                                <button type="submit" class=" btn  btn-warning " > Log out</button>
+                              </form>
                         </li>
 						<li class="separator hidden-lg hidden-md"></li>
                     </ul>

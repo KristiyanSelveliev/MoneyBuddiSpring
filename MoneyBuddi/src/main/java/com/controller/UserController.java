@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.activation.DataSource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -112,5 +113,19 @@ public class UserController {
 		return "main";
 		
 	}
+	
+	
+	
+	@RequestMapping(value="/logout" ,method=RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
+	
+	
+	
+	
+	
+	
 	
 }
