@@ -97,7 +97,7 @@ public class ExpenseController {
 		}
 	}
 	
-	@RequestMapping(value = "/showexpense", method = RequestMethod.GET)
+	@RequestMapping(value = "/showExpense", method = RequestMethod.GET)
 	public String showExpense( HttpServletRequest request, HttpSession session) {
 		try {
 			  //show expense for the selected account

@@ -1,23 +1,18 @@
 package com.model.dao;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
-import com.controller.manager.DBManager;
 import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Budget;
@@ -27,7 +22,6 @@ import com.model.Transaction;
 import com.model.User;
 import com.model.Transaction.TransactionType;
 
-import javafx.util.converter.LocalDateStringConverter;
 @Component
 public class TransactionDao implements ITransactionDao {
 

@@ -18,7 +18,7 @@ import com.model.dao.CategoryDAO;
 import com.model.dao.TransactionTypeDAO;
 
 
-@WebServlet("/createCategory")
+//@WebServlet("/createCategory")
 public class CreateCategoryServlet extends HttpServlet {
 	/*
 	
