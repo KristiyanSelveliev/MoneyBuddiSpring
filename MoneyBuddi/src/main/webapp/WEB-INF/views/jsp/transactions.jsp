@@ -118,7 +118,7 @@
                     <ul class="nav navbar-nav navbar-left">
                         
                         <li>
-                           <form action="logout" method="get">
+                           <form action="addExpense" method="get">
                                 <button type="submit" class=" btn  btn-danger " > <a1 style="font-size: 125%;">Add Expense</a1></button>
                               </form>
                         </li>
@@ -127,7 +127,7 @@
                     <ul class="nav navbar-nav navbar-left">
                         
                         <li>
-                           <form action="logout" method="get">
+                           <form action="addIncome" method="get">
                                 <button type="submit" class=" btn  btn-success "> <a2 style="font-size: 125%;">Add Income</a2></button>
                               </form>
                         </li>
