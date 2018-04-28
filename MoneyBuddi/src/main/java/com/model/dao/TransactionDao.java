@@ -285,21 +285,19 @@ public class TransactionDao implements ITransactionDao {
 	}
 
 	@Override
-	public ArrayList<Transaction> getExpenseByUserForMonth(User u) throws Exception {
+	public ArrayList<Transaction> getExpenseByAccountFromToDate(LocalDate from, LocalDate to,
+			long accountId) throws Exception {
 		ArrayList<Transaction> transactions = new ArrayList();
-		LocalDate now=LocalDate.now();
-		int year=now.getYear();
-		int month=now.getMonthValue();
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 						+ "transaction_type_id FROM transactions "
 						+ "Where (date BETWEEN ? AND ?)"
 						+ "AND transaction_type_id=? "
-						+ "AND account_id IN(SELECT id from accounts where user_id=?)")) {
-			ps.setDate(1, Date.valueOf(year+"-"+month+"-1"));
-			ps.setDate(2, Date.valueOf(LocalDate.now()));
+						+ "AND account_id=? ")) {
+			ps.setDate(1, Date.valueOf(from));
+			ps.setDate(2, Date.valueOf(to));
 			ps.setInt(3, 2);
-			ps.setLong(4, u.getId());
+			ps.setLong(4, accountId);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 						transactions.add(new Expense(rs.getInt("id"), rs.getDouble("amount"),
@@ -316,21 +314,20 @@ public class TransactionDao implements ITransactionDao {
 	}
 
 	@Override
-	public ArrayList<Transaction> getIncomeByUserForMonth(User u) throws Exception {
+	public ArrayList<Transaction> getIncomeByAccountFromToDate(LocalDate from, LocalDate to,
+			long accountId) throws Exception {
 		ArrayList<Transaction> transactions = new ArrayList();
-		LocalDate now=LocalDate.now();
-		int year=now.getYear();
-		int month=now.getMonthValue();
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 						+ "transaction_type_id FROM transactions "
-						+ "Where (date BETWEEN ? AND ?)"
+						+ "Where (date BETWEEN ? AND ?) "
 						+ "AND transaction_type_id=? "
-						+ "AND account_id IN(SELECT id from accounts where user_id=?)")) {
-			ps.setDate(1, Date.valueOf(year+"-"+month+"-1"));
-			ps.setDate(2, Date.valueOf(LocalDate.now()));
+						+ "AND account_id=? "
+						+ "")) {
+			ps.setDate(1, Date.valueOf(from));
+			ps.setDate(2, Date.valueOf(to));
 			ps.setInt(3, 1);
-			ps.setLong(4, u.getId());
+			ps.setLong(4, accountId);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 						transactions.add(new Income(rs.getInt("id"), rs.getDouble("amount"),

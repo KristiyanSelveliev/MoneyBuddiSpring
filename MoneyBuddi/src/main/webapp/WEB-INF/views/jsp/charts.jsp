@@ -1,3 +1,4 @@
+<%@page import="com.model.Account"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.model.Category"%>
 <%@page import="java.util.Map"%>
@@ -14,75 +15,22 @@
 </head>
 <body>
 <h1><%= LocalDate.now().getMonth()%><%= LocalDate.now().getYear() %></h1>
-	<div>
-		<div>
-		<h2>Income details | </h2>
-		<table style="width:50%">
-	  <tr>
-    	 <th>Category</th>
-   		 <th>Amount</th>
-   		 <th>%</th>
-       </tr>
-	  <% 
-	  Map<String,Double> incomeByMonth=(Map<String,Double>)request.getAttribute("incomeByMonth");
-	  double totalAmountIncome=0;
-	  for(Map.Entry<String,Double> e : incomeByMonth.entrySet()){
-	 	totalAmountIncome+=e.getValue();
-			%>
-			<tr>
-	   			 <td><%= e.getKey() %></td>
-	    		 <td><%= e.getValue() %></td>
-	    		 <% 
-	    		 double percentsIncome=(e.getValue())*100/(double)request.getAttribute("totalIncomeAmount");
-	    		 DecimalFormat format_2Places = new DecimalFormat("0.00");
-	    		 percentsIncome = Double.valueOf(format_2Places.format(percentsIncome));
-	    		 %>
-				 <td><%= percentsIncome%></td>
-	  		</tr>
-			<%} %>
-	  
-	</table>
 
-	  <h3>Total : <%= totalAmountIncome %></h3>
-	  <h3>Number of transactions : <%= request.getAttribute("transactionsCountIncome") %></h3>
-		</div>
-	</div>
-	
-	<div>
-		<div>
-		<h2>Expense details | </h2>
-		
-		<table style="width:50%">
-	  <tr>
-    	 <th>Category</th>
-   		 <th>Amount</th>
-   		 <th>%</th>
-       </tr>
-	  <% 
-	  Map<String,Double> expenseByMonth=(Map<String,Double>)request.getAttribute("expenseByMonth");
-	  double totalAmountExpense=0;
-	  for(Map.Entry<String,Double> e : expenseByMonth.entrySet()){
-		  totalAmountExpense+=e.getValue();
-			%>
-			<tr>
-	   			 <td><%= e.getKey() %></td>
-	    		 <td><%= e.getValue() %></td>
-	    		 <% 
-	    		 double percentsExpense=(e.getValue())*100/(double)request.getAttribute("totalExpenseAmount");
-	    		 DecimalFormat format_2Places = new DecimalFormat("0.00");
-	    		 percentsExpense = Double.valueOf(format_2Places.format(percentsExpense));
-	    		 %>
-				 <td><%= percentsExpense%></td>
-	  		</tr>
-			<%} %>
-	  
-	</table>
-
-	  <h3>Total : <%= totalAmountExpense %></h3>
-	  <h3>Number of transactions : <%= request.getAttribute("transactionsCountExpense") %></h3>
-		
-		</div>
-	</div>
+	<form action="showCharts" method="GET">
+		   <select name="accountId" required>
+				<%
+				ArrayList<Account> accounts=(ArrayList<Account>)request.getAttribute("accounts");
+				long accountId=0;
+				for(Account a: accounts){
+				%>
+		    		<option value="<%= accountId=a.getId() %>"><%= a.getName() %></option>
+				<%} 
+				%>
+			</select><br>
+			From :<input type="date" name="from" required><br>
+			To  :<input type="date" name="to" required><br>
+			<input type="submit" value="Show">
+	</form>
 
 </body>
 </html>
