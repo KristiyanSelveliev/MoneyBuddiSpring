@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -25,14 +27,14 @@ public class CategoryDAO implements ICategoryDAO{
 	private TransactionTypeDAO transactionTypeDAO;
 	
 	@Autowired
-	private DriverManagerDataSource db;
+	private DataSource db;
 	
 	
 	@Override
 	public Category getCategoryByID(long id) throws SQLException, InvalidDataException {
-															//could be done with join
+															
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,category,transaction_type_id,user_id FROM categories "
-														  + " WHERE id=?")){
+														  			+ " WHERE id=?")){
 			ps.setLong(1, id);
 			try(ResultSet rs=ps.executeQuery()){
 				if(rs.next()) {//if there is such a row
@@ -69,7 +71,7 @@ public class CategoryDAO implements ICategoryDAO{
 
 	@Override
 	public Collection<Category> getAllCategoriesByUser(User user) throws SQLException, InvalidDataException {
-			 Collection<Category> categories=new ArrayList<>();	//JOIN maybe?//transaction type
+			 Collection<Category> categories=new ArrayList<>();	
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,category,transaction_type_id,user_id FROM categories "
 				                                             +"WHERE user_id IS NULL or user_id=?" )){
 

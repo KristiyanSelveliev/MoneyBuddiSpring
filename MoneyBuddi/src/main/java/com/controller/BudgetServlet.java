@@ -16,7 +16,7 @@ import com.model.User;
 import com.model.dao.BudgetDao;
 
 
-@WebServlet("/budget")
+//@WebServlet("/budget")
 public class BudgetServlet extends HttpServlet {
 /*
     

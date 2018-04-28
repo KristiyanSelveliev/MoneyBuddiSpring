@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,7 @@ public class AccountDao implements IAccountDao {
     private UserDao userDAO;
 	
 	@Autowired
-	private DriverManagerDataSource db;
+	private DataSource db;
 	
 	
 	

@@ -29,8 +29,7 @@ import com.util.security.BCrypt;
 @Controller
 public class UserController {
 
-	@Autowired
-	private DriverManagerDataSource db;
+	
 	@Autowired
 	private CurrencyDAO currencyDAO;
 	@Autowired
@@ -39,6 +38,8 @@ public class UserController {
 	private AccountDao accountDAO;
 	@Autowired
 	private BudgetDao budgetDAO;
+	
+	
 	
 	
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)

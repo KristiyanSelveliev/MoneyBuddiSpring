@@ -117,34 +117,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Icons</a>
+                    <a class="navbar-brand" href="#">Budgets</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-									<p class="hidden-lg hidden-md">
-										5 Notifications
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
+                      
                         <li>
                            <a href="">
                                 <i class="fa fa-search"></i>
@@ -200,20 +177,64 @@
                             </div>
                             <div class="content all-icons">
                                 <div class="row">
+                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                                 	<div class="container-fluid">
+			                             <form action="budgetCreate" method="post">    
+			                                 <div class="row">
+			                                <a style="font-size: 140%;" class="col-md-10">Categories </a><br>
+			                                </div>
+			                                   <select  class="col-md-8" name="categoryId">
+			                                
+					                                <c:forEach var="category" items="${requestScope.categories }">
+					                                 <option value="${category.getId()}">${ category.getCategory() }-${category.getType().toString()} </option>
+					                                
+					                                </c:forEach>
+			                                   </select >
+			                                   <div class="row">
+			                                    <a style="font-size: 140%;" class="col-md-10" >Currencies </a>
+			                                    </div>
+			                                  
+			                                   <select class="col-md-8" name="currencyId" >
+			                                
+					                                <c:forEach var="currency" items="${requestScope.currencies }">
+					                                 <option  value="${currency.getId()}">${ currency.getType().toString()}  </option>
+					                                
+					                                </c:forEach>
+			                                   </select >
+			                                  
+			                                   <div class="row">
+			                                   		<a style="font-size: 140%;" class="col-md-10">Amount </a>
+			                                   </div>
+			                                   <input type="number"  name="amount" class="form-control"  style="font-size: 130%;" value="100"> 
+			                                    <div class="row">
+			                                   		<a style="font-size: 125%;" class="col-md-10">Begin </a>
+			                                   </div>
+			                                   <input type="date"  name="begin" class="form-control"  style="font-size: 130%;" > 
+			                                   <div class="row">
+			                                  		 <a style="font-size: 125%;" class="col-md-10">End </a>
+			                                   </div>
+			                                   	<input type="date"  name="end" class="form-control"  style="font-size: 130%;"> 
+			                                   
+			                                  <button type="submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Create </button>
+                        					</form>
+                        			</div>
+                        		</div>
                                <c:forEach var="budget" items="${requestScope.budgets }">
                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                 
                                    
                                     <div class="font-icon-detail">
                                        <form action=updateBudget method="post">
+                                       <input type="hidden" name="id" value="${budget.getId() }">
                                        <a class="text-muted" style="font-size: 130%;">${budget.getCategory().getCategory()}</a>
                                       
-                                      <input type="number" class="form-control"  style="font-size: 130%;"value="${budget.getAmount()} ">
+                                      <input type="number" name="amount" class="form-control"  style="font-size: 130%; "value="${budget.getAmount()}">
                                       <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
                                       <button type="button" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>
                                     </div>
                                      <form action=deleteBudget method="post">
+                                     <input type="hidden" name="id" value="${budget.getId() }">
                                     <button type="button" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
                                 </div>

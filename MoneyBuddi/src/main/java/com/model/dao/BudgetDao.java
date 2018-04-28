@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,7 @@ public class BudgetDao implements IBudgetDAO{
 	private CategoryDAO categoryDAO;
 	
 	@Autowired
-	private DriverManagerDataSource db;
+	private DataSource db;
 	
 	
 	
