@@ -16,7 +16,7 @@ import com.model.Transaction;
 import com.model.User;
 import com.model.dao.TransactionDao;
 
-@WebServlet("/charts")
+//@WebServlet("/charts")
 public class ChartsServlet extends HttpServlet {
 	/*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
