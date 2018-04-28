@@ -24,7 +24,7 @@ import com.model.dao.CategoryDAO;
 import com.model.dao.TransactionDao;
 import com.model.dao.UserDao;
 
-@WebServlet("/addincome")
+//@WebServlet("/addincome")
 public class AddIncomeServlet extends HttpServlet {
    /*
 	@Override

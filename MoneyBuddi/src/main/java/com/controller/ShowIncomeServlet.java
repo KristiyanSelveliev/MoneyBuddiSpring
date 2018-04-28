@@ -15,7 +15,7 @@ import com.model.Transaction;
 import com.model.User;
 import com.model.dao.TransactionDao;
 
-@WebServlet("/showIncome")
+//@WebServlet("/showIncome")
 public class ShowIncomeServlet extends HttpServlet {
 	/*
   @Override
