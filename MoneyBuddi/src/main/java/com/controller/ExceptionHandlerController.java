@@ -13,11 +13,7 @@ public class ExceptionHandlerController {
 	@ExceptionHandler(value=Exception.class)
 	public String error(HttpServletRequest request,Exception e) {
 		
-	   /* ModelAndView mav = new ModelAndView();
-	    mav.addObject("exception",e );
-	    mav.addObject("url", request.getRequestURL());
-	    mav.setViewName("error");
-	    return mav;*/
+	   
 		request.setAttribute("exception", e);
 		return "error";
 	}

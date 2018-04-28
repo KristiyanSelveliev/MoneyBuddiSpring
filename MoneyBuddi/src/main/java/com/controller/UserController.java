@@ -41,13 +41,22 @@ public class UserController {
 	private BudgetDao budgetDAO;
 	
 	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String login2() throws Exception {
+
+		return "profile";
+	}
+	
+	
 	
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() throws Exception {
 
-		return "index";
+		return "login";
 	}
+	
+	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest request, Model m) throws Exception {
