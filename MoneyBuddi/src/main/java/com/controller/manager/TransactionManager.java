@@ -70,7 +70,7 @@ public class TransactionManager {
 				}
 			
 		  }
-		
+		  
 			transactionDAO.addTransaction(transaction, budget);
 			
 			System.out.println("Transaction "+transaction.getCurrency().getType().toString()+" "+transaction.getAmount());
