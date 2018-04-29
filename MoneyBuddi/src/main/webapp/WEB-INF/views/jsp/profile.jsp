@@ -63,7 +63,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="tablelist.jsp">
+                    <a href="tables">
                         <i class="pe-7s-note2"></i>
                         <p>Table List</p>
                     </a>
