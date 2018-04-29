@@ -6,36 +6,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Charts</title>
-</head>
-<body>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+    	  var json = JSON.parse($window.sessionStorage.incomeJson);
+    	  var array  = JSON.parse(json);
+    	  var data =new google.visualization.arrayToDataTable(array);
 
-<h1>Charts</h1>
+        var options = {
+          title: 'Income Transactions',
+          pieHole: 0.4,
+        };
 
-<div id="showDonutChart"></div>
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="donutchart" style="width: 700px; height: 400px;"></div>
+  </body>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-<script type="text/javascript">
-//load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-//draw the chart and set the chart values
-function drawChart() {
-  var json = JSON.parse($window.sessionStorage.incomeJson);
-  var array  = JSON.parse(json);
-  var data = google.visualization.arrayToDataTable(array);
-
-
-  //add a title and set the width and height of the chart
-  var options = {'title':'Income', 'width':550, 'height':400};
-
-  //display the chart inside the <div> element with id="showDonutChart"
-  var chart = new google.visualization.PieChart(document.getElementById('showDonutChart'));
-  chart.draw(data, options);
-}
-</script>
-
-
-</body>
 </html>

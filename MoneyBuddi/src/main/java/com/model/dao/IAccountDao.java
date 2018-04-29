@@ -14,7 +14,7 @@ public interface IAccountDao {
 	
 	void updateAccount(Account account) throws SQLException;
 	
-	void deleteAccount(Account account) throws SQLException;
+	void deleteAccount(int id) throws SQLException;
 	
 	Account getAccountById(long id) throws SQLException,InvalidDataException;
 	

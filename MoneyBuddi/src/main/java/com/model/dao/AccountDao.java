@@ -75,10 +75,10 @@ public class AccountDao implements IAccountDao {
 	}
 
 	@Override
-	public void deleteAccount(Account account) throws SQLException {
+	public void deleteAccount(int id) throws SQLException {
 		String sql="DELETE FROM accounts WHERE id=?";
 		PreparedStatement ps=db.getConnection().prepareStatement(sql);
-		ps.setLong(1, account.getId());
+		ps.setLong(1, id);
 		ps.executeUpdate();
 		ps.close();
 	}
