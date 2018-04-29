@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="tablelist.jsp">
+                    <a href="tables">
                         <i class="pe-7s-note2"></i>
                         <p>Table List</p>
                     </a>
@@ -115,36 +115,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-									<p class="hidden-lg hidden-md">
-										5 Notifications
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-								<p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
+                     
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -185,136 +156,235 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                       <div class="card"> 
+                            <div class="header">
+                                <h4 class="title" style="color:red">Filter for all expenses</h4>
+                                
+                                <form>
+                                          
+                                             <p>
+                                             <a style="color:purple"> <b> Begin-></b></a>
+                                             <a style="color:purple"> <b> End</b></a>
+                                             </p>
+			                                   <input type="date"  name="begin"   style="font-size: 130%;"> 
+			                           
+			                                   <input   type="date"  name="end"   style="font-size: 130%;" > 
+			                                   
+                                         <button class=" btn  btn-danger ">Show</button>
+                                </form>
+                               
+                                
+                            </div>
+                             <div class="content table-responsive">  
+                                <table class=" table table-responsive table-hover flexy" >
+                                    <thead >
+                                        <th>ID</th>
+                                    	<th>Category</th>
+                                    	<th>Amount</th>
+                                    	<th>Account</th>
+                                    	<th>Date</th>
+                                    </thead>
+                                    <tbody  >
+                                      <c:forEach var="expense" items="${requestScope.expenses }">
+                                          <tr >
+                                            <td>${expense.getId() }</td>
+                                        	<td>${expense.getCategory().getCategory() }</td>
+                                        	<td>-<a style="color:red">${expense.getAmount()}</a></td>
+                                        	<td>${expense.getAccount().getName()}-${expense.getCurrency().getType().toString() }</td>
+                                        	<td>${expense.getDate()}</td>
+                                         <tr>	
+                                      </c:forEach>
+                                    
+                                    </tbody>
+                                </table>
+
+                            </div> 
+                          </div> 
+                    </div>
+
+
+                     <div class="col-md-6">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Striped Table with Hover</h4>
-                                <p class="category">Here is a subtitle for this table</p>
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-hover table-striped">
+                                <h4 class="title" style="color:green">Filter for all Incomes</h4>
+                                
+                                
+                                <form>
+                                            <p>
+                                             <a style="color:purple"> <b> Begin-></b></a>
+                                             <a style="color:purple"> <b> End</b></a>
+                                             </p>
+			                                   <input type="date"  name="begin"   style="font-size: 130%;"> 
+			                              
+			                                
+			                                  
+			                                   <input   type="date"  name="end"   style="font-size: 130%;" > 
+			                                   <button class=" btn  btn-success ">Show</button>
+                                
+                                </form>
+                                </div>
+                           
+                            <div class="content table-responsive">
+                                <table class="table table-responsive table-hover flexy" >
                                     <thead>
                                         <th>ID</th>
-                                    	<th>Name</th>
-                                    	<th>Salary</th>
-                                    	<th>Country</th>
-                                    	<th>City</th>
+                                    	<th>Category</th>
+                                    	<th>Amount</th>
+                                    	<th>Account</th>
+                                    	<th>Date</th>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                        	<td>1</td>
-                                        	<td>Dakota Rice</td>
-                                        	<td>$36,738</td>
-                                        	<td>Niger</td>
-                                        	<td>Oud-Turnhout</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>2</td>
-                                        	<td>Minerva Hooper</td>
-                                        	<td>$23,789</td>
-                                        	<td>Curaçao</td>
-                                        	<td>Sinaai-Waas</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>3</td>
-                                        	<td>Sage Rodriguez</td>
-                                        	<td>$56,142</td>
-                                        	<td>Netherlands</td>
-                                        	<td>Baileux</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>4</td>
-                                        	<td>Philip Chaney</td>
-                                        	<td>$38,735</td>
-                                        	<td>Korea, South</td>
-                                        	<td>Overland Park</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>5</td>
-                                        	<td>Doris Greene</td>
-                                        	<td>$63,542</td>
-                                        	<td>Malawi</td>
-                                        	<td>Feldkirchen in Kärnten</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>6</td>
-                                        	<td>Mason Porter</td>
-                                        	<td>$78,615</td>
-                                        	<td>Chile</td>
-                                        	<td>Gloucester</td>
-                                        </tr>
+                                    <tbody  >
+                                      <c:forEach var="expense" items="${requestScope.expenses }">
+                                          <tr>
+                                            <td>${expense.getId() }</td>
+                                        	<td>${expense.getCategory().getCategory() }</td>
+                                        	<td>+<a style="color:green">${expense.getAmount()}</a></td>
+                                        	<td>${expense.getAccount().getName()}-${expense.getCurrency().getType().toString() }</td>
+                                        	<td>${expense.getDate()}</td>
+                                         <tr>	
+                                      </c:forEach>
+                                    
                                     </tbody>
                                 </table>
-
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-md-12">
-                        <div class="card card-plain">
+                    
+                    <div class="col-md-6">
+                        <div class="card">
                             <div class="header">
-                                <h4 class="title">Table on Plain Background</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title" style="color:red">Filter for all Expenses by account</h4>
+                                
+                                     
+                            <form>
+                            <div class="row">
+                                        <div class="col-md-4">
+                                        <label><a style="color:purple"> <b>Account</b></a></label>
+                                            <div class="form-group">
+                                          
+                                                <select  class="col-md-11" name="accountId">
+			                                       
+					                                <c:forEach var="account" items="${requestScope.accounts }">
+					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
+					                                
+					                               </c:forEach>
+			                                   
+			                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label><a style="color:purple"> <b>Begin</b></a></label>
+                                                  <input type="date"  name="begin"   style="font-size: 130%;"> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                              <label>  <a style="color:purple"> <b>End</b></a></label>
+                                                 <input   type="date"  name="end"   style="font-size: 130%;" > 
+                                            </div>
+                                        </div>
+                                    </div>
+                                      <button class=" btn  btn-danger ">Show </button>
+                                    </form>
+                                
+                                
+                                
                             </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-hover">
+                            <div class="content table-responsive">
+                                <table class="table table-responsive table-hover flexy" >
                                     <thead>
                                         <th>ID</th>
-                                    	<th>Name</th>
-                                    	<th>Salary</th>
-                                    	<th>Country</th>
-                                    	<th>City</th>
+                                    	<th>Category</th>
+                                    	<th>Amount</th>
+                                    	<th>Account</th>
+                                    	<th>Date</th>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                        	<td>1</td>
-                                        	<td>Dakota Rice</td>
-                                        	<td>$36,738</td>
-                                        	<td>Niger</td>
-                                        	<td>Oud-Turnhout</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>2</td>
-                                        	<td>Minerva Hooper</td>
-                                        	<td>$23,789</td>
-                                        	<td>Curaçao</td>
-                                        	<td>Sinaai-Waas</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>3</td>
-                                        	<td>Sage Rodriguez</td>
-                                        	<td>$56,142</td>
-                                        	<td>Netherlands</td>
-                                        	<td>Baileux</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>4</td>
-                                        	<td>Philip Chaney</td>
-                                        	<td>$38,735</td>
-                                        	<td>Korea, South</td>
-                                        	<td>Overland Park</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>5</td>
-                                        	<td>Doris Greene</td>
-                                        	<td>$63,542</td>
-                                        	<td>Malawi</td>
-                                        	<td>Feldkirchen in Kärnten</td>
-                                        </tr>
-                                        <tr>
-                                        	<td>6</td>
-                                        	<td>Mason Porter</td>
-                                        	<td>$78,615</td>
-                                        	<td>Chile</td>
-                                        	<td>Gloucester</td>
-                                        </tr>
+                                    <tbody  >
+                                      <c:forEach var="expense" items="${requestScope.expenses }">
+                                          <tr>
+                                            <td>${expense.getId() }</td>
+                                        	<td>${expense.getCategory().getCategory() }</td>
+                                        	<td>-<a style="color:red">${expense.getAmount()}</a></td>
+                                        	<td>${expense.getAccount().getName()}-${expense.getCurrency().getType().toString() }</td>
+                                        	<td>${expense.getDate()}</td>
+                                         <tr>	
+                                      </c:forEach>
+                                    
                                     </tbody>
                                 </table>
 
                             </div>
                         </div>
                     </div>
+                    
+                    
+                     <div class="col-md-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title" style="color:green">Filter for all Incomes by account</h4>
+                                
+                            <form>
+                            <div class="row">
+                                        <div class="col-md-4">
+                                        <label><a style="color:purple"> <b>Account</b></a></label>
+                                            <div class="form-group">
+                                          
+                                                <select  class="col-md-11" name="accountId">
+			                                       
+					                                <c:forEach var="account" items="${requestScope.accounts }">
+					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
+					                                
+					                               </c:forEach>
+			                                   
+			                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label><a style="color:purple"> <b>Begin</b></a></label>
+                                                  <input type="date"  name="begin"   style="font-size: 130%;"> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                              <label>  <a style="color:purple"> <b>End</b></a></label>
+                                                 <input   type="date"  name="end"   style="font-size: 130%;" > 
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <button class=" btn  btn-success">Show</button>
+                                    </form>
+                                   </div>
+                            <div class="content table-responsive">
+                                <table class="table table-hover flexy" >
+                                    <thead>
+                                        <th>ID</th>
+                                    	<th>Category</th>
+                                    	<th>Amount</th>
+                                    	<th>Account</th>
+                                    	<th>Date</th>
+                                    </thead>
+                                    <tbody  >
+                                      <c:forEach var="expense" items="${requestScope.expenses }">
+                                          <tr >
+                                            <td>${expense.getId() }</td>
+                                        	<td>${expense.getCategory().getCategory() }</td>
+                                        	<td>+<a style="color:green">${expense.getAmount()}</a></td>
+                                        	<td>${expense.getAccount().getName()}-${expense.getCurrency().getType().toString() }</td>
+                                        	<td>${expense.getDate()}</td>
+                                         <tr>	
+                                      </c:forEach>
+                                    
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    
 
 
                 </div>
@@ -356,6 +426,18 @@
 
     </div>
 </div>
+
+
+<style>
+
+.flexy {
+            display:block;
+            max-height: 350px;
+            overflow: auto;
+        }
+
+
+</style>
 
 
 </body>
