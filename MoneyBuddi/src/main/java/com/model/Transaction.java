@@ -43,6 +43,12 @@ public abstract class Transaction {
 		this(amount,currency,account,date,category,type);
 		this.setId(id);
 	}
+	
+	public Transaction(double amount, Category category, TransactionType type)throws InvalidDataException {
+		this.setAmount(amount);
+		this.setCategory(category);
+		this.setType(type);
+	}
 
 	//=====getters
 

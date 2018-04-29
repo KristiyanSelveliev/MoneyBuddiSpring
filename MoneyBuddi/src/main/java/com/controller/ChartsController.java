@@ -43,8 +43,6 @@ public class ChartsController {
 	
 	@RequestMapping(value = "/showCharts", method = RequestMethod.GET)
 	public String transactionsInPercents(HttpSession session, HttpServletRequest request) {
-
-		User u = (User) request.getSession().getAttribute("user");
 		try {
 			// get account id
 			long accountId=Long.parseLong(request.getParameter("accountId"));
@@ -110,5 +108,5 @@ public class ChartsController {
 		}
 
 	}
-
+	
 }

@@ -3,6 +3,8 @@ package com.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.sql.rowset.spi.SyncProvider;
+
 import com.exceptions.InvalidDataException;
 
 public class Income extends Transaction{
@@ -19,5 +21,8 @@ public class Income extends Transaction{
 		
 	}
 	
+	public Income(double amount, Category category)throws InvalidDataException {
+		super(amount,category,TransactionType.INCOME);
+	}
 
 }

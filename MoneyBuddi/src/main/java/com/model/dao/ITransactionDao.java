@@ -24,4 +24,7 @@ public interface ITransactionDao {
 			long accountId) throws Exception;
 	ArrayList<Transaction> getExpenseByAccountFromToDate(LocalDate from, LocalDate to,
 			long accountId) throws Exception;
+	
+	ArrayList<Transaction> getShortIncomeByAccountFromToDate(LocalDate from, LocalDate to,
+			long accountId) throws Exception;
 }

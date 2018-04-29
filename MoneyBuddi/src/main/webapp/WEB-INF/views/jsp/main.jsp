@@ -33,7 +33,8 @@
 		<button type="button" onclick="location.href='showIncome'" style="color:lightgreen; background-color:green">Income</button>
 		<button type="button" onclick="location.href='showExpense'" style="background-color:red;color:pink">Expense</button>
 		<button type="button" onclick="location.href='showMixed'" style="background-color:#FF338A;color:black">Mixed</button>
-		<button type="button" onclick="location.href='charts'"">Charts</button>
+		<button type="button" onclick="location.href='charts'"">Statistics</button>
+		<button type="button" onclick="location.href='donutcharts'"">Donut Charts</button>
 	</div><br>
 	
 	
