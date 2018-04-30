@@ -159,33 +159,33 @@
                     <div class="col-md-6">
                        <div class="card"> 
                             <div class="header">
-                                <h4 class="title" style="color:red">Filter for all expenses</h4>
+                                <h4 class="title" style="color:red">Filter for Expenses</h4>
                                 
-                                <form>
+                                
                                           
                                              <p>
                                              <a style="color:purple"> <b> Begin-></b></a>
                                              <a style="color:purple"> <b> End</b></a>
                                              </p>
-			                                   <input type="date"  name="begin"   style="font-size: 130%;"> 
+			                                   <input id="begin1" type="date"  name="begin"   style="font-size: 130%;"> 
 			                           
-			                                   <input   type="date"  name="end"   style="font-size: 130%;" > 
+			                                   <input  id="end1" type="date"  name="end"   style="font-size: 130%;" > 
 			                                   
-                                         <button class=" btn  btn-danger ">Show</button>
-                                </form>
+                                         <button onclick="fillTable1()" class=" btn  btn-danger ">Show</button>
+                               
                                
                                 
                             </div>
                              <div class="content table-responsive">  
-                                <table class=" table table-responsive table-hover flexy" >
-                                    <thead >
+                                <table id="table1" class=" table table-responsive table-hover flexy" >
+                                    <tr >
                                         <th>ID</th>
                                     	<th>Category</th>
                                     	<th>Amount</th>
                                     	<th>Account</th>
                                     	<th>Date</th>
-                                    </thead>
-                                    <tbody  >
+                                    </tr>
+                                    <tbody id="body1" >
                                       <c:forEach var="expense" items="${requestScope.expenses }">
                                           <tr >
                                             <td>${expense.getId() }</td>
@@ -207,34 +207,34 @@
                      <div class="col-md-6">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title" style="color:green">Filter for all Incomes</h4>
+                                <h4 class="title" style="color:green">Filter for Incomes</h4>
                                 
                                 
-                                <form>
+                               
                                             <p>
                                              <a style="color:purple"> <b> Begin-></b></a>
                                              <a style="color:purple"> <b> End</b></a>
                                              </p>
-			                                   <input type="date"  name="begin"   style="font-size: 130%;"> 
+			                                   <input id="begin2" type="date"  name="begin"   style="font-size: 130%;"> 
 			                              
 			                                
 			                                  
-			                                   <input   type="date"  name="end"   style="font-size: 130%;" > 
-			                                   <button class=" btn  btn-success ">Show</button>
+			                                   <input id="end2"  type="date"  name="end"   style="font-size: 130%;" > 
+			                                   <button onclick="fillTable2()" class=" btn  btn-success ">Show</button>
                                 
-                                </form>
+                              
                                 </div>
                            
                             <div class="content table-responsive">
-                                <table class="table table-responsive table-hover flexy" >
-                                    <thead>
+                                <table id="table2" class="table table-responsive table-hover flexy" >
+                                    <tr>
                                         <th>ID</th>
                                     	<th>Category</th>
                                     	<th>Amount</th>
                                     	<th>Account</th>
                                     	<th>Date</th>
-                                    </thead>
-                                    <tbody  >
+                                    </tr>
+                                    <tbody id="body2" >
                                       <c:forEach var="expense" items="${requestScope.expenses }">
                                           <tr>
                                             <td>${expense.getId() }</td>
@@ -255,16 +255,16 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title" style="color:red">Filter for all Expenses by account</h4>
+                                <h4 class="title" style="color:red">Filter for  Expenses by account</h4>
                                 
                                      
-                            <form>
+                            
                             <div class="row">
                                         <div class="col-md-4">
                                         <label><a style="color:purple"> <b>Account</b></a></label>
                                             <div class="form-group">
                                           
-                                                <select  class="col-md-11" name="accountId">
+                                                <select id="ddlViewBy1"  class="col-md-11" name="accountId">
 			                                       
 					                                <c:forEach var="account" items="${requestScope.accounts }">
 					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
@@ -274,35 +274,35 @@
 			                                  </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
+                                        <div >
+                                            <div >
                                                 <label><a style="color:purple"> <b>Begin</b></a></label>
-                                                  <input type="date"  name="begin"   style="font-size: 130%;"> 
+                                                  <input id="begin3" type="date"  name="begin"   style="font-size: 130%;"> 
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                              <label>  <a style="color:purple"> <b>End</b></a></label>
-                                                 <input   type="date"  name="end"   style="font-size: 130%;" > 
+                                        <div >
+                                            <div >
+                                              <label>  <a style="color:purple"> <b>End&nbsp&nbsp&nbsp&nbsp</b></a></label>
+                                                 <input id="end3"   type="date"  name="end"   style="font-size: 130%;" > 
                                             </div>
                                         </div>
                                     </div>
-                                      <button class=" btn  btn-danger ">Show </button>
-                                    </form>
+                                      <button onclick="fillTable3()" class=" btn  btn-danger ">Show </button>
+                                   
                                 
                                 
                                 
                             </div>
                             <div class="content table-responsive">
-                                <table class="table table-responsive table-hover flexy" >
-                                    <thead>
+                                <table id="table3" class="table table-responsive table-hover flexy" >
+                                    <tr>
                                         <th>ID</th>
                                     	<th>Category</th>
                                     	<th>Amount</th>
                                     	<th>Account</th>
                                     	<th>Date</th>
-                                    </thead>
-                                    <tbody  >
+                                    </tr>
+                                    <tbody id="body3"  >
                                       <c:forEach var="expense" items="${requestScope.expenses }">
                                           <tr>
                                             <td>${expense.getId() }</td>
@@ -324,15 +324,15 @@
                      <div class="col-md-6">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title" style="color:green">Filter for all Incomes by account</h4>
+                                <h4 class="title" style="color:green">Filter for  Incomes by account</h4>
                                 
-                            <form>
-                            <div class="row">
+                            
+                                     <div class="row">
                                         <div class="col-md-4">
                                         <label><a style="color:purple"> <b>Account</b></a></label>
-                                            <div class="form-group">
+                                            <div class="form-group" >
                                           
-                                                <select  class="col-md-11" name="accountId">
+                                                <select id="ddlViewBy" class="col-md-11" name="accountId">
 			                                       
 					                                <c:forEach var="account" items="${requestScope.accounts }">
 					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
@@ -342,32 +342,32 @@
 			                                  </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
+                                        <div >
+                                            <div  >
                                                 <label><a style="color:purple"> <b>Begin</b></a></label>
-                                                  <input type="date"  name="begin"   style="font-size: 130%;"> 
+                                                  <input id="begin4" type="date"  name="begin"   style="font-size: 130%;"> 
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                              <label>  <a style="color:purple"> <b>End</b></a></label>
-                                                 <input   type="date"  name="end"   style="font-size: 130%;" > 
+                                        <div >
+                                            <div  >
+                                              <label>  <a style="color:purple"> <b>End&nbsp&nbsp&nbsp&nbsp</b></a></label>
+                                                 <input id="end4"  type="date"  name="end"   style="font-size: 130%;" > 
                                             </div>
                                         </div>
-                                    </div>
-                                     <button class=" btn  btn-success">Show</button>
-                                    </form>
+                                      </div>
+                                     <button onclick="fillTable4()"  class=" btn  btn-success">Show</button>
+                                   
                                    </div>
                             <div class="content table-responsive">
-                                <table class="table table-hover flexy" >
-                                    <thead>
+                                <table id="table4" class="table table-hover flexy" >
+                                    <tr>
                                         <th>ID</th>
                                     	<th>Category</th>
                                     	<th>Amount</th>
                                     	<th>Account</th>
                                     	<th>Date</th>
-                                    </thead>
-                                    <tbody  >
+                                    </tr>
+                                    <tbody id="body4" >
                                       <c:forEach var="expense" items="${requestScope.expenses }">
                                           <tr >
                                             <td>${expense.getId() }</td>
@@ -391,39 +391,7 @@
             </div>
         </div>
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
-            </div>
-        </footer>
-
-
+        
     </div>
 </div>
 
@@ -441,6 +409,196 @@
 
 
 </body>
+
+<script >
+function fillTable1(){
+	
+	var pole=document.getElementById("begin1");
+	var begin=pole.value;
+	
+     pole=document.getElementById("end1");
+	var end=pole.value;
+	
+	var request=new XMLHttpRequest();
+	request.open("GET","userExpense?begin=" +begin+"&end="+end);
+	request.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			var result = this.responseText;
+			result = JSON.parse(result);
+			var body = document.getElementById("body1");
+			body.innerHTML = "";
+			for(var i=0;i<result.length;i++){
+				var tr="<tr>";
+				tr+='<td>'+result[i]['id']+'</td>';
+				
+				tr+='<td>'+result[i]['category']+'</td>';
+				
+				tr+='<td> -<a style="color:red">'+result[i]['amount']+'</a></td>';
+
+				tr+='<td>'+result[i]['account']+'</td>';
+				
+				tr+='<td>'+result[i]['date']+'</td>';
+				tr+="</tr>";
+				body.innerHTML+=tr;
+				
+			}
+			
+			
+			
+			
+		}
+	}
+	request.send();
+	}
+	
+function fillTable2(){
+	
+	var pole=document.getElementById("begin2");
+	var begin=pole.value;
+	
+     pole=document.getElementById("end2");
+	var end=pole.value;
+	
+	var request=new XMLHttpRequest();
+	request.open("GET","userIncome?begin=" +begin+"&end="+end);
+	request.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			var result = this.responseText;
+			result = JSON.parse(result);
+			var body = document.getElementById("body2");
+			body.innerHTML = "";
+			for(var i=0;i<result.length;i++){
+				var tr="<tr>";
+				tr+='<td>'+result[i]['id']+'</td>';
+				
+				tr+='<td>'+result[i]['category']+'</td>';
+				
+				tr+='<td> +<a style="color:green">'+result[i]['amount']+'</a></td>';
+
+				tr+='<td>'+result[i]['account']+'</td>';
+				
+				tr+='<td>'+result[i]['date']+'</td>';
+				
+				tr+="</tr>";
+				
+				body.innerHTML+=tr;
+				
+			}
+			
+			
+			
+			
+		}
+	}
+	request.send();
+	}
+	
+	
+	
+function fillTable3(){
+	
+	var e = document.getElementById("ddlViewBy1");
+	var accountId = e.options[e.selectedIndex].value;
+	console.log(accountId);
+	
+	var pole=document.getElementById("begin3");
+	var begin=pole.value;
+	
+     pole=document.getElementById("end3");
+	var end=pole.value;
+	
+	var request=new XMLHttpRequest();
+	request.open("GET","accExpense?begin=" +begin+"&end="+end+"&id="+accountId);
+	request.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			var result = this.responseText;
+			result = JSON.parse(result);
+			var body = document.getElementById("body3");
+			body.innerHTML ="";
+			for(var i=0;i<result.length;i++){
+				var tr="<tr>";
+				tr+='<td>'+result[i]['id']+'</td>';
+				
+				tr+='<td>'+result[i]['category']+'</td>';
+				
+				tr+='<td>- <a style="color:red">'+result[i]['amount']+'</a></td>';
+
+				tr+='<td>'+result[i]['account']+'</td>';
+				
+				tr+='<td>'+result[i]['date']+'</td>';
+				
+				tr+="</tr>";
+				
+				body.innerHTML+=tr;
+			
+			}
+			
+			
+			
+			
+		}
+	}
+	request.send();
+	}
+
+
+
+
+function fillTable4(){
+	
+	var e = document.getElementById("ddlViewBy");
+	var accountId = e.options[e.selectedIndex].value;
+	console.log(accountId);
+	
+	var pole=document.getElementById("begin4");
+	var begin=pole.value;
+	
+     pole=document.getElementById("end4");
+	var end=pole.value;
+	
+	var request=new XMLHttpRequest();
+	request.open("GET","accIncome?begin=" +begin+"&end="+end+"&id="+accountId);
+	request.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			var result = this.responseText;
+			result = JSON.parse(result);
+			var body = document.getElementById("body4");
+			body.innerHTML ="";
+			for(var i=0;i<result.length;i++){
+				var tr="<tr>";
+				tr+='<td>'+result[i]['id']+'</td>';
+				
+				tr+='<td>'+result[i]['category']+'</td>';
+				
+				tr+='<td> +<a style="color:green">'+result[i]['amount']+'</a></td>';
+
+				tr+='<td>'+result[i]['account']+'</td>';
+				
+				tr+='<td>'+result[i]['date']+'</td>';
+				
+				tr+="</tr>";
+				
+				body.innerHTML+=tr;
+				
+			}
+			
+			
+			
+			
+		}
+	}
+	request.send();
+	}
+
+
+
+</script>
+
+
+
+
+
+
 
     <!--   Core JS Files   -->
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>

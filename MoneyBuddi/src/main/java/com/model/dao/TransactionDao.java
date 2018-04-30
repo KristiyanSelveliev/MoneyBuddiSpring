@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -297,7 +298,7 @@ public class TransactionDao implements ITransactionDao {
 						+ "AND account_id=? ")) {
 			ps.setDate(1, Date.valueOf(from));
 			ps.setDate(2, Date.valueOf(to));
-			ps.setInt(3, 2);
+			ps.setInt(3, transactionTypeDAO.getIdByTranscationType(TransactionType.EXPENSE));
 			ps.setLong(4, accountId);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -327,7 +328,7 @@ public class TransactionDao implements ITransactionDao {
 						+ "")) {
 			ps.setDate(1, Date.valueOf(from));
 			ps.setDate(2, Date.valueOf(to));
-			ps.setInt(3, 1);
+			ps.setInt(3, transactionTypeDAO.getIdByTranscationType(TransactionType.INCOME));
 			ps.setLong(4, accountId);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -355,7 +356,7 @@ public class TransactionDao implements ITransactionDao {
 					+ "")) {
 		ps.setDate(1, Date.valueOf(from));
 		ps.setDate(2, Date.valueOf(to));
-		ps.setInt(3, 1);
+		ps.setInt(3, transactionTypeDAO.getIdByTranscationType(TransactionType.INCOME));
 		ps.setLong(4, accountId);
 		try (ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
@@ -367,6 +368,79 @@ public class TransactionDao implements ITransactionDao {
 
 	}
 	return transactions;
+	}
+
+
+	@Override
+	public ArrayList<Transaction> getIncomeByUserFromToDate(LocalDate from, LocalDate to, long userId)
+			throws Exception {
+		ArrayList<Transaction> transactions = new ArrayList();
+		try (PreparedStatement ps =db.getConnection().prepareStatement(
+				"SELECT id,amount,date,currency_id,account_id,category_id,"
+		                         + "transaction_type_id FROM transactions "
+						         + "WHERE (date BETWEEN ? AND ?) "
+						         + "AND account_id in(select id FROM accounts WHERE user_id=?)"
+						         + "AND transaction_type_id=? ")){
+			
+			ps.setDate(1, Date.valueOf(from));
+			ps.setDate(2, Date.valueOf(to));
+			ps.setLong(3, userId);
+			ps.setInt(4, transactionTypeDAO.getIdByTranscationType(TransactionType.INCOME));
+			
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+						transactions.add(new Income(
+								rs.getInt("id"), 
+								rs.getDouble("amount"),
+								currencyDAO.getCurrencyById(rs.getInt("currency_id")),
+								accountDAO.getAccountById(rs.getInt("account_id")),
+								rs.getDate("date").toLocalDate(),
+								categoryDAO.getCategoryByID(rs.getInt("category_id"))));
+
+				}
+			}
+			
+		}
+		
+		return transactions;
+	}
+
+
+	@Override
+	public ArrayList<Transaction> getExpenseByUserFromToDate(LocalDate from, LocalDate to, long userId)
+			throws Exception {
+		ArrayList<Transaction> transactions = new ArrayList();
+		try (PreparedStatement ps =db.getConnection().prepareStatement(
+				"SELECT id,amount,date,currency_id,account_id,category_id,"
+		                         + "transaction_type_id FROM transactions "
+						         + "WHERE (date BETWEEN ? AND ?) "
+						         + "AND account_id in(select id FROM accounts WHERE user_id=?)"
+						         + "AND transaction_type_id=? ")){
+			
+			ps.setDate(1, Date.valueOf(from));
+			ps.setDate(2, Date.valueOf(to));
+			ps.setLong(3, userId);
+			ps.setInt(4, transactionTypeDAO.getIdByTranscationType(TransactionType.EXPENSE));
+			
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+						transactions.add(new Expense(
+								rs.getInt("id"), 
+								rs.getDouble("amount"),
+								currencyDAO.getCurrencyById(rs.getInt("currency_id")),
+								accountDAO.getAccountById(rs.getInt("account_id")),
+								rs.getDate("date").toLocalDate(),
+								categoryDAO.getCategoryByID(rs.getInt("category_id"))));
+
+				}
+			}
+			
+		}
+		
+		return transactions;
+		
 	}
 	
 }
