@@ -166,7 +166,7 @@
 			                             		<div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Name </a>
 			                                   </div>
-			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" value="account name"> 
+			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" placeholder="Account name"> 
 			                                       
 			                                   <div class="row">
 			                                    <a style="font-size: 140%;" class="col-md-10" >Currencies </a>
@@ -183,7 +183,7 @@
 			                                   <div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Balance </a>
 			                                   </div>
-			                                   <input type="number"  name="balance" class="form-control"  style="font-size: 130%;" value="100"> 
+			                                   <input type="number"  name="balance" class="form-control"  style="font-size: 130%;" placeholder="Balance"> 
 			                                   
 			                                  <button type="submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Create Account</button>
                         					</form>
@@ -199,12 +199,12 @@
                                       
                                       <input type="number" name="balance" class="form-control"  style="font-size: 130%; "value="${account.balance}">
                                       <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
-                                      <button type="button" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                      <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>
                                     </div>
                                      <form action=deleteAccount method="post">
                                      <input type="hidden" name="id" value="${account.id}">
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
+                                    <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
                                 </div>
                                    

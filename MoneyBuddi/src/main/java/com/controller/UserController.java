@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.exceptions.InvalidDataException;
 import com.model.Currency;
@@ -124,12 +125,18 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/updateProfile" ,method=RequestMethod.POST)
-	public String updateProfile(HttpSession session) {
-		//TODO update profile
+	public String updateProfile(HttpSession session,
+			@RequestParam String email,
+			@RequestParam int age) throws InvalidDataException,SQLException {
+		
+		User user=(User)session.getAttribute("user");
+		user.setEmail(email);
+		user.setAge(age);
+		
+		userDAO.updateUser(user);
+		
 		return "profile";
 	}
-	
-	
-	
+
 	
 }

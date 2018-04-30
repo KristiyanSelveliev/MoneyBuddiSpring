@@ -166,13 +166,13 @@
 			                             		<div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Category Title </a>
 			                                   </div>
-			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" value="title"> 
+			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" placeholder="Category title"> 
 			                                       
 			                                   <div class="row">
 			                                    <a style="font-size: 140%;" class="col-md-10" >Type </a>
 			                                    </div>
 			                                  
-			                                   <select class="col-md-8" name="type" value="type">
+			                                   <select class="col-md-8" name="type" placeholder="Category type">
 			                                
 					                                <c:forEach var="type" items="${requestScope.types }">
 					                                 <option>${ type.toString()}  </option>

@@ -12,7 +12,7 @@ public interface IBudgetDAO {
 	
 	void updateBudget(Budget budget) throws SQLException;
 	
-	void deleteBudget(Budget budget) throws SQLException;
+	void deleteBudget(int id) throws SQLException;
 	
 	Budget getBudgetById(long id)throws Exception;
 	

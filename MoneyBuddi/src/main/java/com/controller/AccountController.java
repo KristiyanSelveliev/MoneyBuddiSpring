@@ -67,19 +67,20 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value= "/updateAccount", method = RequestMethod.POST)
-	public String updateAccount(@RequestParam int  id) throws SQLException, InvalidDataException {
+	public String updateAccount(@RequestParam int  id, 
+			@RequestParam double balance) throws SQLException, InvalidDataException {
 		//get account by id
+		Account account=accountDao.getAccountById(id);
+		account.setBalance(balance);
+		accountDao.updateAccount(account);
 		
-		
-		//request.setAttribute("budgets",budgets);
-		
-		return "createAccount";
+		return "redirect:/accounts";
 	}
 	
 	@RequestMapping(value= "/deleteAccount", method = RequestMethod.POST)
 	public String deleteAccount(@RequestParam int id) throws SQLException, InvalidDataException {
 		accountDao.deleteAccount(id);
 		
-		return "createAccount";
+		return "redirect:/accounts";
 	}
 }

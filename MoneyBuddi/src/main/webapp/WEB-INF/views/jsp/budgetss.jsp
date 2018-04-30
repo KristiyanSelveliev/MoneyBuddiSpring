@@ -210,18 +210,18 @@
                                 
                                    
                                     <div class="font-icon-detail">
-                                       <form action=updateBudget method="post">
+                                       <form action=budgetUpdate method="post">
                                        <input type="hidden" name="id" value="${budget.getId() }">
                                        <a class="text-muted" style="font-size: 130%;">${budget.getCategory().getCategory()}</a>
                                       
                                       <input type="number" name="amount" class="form-control"  style="font-size: 130%; "value="${budget.getAmount()}">
                                       <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
-                                      <button type="button" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                      <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>
                                     </div>
-                                     <form action=deleteBudget method="post">
+                                     <form action=budgetDelete method="post">
                                      <input type="hidden" name="id" value="${budget.getId() }">
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
+                                    <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
                                 </div>
 								
