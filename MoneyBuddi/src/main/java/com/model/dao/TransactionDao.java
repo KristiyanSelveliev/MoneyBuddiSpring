@@ -176,7 +176,7 @@ public class TransactionDao implements ITransactionDao {
 						+ "Where account_id in(select id from accounts where user_id=?)"
 						+ "AND transaction_type_id=?")) {
 			ps.setLong(1, u.getId());
-			ps.setInt(2, 2);
+			ps.setInt(2, transactionTypeDAO.getIdByTranscationType(TransactionType.EXPENSE));
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
@@ -199,7 +199,7 @@ public class TransactionDao implements ITransactionDao {
 						+ "Where account_id in(select id from accounts where user_id=?)"
 						+ "AND transaction_type_id=?")) {
 			ps.setLong(1, u.getId());
-			ps.setInt(2, 1);
+			ps.setInt(2, transactionTypeDAO.getIdByTranscationType(TransactionType.INCOME));
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),

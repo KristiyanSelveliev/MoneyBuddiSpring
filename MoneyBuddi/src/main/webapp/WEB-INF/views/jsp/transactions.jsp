@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,12 +30,13 @@
 
     <script type="text/javascript" src="js/Chart.js"></script>
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="js/Chart.js"></script>
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="css/pe-icon-7-stroke.css" rel="stylesheet" />
-
+ 
 </head>
 <body>
 
@@ -169,7 +171,7 @@
                 </div>
             </div>
         </nav>
-
+ 
 
         <div class="content">
             <div class="container-fluid">
@@ -182,28 +184,41 @@
                                 <p class="category">Last Campaign Performance</p>
                             </div>
                             <div class="content">
-                                <div >
-                                  <canvas id="mycanvas" ></canvas>
-															
+                            
+                               
+                                  <div>
+                                  
+                                  
+                                  
+                                  <canvas id="mycanvas" width="400" height="300" ></canvas>
+													
+													
 															<script>
-													var ctx = document.getElementById("mycanvas");
-													ctx.height = 350;
-													ctx.width=350;
+															var canvas = document.getElementById('mycanvas');
+															var ctx = canvas.getContext('2d');
+															ctx.height = 350;
+															ctx.width=350;
+															
+															
+													
+													
+													 
 													var myChart = new Chart(ctx, {
 													    type: 'doughnut',
 													    data: {
 													        labels: ["Income","Expense"],
+													        indexLabelPlacement: "inside",
 													        datasets: [{
 													            label: '# of Votes',
-													            data: [5, 19],
+													            data: [Math.round(${requestScope.totalIncome }* 100) / 100, Math.round(${requestScope.totalExpense }* 100) / 100 ],
 													            backgroundColor: [
 													            	'rgba(0,255,0,0.8)',
-													            	 '#e94b3c',
+													            	'rgba(219,103,103,0.8)',
 													                
 													            ],
 													            borderColor: [
-													                'rgba(0,255,0,1)',
-													            	 '#e94b3c',
+													            	'rgba(238,223,223,0.8)',
+													                'rgba(238,223,223,0.8)',
 													                
 													            ],
 													            borderWidth: 2
@@ -222,19 +237,15 @@
 													    }
 													});
 													</script>
-													                                
-                                </div>
+													
+											</div>		                     
+                               
 
                                 <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Open
-                                        <i class="fa fa-circle text-danger"></i> Bounce
-                                        <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                    </div>
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                                    </div>
+                                    <h3> <b>Expense transactions count</b><a style="color:red; font-size:125%"> ${requestScope.numExpenses } </a></h5>
+                                    <h3> <b>Income transactions count&nbsp&nbsp</b><a style="color:green; font-size:125%"> ${requestScope.numIncomes } </a></h5>
+                                   
+                               
                                 </div>
                             </div>
                         </div>
@@ -448,7 +459,7 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>,  made with love for a better web
                 </p>
             </div>
         </footer>
@@ -458,6 +469,9 @@
 
 
 </body>
+
+
+
 
     <!--   Core JS Files   -->
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
@@ -478,21 +492,6 @@
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="js/demo.js"></script>
 
-	<script type="text/javascript">
-    	$(document).ready(function(){
-
-        	demo.initChartist();
-
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-
-            },{
-                type: 'info',
-                timer: 4000
-            });
-
-    	});
-	</script>
+	
 
 </html>
