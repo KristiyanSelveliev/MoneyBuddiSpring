@@ -59,7 +59,7 @@
                 <li >
                     <a href="profile">
                         <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
+                        <p>My Profile</p>
                     </a>
                 </li>
                 <li>
@@ -100,34 +100,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">User</a>
+                    <a class="navbar-brand" href="#">${sessionScope.user.username }</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-									<p class="hidden-lg hidden-md">
-										5 Notifications
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
+                      
                         <li>
                            <a href="">
                                 <i class="fa fa-search"></i>
@@ -135,7 +112,7 @@
                             </a>
                         </li>
                     </ul>
-
+                           
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                            <a href="">
@@ -145,19 +122,17 @@
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <p>
-										Dropdown
+										Actions
 										<b class="caret"></b>
 									</p>
 
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a href="transactions">Transactions</a></li>
+                                <li><a href="tables">Table List</a></li>
+                                <li><a href="accounts">Accounts</a></li>
+                                <li><a href="budgets">Budgets</a></li>
+                                <li><a href="categories">Categories</a></li>
                               </ul>
                         </li>
                         <li>
