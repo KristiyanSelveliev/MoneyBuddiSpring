@@ -2,6 +2,7 @@ package com.controller;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.model.Category;
 import com.model.Currency;
 import com.model.Expense;
 import com.model.Income;
+import com.model.Transaction;
 import com.model.Transaction.TransactionType;
 import com.model.User;
 import com.model.dao.AccountDao;
@@ -48,7 +50,39 @@ public class TransactionController {
 	
 	
 	@RequestMapping(value = "/transactions", method = RequestMethod.GET)
-    public String transactions() {
+    public String transactions(HttpSession session,HttpServletRequest request) throws Exception {
+		 User u=(User) session.getAttribute("user");
+		 
+		ArrayList<Transaction> expenses=transactionDao.getAllExpenseTransactions(u);
+		ArrayList<Transaction> incomes=transactionDao.getAllIncomeTransactions(u);
+		
+		double totalIncomeAmount = 0;
+		double totalExpenseAmount = 0;
+
+		//count number of all transactions
+		int transactionsCountIncome = 0;
+		int transactionsCountExpense = 0;
+		// income
+		for (Transaction t : incomes) {
+			
+			totalIncomeAmount += t.getAmount();
+			transactionsCountIncome++;
+		}
+		// expense
+		for (Transaction t : expenses) {
+			
+			totalExpenseAmount += t.getAmount();
+			transactionsCountExpense++;
+		}
+		double total=totalExpenseAmount+totalIncomeAmount;
+		
+		request.setAttribute("totalExpense",totalExpenseAmount/total);
+		request.setAttribute("totalIncome",totalIncomeAmount/total);
+		
+		
+		
+		request.setAttribute("numExpenses", transactionsCountExpense);
+		request.setAttribute("numIncomes", transactionsCountIncome);
 		
 		return "transactions";
 	}
