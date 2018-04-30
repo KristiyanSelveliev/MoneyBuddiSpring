@@ -94,9 +94,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="notifications.jsp">
+                    <a href="categories">
                         <i class="pe-7s-bell"></i>
-                        <p>Notifications</p>
+                        <p>Categories</p>
                     </a>
                 </li>
 				<li class="active-pro">
