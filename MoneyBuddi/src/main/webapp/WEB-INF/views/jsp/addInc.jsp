@@ -75,14 +75,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="typography.jsp">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
-                    </a>
-                </li>
-                <li>
                     <a href="accounts">
-                        <i class="pe-7s-users"></i>
+                        <i class="pe-7s-wallet"></i>
                         <p>Accounts</p>
                     </a>
                 </li>
@@ -94,14 +88,8 @@
                 </li>
                 <li>
                     <a href="categories">
-                        <i class="pe-7s-bell"></i>
+                        <i class="pe-7s-folder"></i>
                         <p>Categories</p>
-                    </a>
-                </li>
-				<li class="active-pro">
-                    <a href="upgrade.html">
-                        <i class="pe-7s-rocket"></i>
-                        <p>Upgrade to PRO</p>
                     </a>
                 </li>
             </ul>

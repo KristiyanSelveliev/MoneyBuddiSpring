@@ -71,7 +71,7 @@ public class UserController {
 
 			request.getSession().setAttribute("user", u);
 			request.getSession().setAttribute("logged", true);
-			return "main";
+			return "profile";
 		} else {
 			throw new InvalidDataException("invalid username or password");
 		}

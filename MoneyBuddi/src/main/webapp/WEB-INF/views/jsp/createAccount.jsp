@@ -65,20 +65,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="tablelist.jsp">
+                    <a href="tables">
                         <i class="pe-7s-note2"></i>
                         <p>Table List</p>
                     </a>
                 </li>
                 <li>
-                    <a href="typography.jsp">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
-                    </a>
-                </li>
-                <li>
                     <a href="accounts">
-                        <i class="pe-7s-users"></i>
+                        <i class="pe-7s-wallet"></i>
                         <p>Accounts</p>
                     </a>
                 </li>
@@ -90,14 +84,8 @@
                 </li>
                 <li>
                    <a href="categories">
-                        <i class="pe-7s-bell"></i>
+                        <i class="pe-7s-folder"></i>
                         <p>Categories</p>
-                    </a>
-                </li>
-				<li class="active-pro">
-                    <a href="upgrade.html">
-                        <i class="pe-7s-rocket"></i>
-                        <p>Upgrade to PRO</p>
                     </a>
                 </li>
             </ul>
@@ -180,7 +168,7 @@
 			                             		<div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Name </a>
 			                                   </div>
-			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;"> 
+			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" value="account name"> 
 			                                       
 			                                   <div class="row">
 			                                    <a style="font-size: 140%;" class="col-md-10" >Currencies </a>
