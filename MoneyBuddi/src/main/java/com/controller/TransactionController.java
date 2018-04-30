@@ -94,19 +94,15 @@ public class TransactionController {
 		// income
 		for (Transaction t : incomes) {
 			
-			totalIncomeAmount += t.getAmount();
+			
 			transactionsCountIncome++;
 		}
 		// expense
 		for (Transaction t : expenses) {
 			
-			totalExpenseAmount += t.getAmount();
+		
 			transactionsCountExpense++;
 		}
-		double total=totalExpenseAmount+totalIncomeAmount;
-		
-		request.setAttribute("totalExpense",totalExpenseAmount/total);
-		request.setAttribute("totalIncome",totalIncomeAmount/total);
 		
 		request.setAttribute("numExpenses", transactionsCountExpense);
 		request.setAttribute("numIncomes", transactionsCountIncome);
@@ -116,6 +112,48 @@ public class TransactionController {
 		
 		return "transactions";
 	}
+	
+	@RequestMapping(value = "/transactions", method = RequestMethod.POST)
+    public String transactionsShow(
+    		     HttpSession session,
+    		     HttpServletRequest request,
+    		     @RequestParam String beginDate,
+    		     @RequestParam String endDate) throws Exception {
+		
+		 User u=(User) session.getAttribute("user");
+		 
+		ArrayList<Transaction> expenses=transactionDao.getAllExpenseTransactions(u);
+		ArrayList<Transaction> incomes=transactionDao.getAllIncomeTransactions(u);
+		
+		
+		
+		int transactionsCountIncome = 0;
+		int transactionsCountExpense = 0;
+		// income
+		for (Transaction t : incomes) {
+		
+			transactionsCountIncome++;
+		}
+		// expense
+		for (Transaction t : expenses) {
+			
+			transactionsCountExpense++;
+		}
+		
+		
+		request.setAttribute("numExpenses", transactionsCountExpense);
+		request.setAttribute("numIncomes", transactionsCountIncome);
+		
+		
+		request.setAttribute("statistics", this.getTransactionsForStatistics(u,LocalDate.parse(beginDate),LocalDate.parse(endDate)));
+		
+		
+		return "transactions";
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/addIncome", method = RequestMethod.GET)
     public String income(HttpSession session,HttpServletRequest request) throws Exception {
@@ -218,10 +256,12 @@ public class TransactionController {
 		 int incomes=0;
 		 int expenses=0;
 		 LocalDate currentDate=end;
+		 System.out.println( expenses=transactionDao.getExpenseByUserFromToDate(currentDate, currentDate, user.getId()).size());
 		 while(currentDate.isAfter(begin)) {
 			 expenses=transactionDao.getExpenseByUserFromToDate(currentDate, currentDate, user.getId()).size();
+			
 			 incomes=transactionDao.getIncomeByUserFromToDate(currentDate, currentDate,user.getId()).size();
-			 System.out.println(incomes+" "+expenses);
+			
 			transactionCount.put(currentDate, new MyEntry(incomes, expenses));
 			currentDate=currentDate.minusDays(1);
 			 

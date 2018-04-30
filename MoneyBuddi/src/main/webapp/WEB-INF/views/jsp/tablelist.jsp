@@ -158,7 +158,8 @@
                                 
                             </div>
                              <div class="content table-responsive">  
-                                <table id="table1" class=" table table-responsive table-hover flexy" >
+                               <div class="scroll1">
+                                <table id="table1" class=" table table-responsive table-hover " >
                                     <tr >
                                         <th>ID</th>
                                     	<th>Category</th>
@@ -179,7 +180,7 @@
                                     
                                     </tbody>
                                 </table>
-
+                               </div>
                             </div> 
                           </div> 
                     </div>
@@ -207,7 +208,8 @@
                                 </div>
                            
                             <div class="content table-responsive">
-                                <table id="table2" class="table table-responsive table-hover flexy" >
+                              <div class="scroll1">
+                                <table id="table2" class="table table-responsive table-hover" >
                                     <tr>
                                         <th>ID</th>
                                     	<th>Category</th>
@@ -228,6 +230,9 @@
                                     
                                     </tbody>
                                 </table>
+                                 
+                                </div>
+                                
                                 </div>
                             </div>
                         </div>
@@ -275,7 +280,8 @@
                                 
                             </div>
                             <div class="content table-responsive">
-                                <table id="table3" class="table table-responsive table-hover flexy" >
+                              <div class="scroll1">
+                                <table id="table3" class="table table-responsive table-hover" >
                                     <tr>
                                         <th>ID</th>
                                     	<th>Category</th>
@@ -296,7 +302,7 @@
                                     
                                     </tbody>
                                 </table>
-
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -340,7 +346,8 @@
                                    
                                    </div>
                             <div class="content table-responsive">
-                                <table id="table4" class="table table-hover flexy" >
+                                <div class="scroll1">
+                                <table id="table4" class="table table-hover " >
                                     <tr>
                                         <th>ID</th>
                                     	<th>Category</th>
@@ -361,7 +368,7 @@
                                     
                                     </tbody>
                                 </table>
-
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -384,6 +391,14 @@
             max-height: 350px;
             overflow: auto;
         }
+        
+ .scroll1 {
+      width=95%;
+      max-width:750px;
+      height:350px;
+      overflow-x:scroll;
+      
+}
 
 
 </style>

@@ -45,6 +45,8 @@
      <script src = "https://code.highcharts.com/modules/data.js"></script>
      
      
+     
+     
      <script type="text/javascript" src="js/Chart.js"></script>
 
 </head>
@@ -134,7 +136,7 @@
                                <p>Account</p>
                             </a>
                         </li>
-<<<<<<< HEAD
+
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <p>
@@ -151,9 +153,6 @@
                                 <li><a href="categories">Categories</a></li>
                               </ul>
                         </li>
-=======
-                       
->>>>>>> 1daf8a77df0388167b5eb375c4e8adfe0eb4ca23
                         <li>
                             <form action="logout" method="get">
                                 <button type="submit" class=" btn  btn-warning " > Log out</button>
@@ -203,7 +202,7 @@
 													        
 													        datasets: [{
 													            label: '# of Votes',
-													            data: [Math.round(${requestScope.totalIncome }* 100) / 100, Math.round(${requestScope.totalExpense }* 100) / 100 ],
+													            data: [${requestScope.numIncomes }, ${requestScope.numExpenses } ],
 													            backgroundColor: [
 													            	'rgba(32,175,221,0.8)',
 													            	'rgba(55,56,102,0.8)',
@@ -238,10 +237,16 @@
                             </div>
                         </div>
                     </div>
+                         <form action="transactions" method="POST">
+                         <input type="date" name=beginDate>
+                          <input type="date" name=endDate>
+                          <button type="submit">Show </button>
+                         </form>
 
                     <div class="col-md-7">
+                              
                       
-			                                <div id = "container" style = "width: 900px; height: 300px; margin: 0 auto"></div>
+			                                <div id = "container" style = " max-width:900px  width: 100%; height: 300px; margin: 0 auto"></div>
 											      <script language = "JavaScript">
 											         $(document).ready(function() {
 											            var data = {
@@ -262,7 +267,7 @@
 											            var tooltip = {
 											               formatter: function () {
 											                  return '<b>' + this.series.name + '</b><br/>' +
-											                     this.point.y + ' ' + this.point.name.toLowerCase();
+											                     this.point.y + ' ' + this.point.name;
 											               }
 											            };
 											            var credits = {
@@ -278,8 +283,8 @@
 											            $('#container').highcharts(json);
 											         });
 											      </script>
-											      
-											      <table id = "datatable"  class="table table-responsive table-hover">
+											      <div class="scroll1">
+											      <table id = "datatable"  class=" table table-hover scroll ">
 											         <thead>
 											            <tr>
 											                <td>Date</td>
@@ -291,7 +296,7 @@
 											         <tbody>
 											         <c:forEach  var="date" items="${requestScope.statistics.keySet() }">
 											               <tr>
-											                  <td>${date.toString()}</td>
+											                  <td>${date}</td>
 											                  <td>${requestScope.statistics.get(date).getIncomeAmount() }</td>
 											                  <td>${requestScope.statistics.get(date).getExpenseAmount() }</td>
 											         
@@ -300,7 +305,7 @@
 											           
 											         </tbody>
 											      </table>
-			                            
+			                            </div>
 			                      
                                 			
                   </div>
@@ -364,6 +369,17 @@
 
     </div>
 </div>
+<style>
+
+.scroll1 {
+      width:100%;
+      height:400px;
+      overflow-x:scroll;
+      
+}
+			
+		
+</style>
  
 </body>
 
