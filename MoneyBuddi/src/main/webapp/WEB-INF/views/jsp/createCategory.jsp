@@ -197,24 +197,19 @@
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
-                        <li>
-                            <a href="#">
+                       <li>
+                            <a href="profile">
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                Company
+                            <a href="profile">
+                                Privacy Policy
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
+                            <a href="https://github.com/KristiyanSelveliev/MoneyBuddiSpring">
+                               GitHub
                             </a>
                         </li>
                     </ul>

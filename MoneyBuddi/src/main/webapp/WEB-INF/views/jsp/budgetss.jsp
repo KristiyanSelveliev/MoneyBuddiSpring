@@ -41,9 +41,6 @@
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="img/sidebar-5.jpg">
 
-    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
-
-
     	<div class="sidebar-wrapper">
             
             
@@ -241,23 +238,18 @@
                 <nav class="pull-left">
                     <ul>
                         <li>
-                            <a href="#">
+                            <a href="profile">
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                Company
+                            <a href="profile">
+                                Privacy Policy
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
+                            <a href="https://github.com/KristiyanSelveliev/MoneyBuddiSpring">
+                               GitHub
                             </a>
                         </li>
                     </ul>
