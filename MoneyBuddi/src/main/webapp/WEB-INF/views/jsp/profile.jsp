@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="accounts.jsp">
+                    <a href="accounts">
                         <i class="pe-7s-users"></i>
                         <p>Accounts</p>
                     </a>
@@ -193,13 +193,13 @@
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form action=updateProfile method="post">
                                     <div class="row">
                                        
                                         <div class="col-md-10">
                                             <div class="form-group">
                                                 <label>Username-</label>                   
-                                                <labe>get name from session</label>
+                                                <labe>${sessionScope.user.username }</label>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +208,7 @@
                                         <div class="col-md-10">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email" value="get email from session">
+                                                <input type="email" class="form-control" placeholder="Email" value="${sessionScope.user.email}">
                                             </div>
                                         </div>
                                     </div>
@@ -217,7 +217,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Age</label>
-                                                <input type="text" class="form-control" placeholder="City" value="20">
+                                                <input type="text" class="form-control" placeholder="City" value="${sessionScope.user.age}">
                                             </div>
                                     </div>
                                         
@@ -239,14 +239,12 @@
                                      <a href="#">
                                     <img class="avatar border-gray" src="img/faces/face-1.jpg" alt="..."/>
 
-                                      <h4 class="title">Username<br />
+                                      <h4 class="title">${sessionScope.user.username }<br />
                                         
                                       </h4>
                                     </a>
                                 </div>
-                                <p class="description text-center"> "Description" <br>
-                                                   
-                                </p>
+                  
                             </div>
                             <hr>
                             <div class="text-center">

@@ -28,7 +28,7 @@ public class AccountController {
 	@Autowired
 	private AccountDao accountDao;
 	
-	@RequestMapping(value= "/createAccount", method = RequestMethod.GET)
+	@RequestMapping(value= "/accounts", method = RequestMethod.GET)
 	public String showCategories(HttpServletRequest request,HttpSession session) throws Exception {
 		List<Currency> currencies = (List<Currency>) currencyDao.getAllCurrencies();
 		request.setAttribute("currencies", currencies);

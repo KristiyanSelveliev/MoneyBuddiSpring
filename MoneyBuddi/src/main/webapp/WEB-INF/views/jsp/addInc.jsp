@@ -81,7 +81,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="createAccount">
+                    <a href="accounts">
                         <i class="pe-7s-users"></i>
                         <p>Accounts</p>
                     </a>

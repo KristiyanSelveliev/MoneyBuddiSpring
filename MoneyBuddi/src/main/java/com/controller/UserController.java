@@ -123,7 +123,11 @@ public class UserController {
 	}
 	
 	
-	
+	@RequestMapping(value="/updateProfile" ,method=RequestMethod.POST)
+	public String updateProfile(HttpSession session) {
+		//TODO update profile
+		return "profile";
+	}
 	
 	
 	
