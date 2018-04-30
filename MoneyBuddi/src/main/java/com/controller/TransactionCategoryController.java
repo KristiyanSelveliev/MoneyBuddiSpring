@@ -17,14 +17,14 @@ import com.model.dao.CategoryDAO;
 import com.model.dao.TransactionTypeDAO;
 
 @Controller
-public class CategoryController {
+public class TransactionCategoryController {
 
 	@Autowired
 	TransactionTypeDAO transactionTypeDao;
 	@Autowired
 	CategoryDAO categoryDao;
 
-	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	@RequestMapping(value = "/transactioncategories", method = RequestMethod.GET)
 	public String showTransactionTypes(HttpServletRequest request) throws Exception {
 
 		// get all TransactionTypes
@@ -34,7 +34,7 @@ public class CategoryController {
 		return "createCategory";
 	}
 
-	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	@RequestMapping(value = "/transactioncategories", method = RequestMethod.POST)
 	public String createCategory(HttpServletRequest request) throws Exception {
 		String name = request.getParameter("name");
 		String type = request.getParameter("type");
