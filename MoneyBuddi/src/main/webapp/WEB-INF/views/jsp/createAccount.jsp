@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="accounts.jsp">
+                    <a href="accounts">
                         <i class="pe-7s-users"></i>
                         <p>Accounts</p>
                     </a>
@@ -206,24 +206,23 @@
                                <c:forEach var="budget" items="${requestScope.accounts }">
                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                 
-                                   
-                                    <div class="font-icon-detail">
+                                   <div class="font-icon-detail">
                                        <form action=updateAccount method="post">
                                        <input type="hidden" name="id" value="${account.id }">
-                                       <input type="text" name="name" class="form-control"  style="font-size: 130%; "value="${account.name}">
-                                       <input type="number" name="balance" class="form-control"  style="font-size: 130%; "value="${account.balance}">
-                         
-                                      <a style="font-size: 130%;">${account.getCurrency().getType().toString()} </a>
+                                       <a class="text-muted" style="font-size: 130%;">${account.name}</a>
+                                      
+                                      <input type="number" name="balance" class="form-control"  style="font-size: 130%; "value="${account.balance}">
+                                      <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
                                       <button type="button" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>
                                     </div>
                                      <form action=deleteAccount method="post">
-                                     <input type="hidden" name="id" value="${account.id }">
+                                     <input type="hidden" name="id" value="${account.id}">
                                     <button type="button" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
                                 </div>
-								
-                               </c:forEach>
+                                   
+                                </c:forEach>
                                  </div>
                                
                             </div>

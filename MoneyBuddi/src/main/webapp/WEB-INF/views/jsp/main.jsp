@@ -20,7 +20,7 @@
 		<h1><%= LocalDate.now() %></h1>
 
 		
-		<button type="button" onclick="location.href='createCategory'">New Category</button>
+		<button type="button" onclick="location.href='categories'">New Category</button>
 		
 	</div>
 
@@ -39,8 +39,8 @@
 	
 	
 	<div>
-		<form action="createAccount" method="GET">
-			<input type="submit" value="create new Account" />
+		<form action=accounts method="GET">
+			<input type="submit" value="Accounts" />
 		</form>
 	</div><br>
 	

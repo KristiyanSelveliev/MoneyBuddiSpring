@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="accounts.jsp">
+                    <a href="accounts">
                         <i class="pe-7s-users"></i>
                         <p>Accounts</p>
                     </a>
