@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,11 +26,11 @@ public class TableController {
 	
 	public static class Helper{
 		
-		public long id;
-		public String category;
-		public double amount;
-		public String account;
-		public String date;
+		private long id;
+		private String category;
+		private double amount;
+		private String account;
+		private String date;
 		
 		public Helper(long id, String category, double amount, String account, String date) {
 			
@@ -42,6 +43,17 @@ public class TableController {
 		
 		
 	}
+	
+	
+		
+		
+		
+		
+		
+	
+	
+	
+	
 	
 	@Autowired
 	TransactionDao transactionDAO;
@@ -157,6 +169,8 @@ public class TableController {
 		
 		return helpers;
 	}
+	
+	
 	
 	
 	

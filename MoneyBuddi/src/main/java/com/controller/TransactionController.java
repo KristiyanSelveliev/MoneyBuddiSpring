@@ -3,6 +3,7 @@ package com.controller;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.controller.manager.CurrencyConverter;
 import com.controller.manager.TransactionManager;
@@ -46,7 +48,34 @@ public class TransactionController {
 	@Autowired
 	private TransactionManager transactionManager;
 	@Autowired
-	private CurrencyDAO currencyDAO;;
+	private CurrencyDAO currencyDAO;
+	
+	private static final int DEFAULT_NUM_DAYS=7;
+	
+	
+	
+	public static class MyEntry{
+		private int incomeAmount;
+		private int expenseAmount;
+		
+		public MyEntry(int incomeAmount, int expenseAmount) {
+		
+			this.incomeAmount = incomeAmount;
+			this.expenseAmount = expenseAmount;
+		}
+
+		public int getIncomeAmount() {
+			return incomeAmount;
+		}
+
+		public int getExpenseAmount() {
+			return expenseAmount;
+		}
+	
+	}
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/transactions", method = RequestMethod.GET)
@@ -79,10 +108,11 @@ public class TransactionController {
 		request.setAttribute("totalExpense",totalExpenseAmount/total);
 		request.setAttribute("totalIncome",totalIncomeAmount/total);
 		
-		
-		
 		request.setAttribute("numExpenses", transactionsCountExpense);
 		request.setAttribute("numIncomes", transactionsCountIncome);
+		
+		request.setAttribute("statistics", this.getTransactionsForStatistics(u,LocalDate.now().minusDays(DEFAULT_NUM_DAYS),LocalDate.now()));
+		
 		
 		return "transactions";
 	}
@@ -180,6 +210,25 @@ public class TransactionController {
 		
 		
 	}
+	
+	
+	private HashMap<LocalDate,MyEntry> getTransactionsForStatistics(User user,LocalDate begin,LocalDate end) throws Exception{
+		 HashMap<LocalDate,MyEntry> transactionCount=new HashMap();
+		 
+		 int incomes=0;
+		 int expenses=0;
+		 LocalDate currentDate=end;
+		 while(currentDate.isAfter(begin)) {
+			 expenses=transactionDao.getExpenseByUserFromToDate(currentDate, currentDate, user.getId()).size();
+			 incomes=transactionDao.getIncomeByUserFromToDate(currentDate, currentDate,user.getId()).size();
+			 System.out.println(incomes+" "+expenses);
+			transactionCount.put(currentDate, new MyEntry(incomes, expenses));
+			currentDate=currentDate.minusDays(1);
+			 
+		 }
+		 return transactionCount;	 
+	}
+	
 	
 	
 
