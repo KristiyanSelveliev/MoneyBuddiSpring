@@ -73,14 +73,14 @@ public class BudgetDao implements IBudgetDAO{
 			throw new SQLException("Cannot update budget in DB");
 				}
 		}
-		
+		System.out.println("Budget updated.");
 	}
 
 	@Override
-	public void deleteBudget(Budget budget) throws SQLException {
+	public void deleteBudget(int id) throws SQLException {
 		
 		try(PreparedStatement ps=db.getConnection().prepareStatement("DELETE FROM budgets WHERE id=?");){
-		ps.setLong(1, budget.getId());
+		ps.setLong(1, id);
 		
 		int rows=ps.executeUpdate();
 		if(rows==0) {

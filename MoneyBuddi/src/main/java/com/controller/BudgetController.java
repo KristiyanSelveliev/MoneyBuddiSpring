@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.exceptions.InvalidDataException;
+import com.model.Account;
 import com.model.Budget;
 import com.model.Category;
 import com.model.Currency;
@@ -78,29 +79,20 @@ public class BudgetController {
 		
 	}
 	
-	
 	@RequestMapping(value= "/budgetUpdate", method = RequestMethod.POST)
-	public String updateBudget(@RequestParam int  id) throws SQLException, InvalidDataException {
+	public String updateBudget(@RequestParam int  id,
+			@RequestParam double  amount) throws Exception {
+		Budget budget=budgetDAO.getBudgetById(id);
+		budget.setAmount(amount);
+		budgetDAO.updateBudget(budget);
 		
-		
-		//request.setAttribute("budgets",budgets);
-		
-		return "budgetss";
-		
+		return "redirect:/budgets";
 	}
 	
-
 	@RequestMapping(value= "/budgetDelete", method = RequestMethod.POST)
 	public String deleteBudget(@RequestParam int id) throws SQLException, InvalidDataException {
-		
-		
-		//budgetDAO.deleteBudget(id);
+		budgetDAO.deleteBudget(id);
 		
 		return "budgetss";
-		
 	}
-	
-	
-	
-
 }

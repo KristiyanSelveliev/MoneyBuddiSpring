@@ -171,7 +171,7 @@
                                         <div class="col-md-10">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email" value="${sessionScope.user.email}">
+                                                <input type="email" name="email" class="form-control" placeholder="Email" value="${sessionScope.user.email}">
                                             </div>
                                         </div>
                                     </div>
@@ -180,7 +180,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Age</label>
-                                                <input type="text" class="form-control" placeholder="City" value="${sessionScope.user.age}">
+                                                <input type="number" name="age" class="form-control" placeholder="Age" value="${sessionScope.user.age}">
                                             </div>
                                     </div>
                                         
