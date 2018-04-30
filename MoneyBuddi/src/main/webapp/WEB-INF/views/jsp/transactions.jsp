@@ -27,6 +27,8 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="css/demo.css" rel="stylesheet" />
 
+    <script type="text/javascript" src="js/Chart.js"></script>
+    <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -80,7 +82,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="accounts.jsp">
+                    <a href="createAccount">
                         <i class="pe-7s-users"></i>
                         <p>Accounts</p>
                     </a>
@@ -176,11 +178,52 @@
                         <div class="card">
 
                             <div class="header">
-                                <h4 class="title">Email Statistics</h4>
+                                <h4 class="title">Transaction statistics</h4>
                                 <p class="category">Last Campaign Performance</p>
                             </div>
                             <div class="content">
-                                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+                                <div >
+                                  <canvas id="mycanvas" ></canvas>
+															
+															<script>
+													var ctx = document.getElementById("mycanvas");
+													ctx.height = 350;
+													ctx.width=350;
+													var myChart = new Chart(ctx, {
+													    type: 'doughnut',
+													    data: {
+													        labels: ["Income","Expense"],
+													        datasets: [{
+													            label: '# of Votes',
+													            data: [5, 19],
+													            backgroundColor: [
+													            	'rgba(0,255,0,0.8)',
+													            	 '#e94b3c',
+													                
+													            ],
+													            borderColor: [
+													                'rgba(0,255,0,1)',
+													            	 '#e94b3c',
+													                
+													            ],
+													            borderWidth: 2
+													        }]
+													    },
+													    options: {
+													    	maintainAspectRatio: false,
+													        scales: {
+													            yAxes:[{
+													                ticks: {
+													                    beginAtZero:true                    
+													                }   
+													
+													                }]          
+													        }       
+													    }
+													});
+													</script>
+													                                
+                                </div>
 
                                 <div class="footer">
                                     <div class="legend">
