@@ -24,6 +24,7 @@
 
     <!--  Light Bootstrap Table core CSS    -->
     <link href="css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+    
 
     
 
@@ -106,7 +107,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                    
-                    <a class="navbar-brand" href="#"> Overview</a>
+                    <a class="navbar-brand" > Overview</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -133,6 +134,7 @@
                                <p>Account</p>
                             </a>
                         </li>
+<<<<<<< HEAD
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <p>
@@ -149,6 +151,9 @@
                                 <li><a href="categories">Categories</a></li>
                               </ul>
                         </li>
+=======
+                       
+>>>>>>> 1daf8a77df0388167b5eb375c4e8adfe0eb4ca23
                         <li>
                             <form action="logout" method="get">
                                 <button type="submit" class=" btn  btn-warning " > Log out</button>
@@ -195,32 +200,27 @@
 													    type: 'doughnut',
 													    data: {
 													        labels: ["Income","Expense"],
-													        indexLabelPlacement: "inside",
+													        
 													        datasets: [{
 													            label: '# of Votes',
 													            data: [Math.round(${requestScope.totalIncome }* 100) / 100, Math.round(${requestScope.totalExpense }* 100) / 100 ],
 													            backgroundColor: [
-													            	'rgba(0,255,0,0.8)',
-													            	'rgba(219,103,103,0.8)',
+													            	'rgba(32,175,221,0.8)',
+													            	'rgba(55,56,102,0.8)',
 													                
 													            ],
 													            borderColor: [
-													            	'rgba(238,223,223,0.8)',
-													                'rgba(238,223,223,0.8)',
+													            	'rgba(250,250,250,0.8)',
+													                'rgba(250,250,250,0.8)',
 													                
 													            ],
-													            borderWidth: 2
+													            borderWidth: 3
 													        }]
 													    },
 													    options: {
 													    	maintainAspectRatio: false,
 													        scales: {
-													            yAxes:[{
-													                ticks: {
-													                    beginAtZero:true                    
-													                }   
-													
-													                }]          
+													          
 													        }       
 													    }
 													});
@@ -230,8 +230,8 @@
                                
 
                                 <div class="footer">
-                                    <h3> <b>Expense transactions count</b><a style="color:red; font-size:125%"> ${requestScope.numExpenses } </a></h5>
-                                    <h3> <b>Income transactions count&nbsp&nbsp</b><a style="color:green; font-size:125%"> ${requestScope.numIncomes } </a></h5>
+                                    <h3> <b>Expense transactions count</b><a style="color:#2C4A60; font-size:125%"> ${requestScope.numExpenses } </a></h5>
+                                    <h3> <b>Income transactions count&nbsp&nbsp</b><a style="color:#1EBAE4; font-size:125%"> ${requestScope.numIncomes } </a></h5>
                                    
                                
                                 </div>
@@ -329,124 +329,7 @@
                                 <h4 class="title">Tasks</h4>
                                 <p class="category">Backend development</p>
                             </div>
-                            <div class="content">
-                                <div class="table-full-width">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox1" type="checkbox">
-						  							  	<label for="checkbox1"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox2" type="checkbox" checked>
-						  							  	<label for="checkbox2"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox3" type="checkbox">
-						  							  	<label for="checkbox3"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-												</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox4" type="checkbox" checked>
-						  							  	<label for="checkbox4"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox5" type="checkbox">
-						  							  	<label for="checkbox5"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Read "Following makes Medium better"</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox6" type="checkbox" checked>
-						  							  	<label for="checkbox6"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Unfollow 5 enemies from twitter</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="footer">
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -491,10 +374,11 @@
     <!--  Notifications Plugin    -->
     <script src="js/bootstrap-notify.js"></script>
 
+    
  
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="js/demo.js"></script>
-
+	<script src="js/light-bootstrap-dashboard.js?v=1.4.0"></script>
+    
 	
 
 </html>
