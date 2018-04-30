@@ -24,8 +24,7 @@
     <link href="css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
 
 
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="css/demo.css" rel="stylesheet" />
+ 
 
 
     <!--     Fonts and icons     -->
@@ -58,7 +57,7 @@
                 <li >
                     <a href="profile">
                         <i class="pe-7s-user"></i>
-                        <p>My Profile</p>
+                        <p>User Profile</p>
                     </a>
                 </li>
                 <li>
@@ -68,8 +67,14 @@
                     </a>
                 </li>
                 <li>
+                    <a href="typography.jsp">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>Typography</p>
+                    </a>
+                </li>
+                <li>
                     <a href="accounts">
-                        <i class="pe-7s-wallet"></i>
+                        <i class="pe-7s-users"></i>
                         <p>Accounts</p>
                     </a>
                 </li>
@@ -80,9 +85,15 @@
                     </a>
                 </li>
                 <li>
-                   <a href="categories">
-                        <i class="pe-7s-folder"></i>
-                        <p>Categories</p>
+                    <a href="notifications.jsp">
+                        <i class="pe-7s-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+				<li class="active-pro">
+                    <a href="upgrade.jsp">
+                        <i class="pe-7s-rocket"></i>
+                        <p>Upgrade to PRO</p>
                     </a>
                 </li>
             </ul>
@@ -115,17 +126,19 @@
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <p>
-										Actions
+										Dropdown
 										<b class="caret"></b>
 									</p>
 
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a href="transactions">Transactions</a></li>
-                                <li><a href="tables">Table List</a></li>
-                                <li><a href="accounts">Accounts</a></li>
-                                <li><a href="budgets">Budgets</a></li>
-                                <li><a href="categories">Categories</a></li>
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
                               </ul>
                         </li>
                         <li>
@@ -602,8 +615,7 @@ function fillTable4(){
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="js/light-bootstrap-dashboard.js?v=1.4.0"></script>
 
-	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="/js/demo.js"></script>
+	
 
 
 </html>

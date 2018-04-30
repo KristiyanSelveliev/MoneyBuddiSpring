@@ -26,11 +26,11 @@ public class TableController {
 	
 	public static class Helper{
 		
-		private long id;
-		private String category;
-		private double amount;
-		private String account;
-		private String date;
+		public long id;
+		public String category;
+		public double amount;
+		public String account;
+		public String date;
 		
 		public Helper(long id, String category, double amount, String account, String date) {
 			
@@ -40,20 +40,11 @@ public class TableController {
 			this.account = account;
 			this.date = date;
 		}
-		
-		
 	}
-	
-	
-		
-		
-		
-		
 		
 	
-	
-	
-	
+
+		
 	
 	@Autowired
 	TransactionDao transactionDAO;
@@ -65,6 +56,7 @@ public class TableController {
 			 @RequestParam String end,
 			 HttpSession session) throws Exception {
 		
+		
 		User user=(User) session.getAttribute("user");
 		LocalDate from=LocalDate.parse(begin);
 		LocalDate to=LocalDate.parse(end);
@@ -73,7 +65,7 @@ public class TableController {
 		this.transactionOrderer(transactions);
 		
 		ArrayList<Helper> helpers =new ArrayList();
-		
+		System.out.println(1);
 		for(Transaction t:transactions) {
 		helpers.add(new Helper(
 				      t.getId(),
