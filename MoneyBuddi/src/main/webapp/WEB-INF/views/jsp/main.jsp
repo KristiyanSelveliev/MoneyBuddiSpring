@@ -20,7 +20,7 @@
 		<h1><%= LocalDate.now() %></h1>
 
 		
-		<button type="button" onclick="location.href='transactioncategories'">New Category</button>
+		<button type="button" onclick="location.href='categories'">New Category</button>
 		
 	</div>
 

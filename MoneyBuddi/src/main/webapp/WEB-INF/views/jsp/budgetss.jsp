@@ -64,7 +64,7 @@
                 <li >
                     <a href="profile">
                         <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
+                        <p>My Profile</p>
                     </a>
                 </li>
                 <li>
@@ -74,14 +74,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="typography.jsp">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
-                    </a>
-                </li>
-                <li>
                     <a href="accounts">
-                        <i class="pe-7s-users"></i>
+                        <i class="pe-7s-wallet"></i>
                         <p>Accounts</p>
                     </a>
                 </li>
@@ -92,15 +86,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="notifications.jsp">
-                        <i class="pe-7s-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-				<li class="active-pro">
-                    <a href="upgrade.html">
-                        <i class="pe-7s-rocket"></i>
-                        <p>Upgrade to PRO</p>
+                    <a href="categories">
+                        <i class="pe-7s-folder"></i>
+                        <p>Categories</p>
                     </a>
                 </li>
             </ul>
@@ -136,22 +124,20 @@
                                <p>Account</p>
                             </a>
                         </li>
-                        <li class="dropdown">
+                       <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <p>
-										Dropdown
+										Actions
 										<b class="caret"></b>
 									</p>
 
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a href="transactions">Transactions</a></li>
+                                <li><a href="tables">Table List</a></li>
+                                <li><a href="accounts">Accounts</a></li>
+                                <li><a href="budgets">Budgets</a></li>
+                                <li><a href="categories">Categories</a></li>
                               </ul>
                         </li>
                         <li>
