@@ -30,25 +30,25 @@
    
     <form action="register" method="post">
       <div class="form-group has-feedback" >
-        <input type="text" class="form-control" name="username" placeholder="Username" required>
+        <input type="text" pattern="^[0-9a-zA-Z]{5,45}" title="Username must be at least 5 symbols" class="form-control" name="username" placeholder="Username" required>
         
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email" required>
+        <input type="email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" title="local-part@domain" class="form-control" name="email" placeholder="Email" required>
       
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password1" placeholder="Password" required>
+        <input type="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" title="Strong password contains at least one digit, upper and lower case letter and special symbol." class="form-control" name="password1" placeholder="Password" required>
          
        
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password2" placeholder="Retype password" required>
+        <input type="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" title="Strong password contains at least one digit, upper and lower case letter and special symbol." class="form-control" name="password2" placeholder="Retype password" required>
        
       </div>
        
       <div class="form-group has-feedback">
-        <input type="number" class="form-control" name="age"placeholder="Age" required>
+        <input type="number" pattern="(1[4-9]|[2-9][0-9]|100)" title="Age must be number between 14 and 100." class="form-control" name="age"placeholder="Age" required>
        
       </div>
       
