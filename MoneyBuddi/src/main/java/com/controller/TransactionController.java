@@ -337,8 +337,8 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value="/deleteTransaction",method=RequestMethod.POST)
-	public String updateTransaction(HttpSession session,@RequestParam long id) throws SQLException, InvalidDataException {
-		
+	public String deleteTransaction(HttpSession session) throws SQLException, InvalidDataException {
+		long id=(long) session.getAttribute("transactionId");
 		Transaction transaction=transactionDao.getTransactionById(id);
 		transactionDao.deleteTransaction(transaction);
 	   

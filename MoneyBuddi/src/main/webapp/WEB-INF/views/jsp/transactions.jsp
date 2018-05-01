@@ -129,8 +129,26 @@
                               </form>
                         </li>
                     </ul>
+                    
 
                     <ul class="nav navbar-nav navbar-right">
+                   <li >
+                 
+                    <form action="transactions" method="POST">
+                    <span style="display:inline-block">
+                      <label> <p>Begin</p></label>
+                         <input type="date" name=beginDate>
+                         </span>
+                        <span style="display:inline-block">
+                          <label> <p>End</p></label>
+                          <input type="date" name=endDate>
+                           </span>
+                          <button class="btn" type="submit">Show </button>
+                        
+                         </form>
+                        
+                    </li>
+                    
                         <li>
                            <a href="">
                                <p>Account</p>
@@ -166,7 +184,9 @@
  
 
         <div class="content">
+                  
             <div class="container-fluid">
+            
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
@@ -259,16 +279,12 @@
                     </div>
                             
                     </div>
-                         <form action="transactions" method="POST">
-                         <input type="date" name=beginDate>
-                          <input type="date" name=endDate>
-                          <button type="submit">Show </button>
-                         </form>
+                         
 
                     <div class="col-md-7">
                               
                       
-			                                <div id = "container" style = " max-width:900px  width: 100%; height: 300px; margin: 0 auto"></div>
+			                                <div id = "container" style = " max-width:900px;  width:100%; height: 350px; margin: 0 auto"></div>
 											      <script language = "JavaScript">
 											         $(document).ready(function() {
 											            var data = {
@@ -369,7 +385,7 @@
 
 .scroll1 {
       width:100%;
-      height:400px;
+      height:500px;
       overflow-x:scroll;
       
 }
@@ -425,19 +441,24 @@
         		if(this.readyState == 4 && this.status == 200){
         			var result = this.responseText;
         			result = JSON.parse(result);
+        			body.innerHTML ="";
         	        var form='<form action="updateTransaction" method="post"><div class="col-md-10"><div class="form-group">';
         	        form+='<label  style="color:black"><b>'+result["category"] +"-"+result["type"] +'</b></label></div></div>';
         	        form+='<div class="col-md-10"><div class="form-group"> <label style="color:black"><b> Account ('+result["account"]+')</b></label></div></div>';
         		    form+='<div class="col-md-10"><div class="form-group"><label style="color:black"><b>Amount<b></label>';
                     form+='<input  name="amount" class="form-control" value='+ result["amount"] +'> </div></div>';
         		    form+='<button type="submit" class="btn btn-fill" style=" background-color:rgba(55,56,102,0.8)">Update</button> </form>';
-        			        			body.innerHTML+=form;
+        		    
+        		    form+='<form style="float:left;" action="deleteTransaction" method="post"> <button type="submit" class="btn btn-danger btn-fill">Delete</button></form>';
+        			body.innerHTML+=form;
         				
         		}
         	}
         	request.send();
         	   	
         }
+        
+      
         
      
       
