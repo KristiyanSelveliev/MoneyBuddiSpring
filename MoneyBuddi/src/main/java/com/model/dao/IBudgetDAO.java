@@ -3,6 +3,7 @@ package com.model.dao;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import com.exceptions.InvalidDataException;
 import com.model.Budget;
 import com.model.User;
 
@@ -16,6 +17,10 @@ public interface IBudgetDAO {
 	
 	Budget getBudgetById(long id)throws Exception;
 	
-	Collection <Budget> getAllBudgetsForUser(User user) throws Exception;
+	Collection <Budget> getAllBudgetsForUser(long userId) throws Exception;
+	
+	Collection<Budget> getAllExpenseBudgetForUser(long userId) throws SQLException, InvalidDataException;
+	
+	Collection<Budget> getAllIncomeBudgetForUser(long userId) throws SQLException, InvalidDataException;
 
 }

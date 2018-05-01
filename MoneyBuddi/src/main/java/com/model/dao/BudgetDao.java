@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.exceptions.InvalidDataException;
 import com.model.Budget;
+import com.model.Transaction.TransactionType;
 import com.model.User;
 @Component
 public class BudgetDao implements IBudgetDAO{
@@ -91,12 +92,12 @@ public class BudgetDao implements IBudgetDAO{
 	}
 
 	@Override
-	public Collection<Budget> getAllBudgetsForUser(User user) throws SQLException,InvalidDataException {//can throw SQL OR INVALID DATA EXCEPTION
+	public Collection<Budget> getAllBudgetsForUser(long userId) throws SQLException,InvalidDataException {//can throw SQL OR INVALID DATA EXCEPTION
 		Collection<Budget> budgets=new ArrayList<>();
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id , amount , begin_date, "
 				                                             +"end_date , user_id , currency_id , category_id "
 				                                             + "FROM budgets WHERE user_id=?");){
-			ps.setInt(1,(int) user.getId());
+			ps.setLong(1,userId);
 			try(ResultSet rs=ps.executeQuery()){
 				while(rs.next()) {
 					budgets.add(new Budget(rs.getLong("id"),
@@ -137,12 +138,31 @@ public class BudgetDao implements IBudgetDAO{
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public Collection<Budget> getAllExpenseBudgetForUser(long userId) throws SQLException, InvalidDataException {
+		ArrayList<Budget> allBudgets=(ArrayList<Budget>) this.getAllBudgetsForUser(userId);
+		ArrayList<Budget> expenseBudgets=new ArrayList();
+		for(Budget budget:allBudgets) {
+			if(budget.getCategory().getType().equals(TransactionType.EXPENSE)) {
+				expenseBudgets.add(budget);
+			}
+		}
+		return expenseBudgets;
+		
+	}
+
+	@Override
+	public Collection<Budget> getAllIncomeBudgetForUser(long userId) throws SQLException, InvalidDataException {
+		ArrayList<Budget> allBudgets=(ArrayList<Budget>) this.getAllBudgetsForUser(userId);
+		ArrayList<Budget> incomeBudgets=new ArrayList();
+		for(Budget budget:allBudgets) {
+			if(budget.getCategory().getType().equals(TransactionType.INCOME)) {
+				incomeBudgets.add(budget);
+			}
+		}
+		return incomeBudgets;
+	}
 	
 	
 	

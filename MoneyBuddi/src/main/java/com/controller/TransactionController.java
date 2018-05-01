@@ -29,6 +29,7 @@ import com.model.Transaction;
 import com.model.Transaction.TransactionType;
 import com.model.User;
 import com.model.dao.AccountDao;
+import com.model.dao.BudgetDao;
 import com.model.dao.CategoryDAO;
 import com.model.dao.CurrencyDAO;
 import com.model.dao.TransactionDao;
@@ -49,6 +50,8 @@ public class TransactionController {
 	private TransactionManager transactionManager;
 	@Autowired
 	private CurrencyDAO currencyDAO;
+	@Autowired
+	private BudgetDao budgetDAO;
 	
 	private static final int DEFAULT_NUM_DAYS=7;
 	
@@ -163,11 +166,12 @@ public class TransactionController {
 		List<Category> categories=categoryDao.getAllCategoriesByUserAndType(u,TransactionType.INCOME);
 		List<Currency> currencies=(List<Currency>) currencyDAO.getAllCurrencies();
 		List<Account>  accounts=accountDao.getAllAccountsForUser(u);
+		List<Budget>   budgets=(List<Budget>) budgetDAO.getAllIncomeBudgetForUser(u.getId());
 		
 		request.setAttribute("categories", categories);
 		request.setAttribute("currencies", currencies);
 		request.setAttribute("accounts", accounts);
-		
+		request.setAttribute("budgets", budgets);
 		
 		return "addInc";
 	}
@@ -180,14 +184,16 @@ public class TransactionController {
 		List<Category> categories=categoryDao.getAllCategoriesByUserAndType(u,TransactionType.EXPENSE);
 		List<Currency> currencies=(List<Currency>) currencyDAO.getAllCurrencies();
 		List<Account>  accounts=accountDao.getAllAccountsForUser(u);
+		List<Budget>   budgets=(List<Budget>) budgetDAO.getAllExpenseBudgetForUser(u.getId());
 		
 		request.setAttribute("categories", categories);
 		request.setAttribute("currencies", currencies);
 		request.setAttribute("accounts", accounts);
-		
+		request.setAttribute("budgets", budgets);
 		
 		return "addExp";
 	}
+	
 	
 	@RequestMapping(value = "/addExpense", method = RequestMethod.POST)
 	public String createExpense(
@@ -216,6 +222,42 @@ public class TransactionController {
 	  return expense(session,request);
 		
 	}
+	
+	
+	
+	@RequestMapping(value = "/addBudgetExpense", method = RequestMethod.POST)
+	public String createBudgetExpense(
+			@RequestParam long budgetId,
+			@RequestParam long currencyId,
+			@RequestParam long accountId,
+			@RequestParam double amount,
+			@RequestParam String date,
+			HttpServletRequest request,
+			HttpSession session) throws Exception {
+		
+		    Account account=accountDao.getAccountById(accountId);
+		    Currency transactionCurrency=currencyDAO.getCurrencyById(currencyId);
+		    Budget budget=budgetDAO.getBudgetById(budgetId);
+		    
+	  Expense expense=new Expense(
+			  amount,
+			  transactionCurrency,
+			  account, 
+			  LocalDate.parse(date), 
+			  budget.getCategory());
+	  
+	  transactionManager.addTransaction(expense, budget);
+	  request.setAttribute("accountAmount", CurrencyConverter.convert(amount, transactionCurrency, account.getCurrency()));
+	  request.setAttribute("budgetAmount", CurrencyConverter.convert(amount, transactionCurrency, budget.getCurrency()));
+	  request.setAttribute("currency",account.getCurrency());
+	  request.setAttribute("budgetCurrency", budget.getCurrency());
+	  
+	  return expense(session,request);
+		
+	}
+	
+	
+	
 	
 	@RequestMapping(value = "/addIncome", method = RequestMethod.POST)
 	public String createIncome(
@@ -248,6 +290,41 @@ public class TransactionController {
 		
 		
 	}
+	
+	
+	@RequestMapping(value = "/addBudgetIncome", method = RequestMethod.POST)
+	public String createBudgetIncome(
+			@RequestParam long budgetId,
+			@RequestParam long currencyId,
+			@RequestParam long accountId,
+			@RequestParam double amount,
+			@RequestParam String date,
+			HttpServletRequest request,
+			HttpSession session) throws Exception {
+		
+		    Account account=accountDao.getAccountById(accountId);
+		    Currency transactionCurrency=currencyDAO.getCurrencyById(currencyId);
+		    Budget budget=budgetDAO.getBudgetById(budgetId);
+		    
+	  Income income=new Income(
+			  amount,
+			  transactionCurrency,
+			  account, 
+			  LocalDate.parse(date), 
+			  budget.getCategory());
+	  
+	  transactionManager.addTransaction(income, budget);
+	  request.setAttribute("accountAmount", CurrencyConverter.convert(amount, transactionCurrency, account.getCurrency()));
+	  request.setAttribute("budgetAmount", CurrencyConverter.convert(amount, transactionCurrency, budget.getCurrency()));
+	  request.setAttribute("currency",account.getCurrency());
+	  request.setAttribute("budgetCurrency", budget.getCurrency());
+	  
+	  return expense(session,request);
+		
+	}
+	
+	
+	
 	
 	
 	private HashMap<LocalDate,MyEntry> getTransactionsForStatistics(User user,LocalDate begin,LocalDate end) throws Exception{

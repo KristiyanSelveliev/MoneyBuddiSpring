@@ -41,7 +41,7 @@ public class BudgetController {
 	public String showBudgets(HttpServletRequest request,HttpSession session) throws SQLException, InvalidDataException {
 		User u=(User) session.getAttribute("user");
 		
-		ArrayList<Budget> budgets=(ArrayList<Budget>) budgetDAO.getAllBudgetsForUser(u);
+		ArrayList<Budget> budgets=(ArrayList<Budget>) budgetDAO.getAllBudgetsForUser(u.getId());
 		ArrayList<Category> categories= (ArrayList<Category>) categoryDAO.getAllCategoriesByUser(u);
 		ArrayList<Currency> currencies=(ArrayList<Currency>) currencyDAO.getAllCurrencies();
 		

@@ -202,7 +202,7 @@
 			                                  </div>
                         					</form>
                         					
-                        					 <c:if test="${requestScope.currency!=null }">
+                        					 <c:if test="${requestScope.currency!=null && requestScope.budgetCurrency==null }">
                         					 
                                      		<script type="text/javascript">
 										    	$(document).ready(function(){
@@ -223,7 +223,7 @@
 										    	});
 											</script>
 											<h4 >
-								                 You just lost ${requestScope.accountAmount}- ${requestScope.currency.getType().toString()}
+								                 Your account lost ${requestScope.accountAmount}- ${requestScope.currency.getType().toString()}
 								              </h4>
 																			
 								</c:if>
@@ -232,6 +232,109 @@
                             
                         </div>
                     </div>
+                    
+                    
+                    <div class="col-md-4">
+                           <div class="card">
+                            <div class="header">
+                                <h4 class="title">Join a budget to your transaction</h4>
+                                 <form action="addBudgetExpense" method="post">
+                                 
+                                   		 <div class="row">
+			                                <a style="font-size: 140%;" class="col-md-10">Accounts </a><br>
+			                                </div>
+			                                   <select  class="col-md-11" name="accountId">
+			                                
+					                                <c:forEach var="account" items="${requestScope.accounts }">
+					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
+					                                
+					                                </c:forEach>
+			                                   </select > 
+			                                      
+			                                 <div class="row">
+			                                 
+			                                <a style="font-size: 140%;" class="col-md-10">Budgets</a><br>
+			                                </div>
+			                                   <select  class="col-md-11" name="budgetId">
+			                                
+					                                <c:forEach var="budget" items="${requestScope.budgets }">
+					                                 <option value="${budget.getId()}">${ budget.getCategory().getCategory() }-${budget.getAmount()}-
+					                                  ${budget.getCurrency().getType().toString() }- ${budget.getCategory().getType().toString()} </option>
+					                                
+					                                </c:forEach>
+			                                   </select >
+			                                   <div class="row">
+			                                    <a style="font-size: 140%;" class="col-md-10" >Currencies </a>
+			                                    </div>
+			                                  
+			                                   <select class="col-md-11" name="currencyId" >
+			                                
+					                                <c:forEach var="currency" items="${requestScope.currencies }">
+					                                 <option  value="${currency.getId()}">${ currency.getType().toString()}  </option>
+					                                
+					                                </c:forEach>
+			                                   </select >
+			                                  
+			                                   <div class="row">
+			                                   		<a style="font-size: 140%;" class="col-md-9">Amount </a>
+			                                   </div>
+			                                   <input type="number"  name="amount" class="col-md-7" style="font-size: 115%;" value="100"> 
+			                                    <div class="row" class="col-md-5">
+			                                   		<a style="font-size: 125%;" class="col-md-9">Date </a>
+			                                   </div>
+			                                   <input type="date"  name="date"   class="col-md-7" style="font-size: 115%;" required> 
+			                                   
+			                                   
+			                                 <div class="row">
+			                                        <div class="col-md-8">
+			                                  			<button  submit" rel="tooltip" title="Create" class="btn btn-danger focus"  >Add </button>
+			                                  			</div>
+			                                  </div>
+                        					</form>
+                        					
+                        					 <c:if test="${requestScope.budgetCurrency!=null }">
+                        					 
+                                     		<script type="text/javascript">
+										    	$(document).ready(function(){
+										
+										    		
+										
+										        	$.notify({
+										            	icon: 'pe-7s-cash',
+										            	message: "You just bought something! Well Done"
+										
+										            }
+										        	,{
+										        		
+										                type: 'info',
+										                timer: 2000
+										            });
+										
+										    	});
+											</script>
+											<h4 >
+								                 <p>Your account lost ${requestScope.accountAmount}- ${requestScope.currency.getType().toString()}</p>
+								                 <p> You budget lost ${requestScope.budgetAmount}- ${requestScope.budgetCurrency.getType().toString()}</p>
+								              </h4>
+																			
+								</c:if>
+                               
+                            </div>
+                            
+                        </div>
+                    
+                    
+                    
+                    
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 </div>
 
 
