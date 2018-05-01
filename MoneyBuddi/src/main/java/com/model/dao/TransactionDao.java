@@ -134,6 +134,49 @@ public class TransactionDao implements ITransactionDao {
 
 		System.out.println("Transaction updated.");
 	}
+	
+	@Override
+	public Transaction getTransactionById(long transactionId) throws SQLException, InvalidDataException {
+		try(PreparedStatement ps=db.getConnection().prepareStatement(
+				"SELECT id,amount,date,currency_id,account_id,category_id,"
+			   +"transaction_type_id FROM transactions "
+			   +"WHERE id=? ")) {
+			
+			ps.setLong(1, transactionId);
+			try(ResultSet rs=ps.executeQuery()) {
+				if(rs.next()) {
+					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
+							.equals(TransactionType.EXPENSE)) {
+						
+						        return new Expense(rs.getLong("id"), rs.getDouble("amount"),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
+								rs.getDate("date").toLocalDate(),
+								categoryDAO.getCategoryByID(rs.getLong("category_id")));
+						        
+					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
+							.equals(TransactionType.INCOME)) {
+						
+						        return new Income(rs.getLong("id"), rs.getDouble("amount"),
+								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
+								accountDAO.getAccountById(rs.getLong("account_id")),
+								rs.getDate("date").toLocalDate(),
+								categoryDAO.getCategoryByID(rs.getLong("category_id")));
+
+					}
+				}
+			}
+			return null;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public ArrayList<Transaction> getAllTransactionsByUser(User u) throws SQLException, InvalidDataException {
@@ -442,5 +485,5 @@ public class TransactionDao implements ITransactionDao {
 		return transactions;
 		
 	}
-	
+
 }

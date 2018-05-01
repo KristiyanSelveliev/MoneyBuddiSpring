@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exceptions.InvalidDataException;
 import com.model.Transaction;
 import com.model.User;
 import com.model.dao.TransactionDao;
@@ -31,6 +33,7 @@ public class TableController {
 		public double amount;
 		public String account;
 		public String date;
+		public String type;
 		
 		public Helper(long id, String category, double amount, String account, String date) {
 			
@@ -39,6 +42,11 @@ public class TableController {
 			this.amount = amount;
 			this.account = account;
 			this.date = date;
+		}
+		public Helper(long id, String category, double amount, String account, String date,String type) {
+			this(id, category, amount, account, date);
+			this.type=type;
+			
 		}
 	}
 		
@@ -164,6 +172,55 @@ public class TableController {
 	
 	
 	
+	
+	@RequestMapping(value="showTransactions",method=RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<Helper> showTransactions(
+			@RequestParam String date,
+			HttpSession session ) throws SQLException, InvalidDataException{
+		User user=(User) session.getAttribute("user");
+		ArrayList<Transaction> transactions=transactionDAO.getAllTransactionsByUserAndDate(user,LocalDate.parse(date));
+		ArrayList<Helper> helpers =new ArrayList();
+		for(Transaction t:transactions) {
+			helpers.add(new Helper(
+					      t.getId(),
+					      t.getCategory().getCategory(),
+					      t.getAmount(),
+					      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
+					      t.getDate().toLocalDate().toString(),
+			              t.getType().toString()));
+			}
+			return helpers;
+		
+		
+	}
+	
+	@RequestMapping(value="editTransaction",method=RequestMethod.GET)
+	@ResponseBody
+	public Helper editTransaction(
+			@RequestParam long transactionId,
+			HttpSession session ) throws SQLException, InvalidDataException{
+		User user=(User) session.getAttribute("user");
+		session.setAttribute("transactionId", transactionId);
+		Transaction transaction=transactionDAO.getTransactionById(transactionId);
+		
+		
+           if(transaction!=null) {	
+			return new Helper(
+				      transaction.getId(),
+				      transaction.getCategory().getCategory(),
+				      transaction.getAmount(),
+				      transaction.getAccount().getName()+"-"+transaction.getAccount().getCurrency().getType().toString(),
+				      transaction.getDate().toLocalDate().toString(),
+			          transaction.getType().toString());
+           }
+           return null;
+		
+		
+	}
+	
+	
+		
 	
 	
 	

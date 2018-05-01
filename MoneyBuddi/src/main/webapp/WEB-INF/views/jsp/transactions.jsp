@@ -236,6 +236,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-13">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">Transaction editor</h4>
+                                <p class="category">Choose date</p>
+                                <input id="Edit"  type="date" ></input>
+                                
+                                 <button class="btn" onclick="show()">go</button>
+                                
+                            </div>
+                            <div class="content">
+                                <div id="chartActivity" class="ct-chart">
+                                
+                                
+                                
+                                </div>
+                                 
+								                                
+                            </div>
+                        </div>
+                    </div>
+                            
                     </div>
                          <form action="transactions" method="POST">
                          <input type="date" name=beginDate>
@@ -309,34 +331,8 @@
 			                      
                                 			
                   </div>
-                            
                  
-
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card ">
-                            <div class="header">
-                                <h4 class="title">2014 Sales</h4>
-                                <p class="category">All products including Taxes</p>
-                            </div>
-                            <div class="content">
-                                <div id="chartActivity" class="ct-chart"></div>
-                                 
-								                                
-                            </div>
-                        </div>
-                    </div>
-     </div>
-                    <div class="col-md-6">
-                        <div class="card ">
-                            <div class="header">
-                                <h4 class="title">Tasks</h4>
-                                <p class="category">Backend development</p>
-                            </div>
-                           
-                        </div>
-                    </div>
+                      
                 </div>
             </div>
         </div>
@@ -377,12 +373,75 @@
       overflow-x:scroll;
       
 }
+
+
 			
 		
 </style>
  
 </body>
-
+      <script>
+        function show(){
+        	var body = document.getElementById("chartActivity");
+        	var pole=document.getElementById("Edit");
+        	var date=pole.value;
+        	var request=new XMLHttpRequest();
+        	request.open("GET","showTransactions?date=" +date);
+        	request.onreadystatechange = function() {
+        		if(this.readyState == 4 && this.status == 200){
+        			var result = this.responseText;
+        			result = JSON.parse(result);
+        			body.innerHTML ="";
+        			var select='<select id="mySelect" style="max-width:300px; width:75%" >';
+        			for(var i=0;i<result.length;i++){
+        				var option='<option value='+result[i]['id']+'>';
+        				option+=result[i]['category']+" "+result[i]['amount']+" "+result[i]['account']+" ";
+        				option+=result[i]['type'];
+        				option+='</option>';
+        				
+        				select+=option;
+        					
+        			}
+        			select+='</select>';
+        			select+='<button onclick="edit()" class="btn ">Edit</button>';
+        			body.innerHTML+=select;
+        				
+        		}
+        	}
+        	request.send();
+        	   	
+        }
+        
+        function edit(){
+        	var body = document.getElementById("chartActivity");
+        	var select = document.getElementById("mySelect");
+        	
+        	var transactionId=select.options[select.selectedIndex].value;
+        
+        	console.log(transactionId);
+        	var request=new XMLHttpRequest();
+        	request.open("GET","editTransaction?transactionId=" +transactionId);
+        	request.onreadystatechange = function() {
+        		if(this.readyState == 4 && this.status == 200){
+        			var result = this.responseText;
+        			result = JSON.parse(result);
+        	        var form='<form action="updateTransaction" method="post"><div class="col-md-10"><div class="form-group">';
+        	        form+='<label  style="color:black"><b>'+result["category"] +"-"+result["type"] +'</b></label></div></div>';
+        	        form+='<div class="col-md-10"><div class="form-group"> <label style="color:black"><b> Account ('+result["account"]+')</b></label></div></div>';
+        		    form+='<div class="col-md-10"><div class="form-group"><label style="color:black"><b>Amount<b></label>';
+                    form+='<input  name="amount" class="form-control" value='+ result["amount"] +'> </div></div>';
+        		    form+='<button type="submit" class="btn btn-fill" style=" background-color:rgba(55,56,102,0.8)">Update</button> </form>';
+        			        			body.innerHTML+=form;
+        				
+        		}
+        	}
+        	request.send();
+        	   	
+        }
+        
+     
+      
+      </script>
 
 	<!--  Charts Plugin -->
 	<script src="js/chartist.min.js"></script>

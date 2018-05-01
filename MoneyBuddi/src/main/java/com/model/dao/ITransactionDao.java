@@ -15,6 +15,7 @@ public interface ITransactionDao {
 	void addTransaction(Transaction transaction,Budget budget) throws SQLException;//budget is optional
 	void deleteTransaction(Transaction transaction) throws SQLException;
 	void changeTransaction(Transaction transaction) throws SQLException;
+	Transaction getTransactionById(long transactionId) throws SQLException, InvalidDataException;
 	Collection<Transaction> getAllTransactionsByUser(User u) throws SQLException,InvalidDataException;
 	ArrayList<Transaction> getAllIncomeTransactions(User u) throws Exception;
 	ArrayList<Transaction> getAllExpenseTransactions(User u) throws Exception;

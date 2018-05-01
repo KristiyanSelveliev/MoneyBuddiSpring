@@ -325,6 +325,27 @@ public class TransactionController {
 	}
 	
 	
+	@RequestMapping(value="/updateTransaction",method=RequestMethod.POST)
+	public String updateTransaction(HttpSession session,@RequestParam double amount) throws SQLException, InvalidDataException {
+		long transactionId=(long) session.getAttribute("transactionId");
+		Transaction transaction=transactionDao.getTransactionById(transactionId);
+		transaction.setAmount(amount);
+		transactionDao.changeTransaction(transaction);
+		
+		return "redirect:/transactions";
+		
+	}
+	
+	@RequestMapping(value="/deleteTransaction",method=RequestMethod.POST)
+	public String updateTransaction(HttpSession session,@RequestParam long id) throws SQLException, InvalidDataException {
+		
+		Transaction transaction=transactionDao.getTransactionById(id);
+		transactionDao.deleteTransaction(transaction);
+	   
+		return "redirect:/transactions";
+		
+	}
+	
 	
 	
 	
@@ -348,6 +369,8 @@ public class TransactionController {
 		 return transactionCount;	 
 	}
 	
+	
+
 	
 	
 
