@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -327,14 +328,15 @@ public class TransactionController {
 	
 	
 	
-	private HashMap<LocalDate,MyEntry> getTransactionsForStatistics(User user,LocalDate begin,LocalDate end) throws Exception{
-		 HashMap<LocalDate,MyEntry> transactionCount=new HashMap();
+	private TreeMap<LocalDate,MyEntry> getTransactionsForStatistics(User user,LocalDate begin,LocalDate end) throws Exception{
+		 TreeMap<LocalDate,MyEntry> transactionCount=new TreeMap();
 		 
 		 int incomes=0;
 		 int expenses=0;
 		 LocalDate currentDate=end;
 		 System.out.println( expenses=transactionDao.getExpenseByUserFromToDate(currentDate, currentDate, user.getId()).size());
 		 while(currentDate.isAfter(begin)) {
+			 
 			 expenses=transactionDao.getExpenseByUserFromToDate(currentDate, currentDate, user.getId()).size();
 			
 			 incomes=transactionDao.getIncomeByUserFromToDate(currentDate, currentDate,user.getId()).size();

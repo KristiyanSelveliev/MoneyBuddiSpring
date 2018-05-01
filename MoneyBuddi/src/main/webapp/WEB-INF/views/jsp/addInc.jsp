@@ -281,7 +281,7 @@
 			                                   
 			                                 <div class="row">
 			                                        <div class="col-md-8">
-			                                  			<button  submit" rel="tooltip" title="Create" class="btn btn-danger focus"  >Add </button>
+			                                  			<button  submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Add </button>
 			                                  			</div>
 			                                  </div>
                         					</form>
