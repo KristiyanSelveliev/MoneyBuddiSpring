@@ -153,8 +153,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
-                               <p>Account</p>
+                           <a href="profile">
+                               <p>My Profile</p>
                             </a>
                         </li>
                         <li class="dropdown">

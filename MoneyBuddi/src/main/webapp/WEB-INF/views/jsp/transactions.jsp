@@ -150,8 +150,8 @@
                     </li>
                     
                         <li>
-                           <a href="">
-                               <p>Account</p>
+                           <a href="profile">
+                               <p>My Profile</p>
                             </a>
                         </li>
 
