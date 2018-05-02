@@ -67,7 +67,7 @@ public class Budget {
 	
 	
 	public void setAmount(double amount) throws InvalidDataException {
-		if(amount<=0) {
+		if(amount<0) {
 		  throw new InvalidDataException("Budget amount can't be negative");
 		}
 		this.amount = amount;

@@ -9,14 +9,8 @@ public abstract class Transaction {
 
 	public enum TransactionType{
 		//transaction_type, transaction is income or expense
-		INCOME(1),EXPENSE(2);
-		private int id;
-		private TransactionType(int id) {
-			this.id=id;
-		}
-		public int getId() {
-			return id;
-		}
+		INCOME,EXPENSE
+		
 	}
 	
 	private long id;

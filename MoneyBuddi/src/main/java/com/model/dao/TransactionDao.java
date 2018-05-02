@@ -126,7 +126,7 @@ public class TransactionDao implements ITransactionDao {
 			ps.setLong(3, transaction.getCurrency().getId());
 			ps.setLong(4, transaction.getAccount().getId());
 			ps.setLong(5, transaction.getCategory().getId());
-			ps.setInt(6, transaction.getType().getId());
+			ps.setInt(6, transactionTypeDAO.getIdByTranscationType(transaction.getType()));
 			ps.setLong(7, transaction.getId());
 
 			ps.executeUpdate();
@@ -161,12 +161,6 @@ public class TransactionDao implements ITransactionDao {
 			return null;
 		}
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 

@@ -198,10 +198,10 @@
                                        <a class="text-muted" style="font-size: 130%;">${account.name}</a>
                                        <c:choose >
                                          <c:when test="${account.balance>0}"> 
-                                         <input type="number" name="balance" class="form-control"  style="font-size: 130%; color:green "value="${account.balance}">
+                                         <input type="value" name="balance" class="form-control"  style="font-size: 130%; color:green "value="${Math.round( account.balance* 100) / 100}">
                                           </c:when>
                                          <c:otherwise > 
-                                         <input type="number" name="balance" min="0" step="any" class="form-control"  style="font-size: 130%; color:red "value="${account.balance}">
+                                         <input type="value" name="balance" min="0" step="any" class="form-control"  style="font-size: 130%; color:red "value="${Math.round( account.balance* 100) / 100}">
                                           </c:otherwise>
                                        </c:choose> 
                                      
