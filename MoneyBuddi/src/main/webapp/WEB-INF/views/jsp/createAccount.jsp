@@ -183,7 +183,7 @@
 			                                   <div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Balance </a>
 			                                   </div>
-			                                   <input type="number"  name="balance" class="form-control"  style="font-size: 130%;" placeholder="Balance"> 
+			                                   <input type="number"  name="balance" class="form-control" min="0" step=".01" style="font-size: 130%;" placeholder="Balance"> 
 			                                   
 			                                  <button type="submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Create Account</button>
                         					</form>
@@ -201,7 +201,7 @@
                                          <input type="number" name="balance" class="form-control"  style="font-size: 130%; color:green "value="${account.balance}">
                                           </c:when>
                                          <c:otherwise > 
-                                         <input type="number" name="balance" class="form-control"  style="font-size: 130%; color:red "value="${account.balance}">
+                                         <input type="number" name="balance" min="0" step="any" class="form-control"  style="font-size: 130%; color:red "value="${account.balance}">
                                           </c:otherwise>
                                        </c:choose> 
                                      

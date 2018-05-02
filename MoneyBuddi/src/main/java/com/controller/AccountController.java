@@ -63,7 +63,7 @@ public class AccountController {
 		accountDao.addAccount(account);
 		request.setAttribute("Success", account);
 
-		return "createAccount";
+		return "redirect:/accounts";
 	}
 	
 	@RequestMapping(value= "/updateAccount", method = RequestMethod.POST)

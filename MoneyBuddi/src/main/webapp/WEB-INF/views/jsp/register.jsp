@@ -48,7 +48,7 @@
       </div>
        
       <div class="form-group has-feedback">
-        <input type="number" pattern="(1[4-9]|[2-9][0-9]|100)" title="Age must be number between 14 and 100." class="form-control" name="age"placeholder="Age" required>
+        <input type="number" min="14" max="100" class="form-control" name="age"placeholder="Age" required>
        
       </div>
       
