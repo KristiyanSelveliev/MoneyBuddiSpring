@@ -4,7 +4,6 @@ package com.controller;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.exceptions.InvalidDataException;
-import com.model.Account;
 import com.model.Budget;
 import com.model.Category;
 import com.model.Currency;

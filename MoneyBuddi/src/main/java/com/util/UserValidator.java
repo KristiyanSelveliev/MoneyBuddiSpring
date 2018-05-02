@@ -5,7 +5,7 @@ import com.exceptions.InvalidDataException;
 public class UserValidator {
 	
 	private static final String EMAIL_REGEX = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
-	private static final int USERNAME_MIN_LENGTH=5;
+	//private static final int USERNAME_MIN_LENGTH=5;
 	private static final String USERNAME_REGEX = "^[0-9a-zA-Z]{5,45}";
 	private static final String PASSWORD_REGEX = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.-^*()%!])(?=\\S+$).{8,45}";
 	private static final int MIN_AGE=14;

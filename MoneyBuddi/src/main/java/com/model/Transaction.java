@@ -2,7 +2,6 @@ package com.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.exceptions.InvalidDataException;
 

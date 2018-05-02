@@ -1,23 +1,19 @@
 package com.model.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
-import com.controller.manager.DBManager;
 import com.model.Account;
-import com.model.Currency;
 import com.model.User;
+
 @Component
 public class AccountDao implements IAccountDao {
 	@Autowired

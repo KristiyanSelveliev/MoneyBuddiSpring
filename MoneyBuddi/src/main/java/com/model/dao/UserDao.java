@@ -8,15 +8,12 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
-import com.controller.manager.DBManager;
 import com.exceptions.InvalidDataException;
 import com.model.User;
 import com.util.security.BCrypt;
 
-import java.sql.Connection;
 @Component
 public class UserDao implements IUserDao {
 	

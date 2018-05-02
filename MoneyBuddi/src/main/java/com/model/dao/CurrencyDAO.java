@@ -1,6 +1,5 @@
 package com.model.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +9,8 @@ import java.util.Collection;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
-import com.controller.manager.DBManager;
 import com.model.Currency;
 import com.model.Currency.CurrencyType;
 
@@ -68,7 +65,7 @@ public class CurrencyDAO implements ICurrencyDAO{
 
 	@Override
 	public Collection<Currency> getAllCurrencies() throws SQLException {
-		Collection<Currency> currencies=new ArrayList();
+		Collection<Currency> currencies=new ArrayList<Currency>();
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,type FROM currencies ")){
 		
 			

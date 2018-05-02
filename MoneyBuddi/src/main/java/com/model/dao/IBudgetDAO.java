@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import com.exceptions.InvalidDataException;
 import com.model.Budget;
-import com.model.User;
 
 public interface IBudgetDAO {
 	

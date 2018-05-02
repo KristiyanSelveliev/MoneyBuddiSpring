@@ -3,7 +3,6 @@ package com.controller;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -34,7 +33,6 @@ import com.model.dao.BudgetDao;
 import com.model.dao.CategoryDAO;
 import com.model.dao.CurrencyDAO;
 import com.model.dao.TransactionDao;
-import com.model.dao.UserDao;
 
 @Controller
 public class TransactionController {
@@ -43,8 +41,6 @@ public class TransactionController {
 	private TransactionDao transactionDao;
 	@Autowired
 	private CategoryDAO categoryDao;
-	@Autowired
-	private UserDao userDao;
 	@Autowired
 	private AccountDao accountDao;
 	@Autowired
@@ -78,10 +74,6 @@ public class TransactionController {
 	
 	}
 	
-	
-	
-	
-	
 	@RequestMapping(value = "/transactions", method = RequestMethod.GET)
     public String transactions(HttpSession session,HttpServletRequest request) throws Exception {
 		 User u=(User) session.getAttribute("user");
@@ -97,14 +89,10 @@ public class TransactionController {
 		int transactionsCountExpense = 0;
 		// income
 		for (Transaction t : incomes) {
-			
-			
 			transactionsCountIncome++;
 		}
 		// expense
 		for (Transaction t : expenses) {
-			
-		
 			transactionsCountExpense++;
 		}
 		
@@ -129,8 +117,6 @@ public class TransactionController {
 		ArrayList<Transaction> expenses=transactionDao.getAllExpenseTransactions(u);
 		ArrayList<Transaction> incomes=transactionDao.getAllIncomeTransactions(u);
 		
-		
-		
 		int transactionsCountIncome = 0;
 		int transactionsCountExpense = 0;
 		// income
@@ -154,10 +140,6 @@ public class TransactionController {
 		
 		return "transactions";
 	}
-	
-	
-	
-	
 	
 	@RequestMapping(value = "/addIncome", method = RequestMethod.GET)
     public String income(HttpSession session,HttpServletRequest request) throws Exception {
@@ -224,8 +206,6 @@ public class TransactionController {
 		
 	}
 	
-	
-	
 	@RequestMapping(value = "/addBudgetExpense", method = RequestMethod.POST)
 	public String createBudgetExpense(
 			@RequestParam long budgetId,
@@ -257,9 +237,6 @@ public class TransactionController {
 		
 	}
 	
-	
-	
-	
 	@RequestMapping(value = "/addIncome", method = RequestMethod.POST)
 	public String createIncome(
 			@RequestParam long categoryId,
@@ -281,17 +258,12 @@ public class TransactionController {
 			  categoryDao.getCategoryByID(categoryId));
 	  
 	  transactionManager.addTransaction(income, null);
-
-	  
 	  
 	  request.setAttribute("accountAmount", CurrencyConverter.convert(amount, transactionCurrency, account.getCurrency()));
 	  request.setAttribute("currency", account.getCurrency());
 	  
 	  return income(session,request);
-		
-		
 	}
-	
 	
 	@RequestMapping(value = "/addBudgetIncome", method = RequestMethod.POST)
 	public String createBudgetIncome(
@@ -321,9 +293,7 @@ public class TransactionController {
 	  request.setAttribute("budgetCurrency", budget.getCurrency());
 	  
 	  return expense(session,request);
-		
 	}
-	
 	
 	@RequestMapping(value="/updateTransaction",method=RequestMethod.POST)
 	public String updateTransaction(HttpSession session,@RequestParam double amount) throws SQLException, InvalidDataException {
@@ -333,7 +303,6 @@ public class TransactionController {
 		transactionDao.changeTransaction(transaction);
 		
 		return "redirect:/transactions";
-		
 	}
 	
 	@RequestMapping(value="/deleteTransaction",method=RequestMethod.POST)
@@ -343,11 +312,7 @@ public class TransactionController {
 		transactionDao.deleteTransaction(transaction);
 	   
 		return "redirect:/transactions";
-		
 	}
-	
-	
-	
 	
 	private TreeMap<LocalDate,MyEntry> getTransactionsForStatistics(User user,LocalDate begin,LocalDate end) throws Exception{
 		 TreeMap<LocalDate,MyEntry> transactionCount=new TreeMap();
@@ -369,9 +334,4 @@ public class TransactionController {
 		 return transactionCount;	 
 	}
 	
-	
-
-	
-	
-
 }

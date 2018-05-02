@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.exceptions.InvalidDataException;
 import com.model.Account;
-import com.model.Currency;
 import com.model.User;
 
 public interface IAccountDao {

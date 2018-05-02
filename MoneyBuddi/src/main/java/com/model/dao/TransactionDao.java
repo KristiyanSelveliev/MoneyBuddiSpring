@@ -180,7 +180,7 @@ public class TransactionDao implements ITransactionDao {
 
 	@Override
 	public ArrayList<Transaction> getAllTransactionsByUser(User u) throws SQLException, InvalidDataException {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where account_id in(select id from accounts where user_id=?)")) {
@@ -212,7 +212,7 @@ public class TransactionDao implements ITransactionDao {
 
 	@Override
 	public ArrayList<Transaction> getAllExpenseTransactions(User u) throws Exception {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		// the id of expense in my db is 2
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
@@ -235,7 +235,7 @@ public class TransactionDao implements ITransactionDao {
 
 	@Override
 	public ArrayList<Transaction> getAllIncomeTransactions(User u) throws Exception {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		// the id of income in my db is 1
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
@@ -261,7 +261,7 @@ public class TransactionDao implements ITransactionDao {
 			throws SQLException, InvalidDataException {
 		LocalDate now = LocalDate.now();
 		LocalDate begin = now.minusDays(days);// this will show only the transaction from the begin date to now
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where date>? and account_id in(select id from accounts where user_id=?)")) {
@@ -297,7 +297,7 @@ public class TransactionDao implements ITransactionDao {
 	public ArrayList<Transaction> getAllTransactionsByUserAndDate(User u, LocalDate date)
 			throws SQLException, InvalidDataException {
 
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps =db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
 						+ "Where date=? and account_id in(select id from accounts where user_id=?)")) {
@@ -332,7 +332,7 @@ public class TransactionDao implements ITransactionDao {
 	@Override
 	public ArrayList<Transaction> getExpenseByAccountFromToDate(LocalDate from, LocalDate to,
 			long accountId) throws Exception {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 						+ "transaction_type_id FROM transactions "
@@ -361,7 +361,7 @@ public class TransactionDao implements ITransactionDao {
 	@Override
 	public ArrayList<Transaction> getIncomeByAccountFromToDate(LocalDate from, LocalDate to,
 			long accountId) throws Exception {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps = db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 						+ "transaction_type_id FROM transactions "
@@ -390,7 +390,7 @@ public class TransactionDao implements ITransactionDao {
 
 	@Override
 	public ArrayList<Transaction> getShortIncomeByAccountFromToDate(LocalDate from, LocalDate to, long accountId) throws Exception {
-	ArrayList<Transaction> transactions = new ArrayList();
+	ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 	try (PreparedStatement ps = db.getConnection().prepareStatement(
 			"SELECT amount,category_id FROM transactions "
 					+ "Where (date BETWEEN ? AND ?) "
@@ -417,7 +417,7 @@ public class TransactionDao implements ITransactionDao {
 	@Override
 	public ArrayList<Transaction> getIncomeByUserFromToDate(LocalDate from, LocalDate to, long userId)
 			throws Exception {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps =db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 		                         + "transaction_type_id FROM transactions "
@@ -453,7 +453,7 @@ public class TransactionDao implements ITransactionDao {
 	@Override
 	public ArrayList<Transaction> getExpenseByUserFromToDate(LocalDate from, LocalDate to, long userId)
 			throws Exception {
-		ArrayList<Transaction> transactions = new ArrayList();
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try (PreparedStatement ps =db.getConnection().prepareStatement(
 				"SELECT id,amount,date,currency_id,account_id,category_id,"
 		                         + "transaction_type_id FROM transactions "

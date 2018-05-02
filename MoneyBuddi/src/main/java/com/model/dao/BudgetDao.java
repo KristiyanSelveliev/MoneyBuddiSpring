@@ -1,6 +1,5 @@
 package com.model.dao;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,13 +10,11 @@ import java.util.Collection;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import com.exceptions.InvalidDataException;
 import com.model.Budget;
 import com.model.Transaction.TransactionType;
-import com.model.User;
 @Component
 public class BudgetDao implements IBudgetDAO{
 	@Autowired
@@ -142,7 +139,7 @@ public class BudgetDao implements IBudgetDAO{
 	@Override
 	public Collection<Budget> getAllExpenseBudgetForUser(long userId) throws SQLException, InvalidDataException {
 		ArrayList<Budget> allBudgets=(ArrayList<Budget>) this.getAllBudgetsForUser(userId);
-		ArrayList<Budget> expenseBudgets=new ArrayList();
+		ArrayList<Budget> expenseBudgets=new ArrayList<Budget>();
 		for(Budget budget:allBudgets) {
 			if(budget.getCategory().getType().equals(TransactionType.EXPENSE)) {
 				expenseBudgets.add(budget);
@@ -155,7 +152,7 @@ public class BudgetDao implements IBudgetDAO{
 	@Override
 	public Collection<Budget> getAllIncomeBudgetForUser(long userId) throws SQLException, InvalidDataException {
 		ArrayList<Budget> allBudgets=(ArrayList<Budget>) this.getAllBudgetsForUser(userId);
-		ArrayList<Budget> incomeBudgets=new ArrayList();
+		ArrayList<Budget> incomeBudgets=new ArrayList<Budget>();
 		for(Budget budget:allBudgets) {
 			if(budget.getCategory().getType().equals(TransactionType.INCOME)) {
 				incomeBudgets.add(budget);
