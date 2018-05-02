@@ -91,6 +91,6 @@ public class BudgetController {
 	public String deleteBudget(@RequestParam int id) throws SQLException, InvalidDataException {
 		budgetDAO.deleteBudget(id);
 		
-		return "budgetss";
+		return "redirect:/budgets";
 	}
 }

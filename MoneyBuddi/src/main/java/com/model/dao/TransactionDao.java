@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.controller.manager.TransactionFactory;
 import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Budget;
@@ -41,6 +42,9 @@ public class TransactionDao implements ITransactionDao {
 	
 	@Autowired 
 	private TransactionTypeDAO transactionTypeDAO;
+	
+	@Autowired
+	TransactionFactory transactionFactory;
 	
 	@Autowired
 	private DataSource db;
@@ -145,25 +149,13 @@ public class TransactionDao implements ITransactionDao {
 			ps.setLong(1, transactionId);
 			try(ResultSet rs=ps.executeQuery()) {
 				if(rs.next()) {
-					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.EXPENSE)) {
-						
-						        return new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id")));
-						        
-					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.INCOME)) {
-						
-						        return new Income(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id")));
-
-					}
+					return transactionFactory.createTransaction(
+							transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id")), 
+							rs.getLong("id"), rs.getDouble("amount"),
+							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
+						    accountDAO.getAccountById(rs.getLong("account_id")),
+							rs.getDate("date").toLocalDate(),
+							categoryDAO.getCategoryByID(rs.getLong("category_id")));
 				}
 			}
 			return null;
@@ -187,22 +179,13 @@ public class TransactionDao implements ITransactionDao {
 			ps.setLong(1, u.getId());
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.EXPENSE)) {
-						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
-					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.INCOME)) {
-						transactions.add(new Income(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
-
-					}
+					transactions.add(transactionFactory.createTransaction(
+							transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id")), 
+							rs.getLong("id"), rs.getDouble("amount"),
+							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
+						    accountDAO.getAccountById(rs.getLong("account_id")),
+							rs.getDate("date").toLocalDate(),
+							categoryDAO.getCategoryByID(rs.getLong("category_id"))));
 				}
 			}
 
@@ -256,42 +239,6 @@ public class TransactionDao implements ITransactionDao {
 		return transactions;
 	}
 
-	@Override
-	public ArrayList<Transaction> getAllTransactionsByUserFiltered(User u, int days)
-			throws SQLException, InvalidDataException {
-		LocalDate now = LocalDate.now();
-		LocalDate begin = now.minusDays(days);// this will show only the transaction from the begin date to now
-		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-		try (PreparedStatement ps = db.getConnection().prepareStatement(
-				"SELECT id,amount,date,currency_id,account_id,category_id," + "transaction_type_id FROM transactions "
-						+ "Where date>? and account_id in(select id from accounts where user_id=?)")) {
-			ps.setDate(1, Date.valueOf(begin));
-			ps.setLong(2, u.getId());
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.EXPENSE)) {
-						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
-
-					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.INCOME)) {
-						transactions.add(new Income(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
-
-					}
-				}
-			}
-
-		}
-		return transactions;
-	}
 
 	@Override
 	public ArrayList<Transaction> getAllTransactionsByUserAndDate(User u, LocalDate date)
@@ -305,23 +252,15 @@ public class TransactionDao implements ITransactionDao {
 			ps.setLong(2, u.getId());
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.EXPENSE)) {
-						transactions.add(new Expense(rs.getLong("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
+					transactions.add(transactionFactory.createTransaction(
+							transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id")), 
+							rs.getLong("id"), rs.getDouble("amount"),
+							currencyDAO.getCurrencyById(rs.getLong("currency_id")),
+						    accountDAO.getAccountById(rs.getLong("account_id")),
+							rs.getDate("date").toLocalDate(),
+							categoryDAO.getCategoryByID(rs.getLong("category_id"))));
+					
 
-					} else if (transactionTypeDAO.getTypeById(rs.getInt("transaction_type_id"))
-							.equals(TransactionType.INCOME)) {
-						transactions.add(new Income(rs.getInt("id"), rs.getDouble("amount"),
-								currencyDAO.getCurrencyById(rs.getLong("currency_id")),
-								accountDAO.getAccountById(rs.getLong("account_id")),
-								rs.getDate("date").toLocalDate(),
-								categoryDAO.getCategoryByID(rs.getLong("category_id"))));
-
-					}
 				}
 			}
 
