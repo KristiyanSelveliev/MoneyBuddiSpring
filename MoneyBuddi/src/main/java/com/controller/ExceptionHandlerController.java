@@ -11,8 +11,6 @@ public class ExceptionHandlerController {
 	
 	@ExceptionHandler(value=Exception.class)
 	public String error(HttpServletRequest request,Exception e) {
-		
-	   
 		request.setAttribute("exception", e);
 		return "error";
 	}
