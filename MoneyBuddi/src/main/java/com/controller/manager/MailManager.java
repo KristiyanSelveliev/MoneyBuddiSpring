@@ -1,5 +1,7 @@
 package com.controller.manager;
 
+
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -11,13 +13,29 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Component;
+
+import com.model.User;
+import com.model.dao.UserDao;
+
+
+@Component
 public class MailManager {
+	
+	@Autowired
+	private  UserDao userDAO;
+	
+	//EMAIL
+	private static final String SUBJECT="Transactions!";
+	private static final String MESSAGE="Reminder!!You have been inactive with your transactions  !! ";
 	
 	private static final String EMAIL_USERNAME="MoneyBuddii1@gmail.com";
     private static final String PASSWORD="ittstudent-123";
     
     
+ 
     
     public static void sendMail(String receiver,String subject,String msg) {
     	Properties props = new Properties();
@@ -54,5 +72,31 @@ public class MailManager {
         }
 
     }
+
+
+
+
+	public  void sendEmailToAllInactiveUsers()  {
+		try {
+        ArrayList<User> users=userDAO.getAllUsers();
+        //TODO
+        //need to add new field in db 
+        //Get the time when the user made  his last transaction 
+        //if it is done more than a certain amount 
+        //an email must be send to the user
+        
+        for(User u:users) {
+        	sendMail(u.getEmail(),SUBJECT,MESSAGE);
+        }
+        
+        
+        
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	
 
 }
