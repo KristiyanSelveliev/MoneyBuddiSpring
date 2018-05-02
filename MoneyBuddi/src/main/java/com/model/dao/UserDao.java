@@ -25,27 +25,31 @@ public class UserDao implements IUserDao {
 
 	@Override
 	public synchronized void saveUser(User u) throws SQLException {
-		PreparedStatement s = db.getConnection().prepareStatement(
-				"INSERT INTO users (username, " + "password, email, age)" 
-		+ " VALUES (?,?,?,?)",
-				Statement.RETURN_GENERATED_KEYS);
-		s.setString(1, u.getUsername());
-		s.setString(2, u.getPassword());
-		s.setString(3, u.getEmail());
-		s.setInt(4, u.getAge());
+		PreparedStatement s=null;
+		try {
+			 s= db.getConnection().prepareStatement(
+					"INSERT INTO users (username, " + "password, email, age)" 
+			+ " VALUES (?,?,?,?)",
+					Statement.RETURN_GENERATED_KEYS);
+			s.setString(1, u.getUsername());
+			s.setString(2, u.getPassword());
+			s.setString(3, u.getEmail());
+			s.setInt(4, u.getAge());
 
-		int rows = s.executeUpdate();
-		if (rows == 0) {
-			// if user is not inserted, throw exception
-			throw new SQLException("User was not inserted in DB.");
+			int rows = s.executeUpdate();
+			if (rows == 0) {
+				// if user is not inserted, throw exception
+				throw new SQLException("User was not inserted in DB.");
+			}
+
+			// retrieve user`s id
+			ResultSet generatedKey = s.getGeneratedKeys();
+			generatedKey.next();
+			u.setId(generatedKey.getLong(1));
+		}finally {
+			s.close();
 		}
 
-		// retrieve user`s id
-		ResultSet generatedKey = s.getGeneratedKeys();
-		generatedKey.next();
-		u.setId(generatedKey.getLong(1));
-
-		s.close();
 		System.out.println("Saved user in DB");
 	}
 
@@ -140,13 +144,14 @@ public class UserDao implements IUserDao {
 	public boolean checkIfEmailExists(String email) throws SQLException {
 		// checks if the email already exists in DB
 		// returns number of affected rows from the query
-		PreparedStatement ps =db.getConnection().prepareStatement("SELECT id FROM" + " users WHERE email=?");
-		ps.setString(1, email);
-		ResultSet rs= ps.executeQuery();
-		if(rs.next()) {
-			return true;
+		try(PreparedStatement ps =db.getConnection().prepareStatement("SELECT id FROM" + " users WHERE email=?");){
+			ps.setString(1, email);
+			ResultSet rs= ps.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+			return false;
 		}
-		return false;
 	}
 	
 	@Override
@@ -179,26 +184,27 @@ public class UserDao implements IUserDao {
 	InvalidDataException {
 		String sql = "SELECT id, username, password, email, age FROM users WHERE username = ?";
 				
-		PreparedStatement ps = db.getConnection().prepareStatement(sql);
-		ps.setString(1, username);
-		
-		ResultSet result = ps.executeQuery();
-		if(result.next()) {
-			String hashed=result.getString("password");
-			if(BCrypt.checkpw(pass, hashed)) {
-			return new User(result.getLong("id"),
-					result.getString("username"),
-					result.getString("password"),
-					result.getString("email"),
-					result.getInt("age"));
+		try(PreparedStatement ps = db.getConnection().prepareStatement(sql);){
+			ps.setString(1, username);
+			
+			ResultSet result = ps.executeQuery();
+			if(result.next()) {
+				String hashed=result.getString("password");
+				if(BCrypt.checkpw(pass, hashed)) {
+				return new User(result.getLong("id"),
+						result.getString("username"),
+						result.getString("password"),
+						result.getString("email"),
+						result.getInt("age"));
+					}
 				}
-			}
-		return null;
+			return null;
+		}
 	}
 
 	@Override
 	public ArrayList<User> getAllUsers() throws SQLException, InvalidDataException {
-		ArrayList<User> users=new ArrayList();
+		ArrayList<User> users=new ArrayList<User>();
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,username,password,email,age FROM users")){
 			try(ResultSet rs=ps.executeQuery()){
 				while(rs.next()) {

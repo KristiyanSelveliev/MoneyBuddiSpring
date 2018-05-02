@@ -23,9 +23,7 @@ import com.model.dao.TransactionDao;
 @RestController
 public class TableController {
 	
-	
-	
-	public static class Helper{
+	public static class TransactionDTO{
 		
 		public long id;
 		public String category;
@@ -34,7 +32,7 @@ public class TableController {
 		public String date;
 		public String type;
 		
-		public Helper(long id, String category, double amount, String account, String date) {
+		public TransactionDTO(long id, String category, double amount, String account, String date) {
 			
 			this.id = id;
 			this.category = category;
@@ -42,23 +40,19 @@ public class TableController {
 			this.account = account;
 			this.date = date;
 		}
-		public Helper(long id, String category, double amount, String account, String date,String type) {
+		public TransactionDTO(long id, String category, double amount, String account, String date,String type) {
 			this(id, category, amount, account, date);
 			this.type=type;
 			
 		}
 	}
-		
-	
-
-		
 	
 	@Autowired
 	TransactionDao transactionDAO;
 	
 	@RequestMapping(value = "/userExpense", method = RequestMethod.GET)
 	@ResponseBody
-	 public ArrayList<Helper> userExpense(
+	 public ArrayList<TransactionDTO> userExpense(
 			 @RequestParam String begin,
 			 @RequestParam String end,
 			 HttpSession session) throws Exception {
@@ -71,10 +65,10 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getExpenseByUserFromToDate(from, to, user.getId());
 		this.transactionOrderer(transactions);
 		
-		ArrayList<Helper> helpers =new ArrayList();
+		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
 		System.out.println(1);
 		for(Transaction t:transactions) {
-		helpers.add(new Helper(
+		helpers.add(new TransactionDTO(
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
@@ -87,7 +81,7 @@ public class TableController {
 	
 	@RequestMapping(value = "/userIncome", method = RequestMethod.GET)
 	@ResponseBody
-	 public ArrayList<Helper> userIncome(
+	 public ArrayList<TransactionDTO> userIncome(
 			 @RequestParam String begin,
 			 @RequestParam String end,
 			 HttpSession session) throws Exception {
@@ -99,10 +93,10 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getIncomeByUserFromToDate(from, to, user.getId());
 		this.transactionOrderer(transactions);
 		
-		ArrayList<Helper> helpers =new ArrayList();
+		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
 		
 		for(Transaction t:transactions) {
-		helpers.add(new Helper(
+		helpers.add(new TransactionDTO(
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
@@ -113,11 +107,9 @@ public class TableController {
 		return helpers;
 	}
 	
-	
-	
 	@RequestMapping(value = "/accIncome", method = RequestMethod.GET)
 	@ResponseBody
-	 public ArrayList<Helper> accIncome(
+	 public ArrayList<TransactionDTO> accIncome(
 			 @RequestParam String begin,
 			 @RequestParam String end,
 			 @RequestParam long id) throws Exception {
@@ -129,9 +121,9 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getIncomeByAccountFromToDate(from, to, id);
 		this.transactionOrderer(transactions);
 		
-		ArrayList<Helper> helpers =new ArrayList();
+		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
 		for(Transaction t:transactions) {
-		helpers.add(new Helper(
+		helpers.add(new TransactionDTO(
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
@@ -144,7 +136,7 @@ public class TableController {
 	
 	@RequestMapping(value = "/accExpense", method = RequestMethod.GET)
 	@ResponseBody
-	 public ArrayList<Helper> accExpense(
+	 public ArrayList<TransactionDTO> accExpense(
 			 @RequestParam String begin,
 			 @RequestParam String end,
 			 @RequestParam long id) throws Exception {
@@ -156,9 +148,9 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getExpenseByAccountFromToDate(from, to, id);
 		this.transactionOrderer(transactions);
 		
-		ArrayList<Helper> helpers =new ArrayList();
+		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
 		for(Transaction t:transactions) {
-		helpers.add(new Helper(
+		helpers.add(new TransactionDTO(
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
@@ -169,19 +161,16 @@ public class TableController {
 		return helpers;
 	}
 	
-	
-	
-	
 	@RequestMapping(value="showTransactions",method=RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<Helper> showTransactions(
+	public ArrayList<TransactionDTO> showTransactions(
 			@RequestParam String date,
 			HttpSession session ) throws SQLException, InvalidDataException{
 		User user=(User) session.getAttribute("user");
 		ArrayList<Transaction> transactions=transactionDAO.getAllTransactionsByUserAndDate(user,LocalDate.parse(date));
-		ArrayList<Helper> helpers =new ArrayList();
+		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
 		for(Transaction t:transactions) {
-			helpers.add(new Helper(
+			helpers.add(new TransactionDTO(
 					      t.getId(),
 					      t.getCategory().getCategory(),
 					      t.getAmount(),
@@ -190,13 +179,11 @@ public class TableController {
 			              t.getType().toString()));
 			}
 			return helpers;
-		
-		
 	}
 	
-	@RequestMapping(value="editTransaction",method=RequestMethod.GET)
+	@RequestMapping(value="editTransaction",method=RequestMethod.POST)
 	@ResponseBody
-	public Helper editTransaction(
+	public TransactionDTO editTransaction(
 			@RequestParam long transactionId,
 			HttpSession session ) throws SQLException, InvalidDataException{
 		User user=(User) session.getAttribute("user");
@@ -205,7 +192,7 @@ public class TableController {
 		
 		
            if(transaction!=null) {	
-			return new Helper(
+			return new TransactionDTO(
 				      transaction.getId(),
 				      transaction.getCategory().getCategory(),
 				      transaction.getAmount(),
@@ -214,14 +201,7 @@ public class TableController {
 			          transaction.getType().toString());
            }
            return null;
-		
-		
 	}
-	
-	
-		
-	
-	
 	
 	private  void  transactionOrderer(ArrayList<Transaction> transactions) {
 		 

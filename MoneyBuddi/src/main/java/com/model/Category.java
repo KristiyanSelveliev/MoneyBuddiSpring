@@ -67,9 +67,4 @@ public class Category {
 		this.userId = userId;
 	}
 	
-	
-	
-	
-	
-
 }

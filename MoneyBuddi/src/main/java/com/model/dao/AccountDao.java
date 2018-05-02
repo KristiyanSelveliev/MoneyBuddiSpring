@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.User;
 
@@ -59,28 +60,30 @@ public class AccountDao implements IAccountDao {
 
 	@Override
 	public void updateAccount(Account account) throws SQLException {
-		PreparedStatement ps=db.getConnection().prepareStatement("UPDATE accounts SET "
+		try(PreparedStatement ps=db.getConnection().prepareStatement("UPDATE accounts SET "
 				+ "name=?, balance=?, user_id=?, currency_id=? "
-				+ "WHERE id=?");
-		ps.setString(1, account.getName());
-		ps.setDouble(2, account.getBalance());
-		ps.setLong(3, account.getUser().getId());
-		ps.setLong(4, account.getCurrencyId());
-		ps.setLong(5, account.getId());
-		ps.executeUpdate();
+				+ "WHERE id=?");){
+			ps.setString(1, account.getName());
+			ps.setDouble(2, account.getBalance());
+			ps.setLong(3, account.getUser().getId());
+			ps.setLong(4, account.getCurrencyId());
+			ps.setLong(5, account.getId());
+			ps.executeUpdate();
+		}
+		
 	}
 
 	@Override
 	public void deleteAccount(int id) throws SQLException {
-		String sql="DELETE FROM accounts WHERE id=?";
-		PreparedStatement ps=db.getConnection().prepareStatement(sql);
-		ps.setLong(1, id);
-		ps.executeUpdate();
-		ps.close();
+		try(PreparedStatement ps=db.getConnection().prepareStatement("DELETE FROM accounts WHERE id=?");){
+			ps.setLong(1, id);
+			ps.executeUpdate();
+			ps.close();
+		}
 	}
 
 	@Override
-	public Account getAccountByName(String name, User u) throws Exception {
+	public Account getAccountByName(String name, User u) throws SQLException,InvalidDataException {
 		Account account = null;
 		PreparedStatement ps = null;
 		try {
@@ -99,9 +102,6 @@ public class AccountDao implements IAccountDao {
 			}else {
 				throw new SQLException("No such account");
 			}
-			
-			
-			
 		} finally {
 			ps.close();
 		}

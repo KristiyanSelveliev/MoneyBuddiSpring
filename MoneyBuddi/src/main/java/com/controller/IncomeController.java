@@ -41,9 +41,8 @@ public class IncomeController {
 	private TransactionManager transactionManager;
 	
 	@RequestMapping(value = "/addincome", method = RequestMethod.GET)
-	public String showExpenseCategories(HttpSession session, HttpServletRequest request) {
+	public String showExpenseCategories(HttpSession session, HttpServletRequest request) throws Exception {
 		// retrieve all categories from db and pass them to the request
-		try {
 			// get all categories
 			// get the user id from session and then retrieve from db by that id
 			User user = (User) session.getAttribute("user");
@@ -55,10 +54,6 @@ public class IncomeController {
 			// add them to request
 			request.setAttribute("categories", categories);
 			return "addincome";
-		} catch (Exception e) {
-			request.setAttribute("exception", e);
-			return "error";
-		}
 	}
 
 	@RequestMapping(value = "/addincome", method = RequestMethod.POST)
@@ -94,18 +89,13 @@ public class IncomeController {
 	}
 	
 	@RequestMapping(value = "/showIncome", method = RequestMethod.GET)
-	public String showExpense( HttpServletRequest request, HttpSession session) {
-		try {
+	public String showExpense(HttpServletRequest request, HttpSession session) throws Exception {
 			  //show expense for the selected account
 			  User user=(User)session.getAttribute("user");
 			  ArrayList<Transaction> incomeTransactions=transactionDao.getAllIncomeTransactions(user);
 			  //add them to request and forward it
 			  request.setAttribute("incomeTransactions", incomeTransactions);
 			  return "showIncomeTransactions";
-		  }catch(Exception e) {
-			  request.setAttribute("exception", e);
-			  return "error";
-		  }
 	}
 	
 }

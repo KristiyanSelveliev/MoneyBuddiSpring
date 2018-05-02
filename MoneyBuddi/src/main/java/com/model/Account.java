@@ -1,5 +1,7 @@
 package com.model;
 
+import com.exceptions.InvalidDataException;
+
 public class Account {
 	
 	private long id;
@@ -8,27 +10,27 @@ public class Account {
 	private User user;
 	private Currency currency;
 
-	private Account(long id, String name, double balance) throws com.exceptions.InvalidDataException {
+	private Account(long id, String name, double balance) throws InvalidDataException {
 		this.setId(id);
 		this.setName(name);
 		this.setBalance(balance);
 	}
 	public Account(long id, String name, double balance, User user, 
-			Currency currency) throws  com.exceptions.InvalidDataException {
+			Currency currency) throws  InvalidDataException {
 		this(id, name, balance);
 		this.setUser(user);
 		this.setCurrency(currency);
 	}
 	
 	public Account(long id, String name, double balance,long user_id, int currency_id)
-			throws  com.exceptions.InvalidDataException {
+			throws  InvalidDataException {
 		this(id, name, balance);
 		this.user.setId(user_id);
 		this.currency.setId(currency_id);
 	}
 	
 	public Account(String name, double balance,User user, Currency currency)
-			throws  com.exceptions.InvalidDataException {
+			throws  InvalidDataException {
 		this.setName(name);
 		this.setBalance(balance);
 		this.setUser(user);
@@ -64,15 +66,15 @@ public class Account {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public void setUser(User user) throws com.exceptions.InvalidDataException {
+	public void setUser(User user) throws InvalidDataException {
 		if(user == null) {
-			throw new com.exceptions.InvalidDataException("User cannot be null.");
+			throw new InvalidDataException("User cannot be null.");
 		}
 		this.user = user;
 	}
-	public void setName(String name) throws com.exceptions.InvalidDataException {
+	public void setName(String name) throws InvalidDataException {
 		if(name==null || name.isEmpty()) {
-			throw new com.exceptions.InvalidDataException("The name of the transaction cannot be null or empty.");
+			throw new InvalidDataException("The name of the transaction cannot be null or empty.");
 		}
 		this.name = name;
 	}
@@ -81,9 +83,9 @@ public class Account {
 		this.currency.setId(id);;
 	}
 	
-	public void setCurrency(Currency currency) throws com.exceptions.InvalidDataException {
+	public void setCurrency(Currency currency) throws InvalidDataException {
 		if(currency==null) {
-			throw new com.exceptions.InvalidDataException("Currency cannot be null");
+			throw new InvalidDataException("Currency cannot be null");
 		}
 		
 		this.currency=currency;
