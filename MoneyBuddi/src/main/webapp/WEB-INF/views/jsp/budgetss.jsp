@@ -167,7 +167,7 @@
 			                                <a style="font-size: 140%;" class="col-md-10">Categories </a><br>
 			                                </div>
 			                                   <select  class="col-md-8" name="categoryId">
-			                                
+			                                  
 					                                <c:forEach var="category" items="${requestScope.categories }">
 					                                 <option value="${category.getId()}">${ category.getCategory() }-${category.getType().toString()} </option>
 					                                
@@ -207,11 +207,19 @@
                                 
                                    
                                     <div class="font-icon-detail">
-                                       <form action=budgetUpdate method="post">
+                                       <form action="budgetUpdate" method="post">
                                        <input type="hidden" name="id" value="${budget.getId() }">
-                                       <a class="text-muted" style="font-size: 130%;">${budget.getCategory().getCategory()}</a>
-                                      
-                                      <input type="number" name="amount" class="form-control"  style="font-size: 130%; "value="${budget.getAmount()}">
+                                       <p class="text-muted" style="font-size: 130%;">${budget.getCategory().getCategory()}</p>
+                                       
+                                        
+                                         <c:choose >
+                                         <c:when test="${budget.getCategory().getType().toString()=='INCOME'}"> 
+                                         <a class="text-muted" style="font-size: 130%; color:green" > ${budget.getCategory().getType().toString()}</a>
+                                          </c:when>
+                                         <c:otherwise > <a class="text-muted" style="font-size: 130%; color:red" > ${budget.getCategory().getType().toString()}</a>
+                                          </c:otherwise>
+                                       </c:choose> 
+                                      <input type="number" name="amount" class="form-control"  style="font-size: 130%; color:green "value="${budget.getAmount()}">
                                       <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
                                       <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>

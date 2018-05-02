@@ -193,12 +193,19 @@
                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                 
                                    <div class="font-icon-detail">
-                                       <form action=updateAccount method="post">
+                                       <form action="updateAccount" method="post">
                                        <input type="hidden" name="id" value="${account.id }">
                                        <a class="text-muted" style="font-size: 130%;">${account.name}</a>
-                                      
-                                      <input type="number" name="balance" class="form-control"  style="font-size: 130%; "value="${account.balance}">
-                                      <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
+                                       <c:choose >
+                                         <c:when test="${account.balance>0}"> 
+                                         <input type="number" name="balance" class="form-control"  style="font-size: 130%; color:green "value="${account.balance}">
+                                          </c:when>
+                                         <c:otherwise > 
+                                         <input type="number" name="balance" class="form-control"  style="font-size: 130%; color:red "value="${account.balance}">
+                                          </c:otherwise>
+                                       </c:choose> 
+                                     
+                                      <a style="font-size: 130%;">${account.getCurrency().getType().toString()} </a>
                                       <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>
                                     </div>
