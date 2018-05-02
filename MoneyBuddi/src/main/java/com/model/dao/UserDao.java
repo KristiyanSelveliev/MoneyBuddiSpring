@@ -4,19 +4,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 import org.springframework.stereotype.Component;
 
-import com.controller.manager.DBManager;
+
 import com.exceptions.InvalidDataException;
 import com.model.User;
 import com.util.security.BCrypt;
 
-import java.sql.Connection;
 @Component
 public class UserDao implements IUserDao {
 	
@@ -195,6 +195,24 @@ public class UserDao implements IUserDao {
 				}
 			}
 		return null;
+	}
+
+	@Override
+	public ArrayList<User> getAllUsers() throws SQLException, InvalidDataException {
+		ArrayList<User> users=new ArrayList();
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,username,password,email,age FROM users")){
+			try(ResultSet rs=ps.executeQuery()){
+				while(rs.next()) {
+					users.add(new User(
+							rs.getLong("id"),
+							rs.getString("username"),
+							rs.getString("password"),
+							rs.getString("email"),
+							rs.getInt("age")));
+				}
+			}
+		}
+		return users;
 	}
 	
 }

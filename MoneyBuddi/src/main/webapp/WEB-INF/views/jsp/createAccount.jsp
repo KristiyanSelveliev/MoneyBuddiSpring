@@ -189,7 +189,7 @@
                         					</form>
                         			</div>
                         		</div>
-                               <c:forEach var="budget" items="${requestScope.accounts }">
+                               <c:forEach var="account" items="${requestScope.accounts }">
                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                 
                                    <div class="font-icon-detail">

@@ -442,14 +442,14 @@
         			var result = this.responseText;
         			result = JSON.parse(result);
         			body.innerHTML ="";
-        	        var form='<form action="updateTransaction" method="post"><div class="col-md-10"><div class="form-group">';
+        	        var form='<form  action="updateTransaction" method="post"><div class="col-md-10"><div class="form-group">';
         	        form+='<label  style="color:black"><b>'+result["category"] +"-"+result["type"] +'</b></label></div></div>';
         	        form+='<div class="col-md-10"><div class="form-group"> <label style="color:black"><b> Account ('+result["account"]+')</b></label></div></div>';
         		    form+='<div class="col-md-10"><div class="form-group"><label style="color:black"><b>Amount<b></label>';
                     form+='<input  name="amount" class="form-control" value='+ result["amount"] +'> </div></div>';
-        		    form+='<button type="submit" class="btn btn-fill" style=" background-color:rgba(55,56,102,0.8)">Update</button> </form>';
+        		    form+='<button type="submit" class="btn btn-fill " style=" background-color:rgba(55,56,102,0.8); margin:10px;">Update</button> </form>';
         		    
-        		    form+='<form style="float:left;" action="deleteTransaction" method="post"> <button type="submit" class="btn btn-danger btn-fill">Delete</button></form>';
+        		    form+='<form style="float:left" action="deleteTransaction" method="post"> <button style="margin:10px" type="submit"  class="btn btn-fill btn-danger">Delete</button></form>';
         			body.innerHTML+=form;
         				
         		}
