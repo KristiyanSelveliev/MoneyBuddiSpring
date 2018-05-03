@@ -323,32 +323,6 @@ public class TransactionDao implements ITransactionDao {
 	}
 
 	@Override
-	public ArrayList<Transaction> getShortIncomeByAccountFromToDate(LocalDate from, LocalDate to, long accountId) throws Exception {
-	ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-	try (PreparedStatement ps = db.getConnection().prepareStatement(
-			"SELECT amount,category_id FROM transactions "
-					+ "Where (date BETWEEN ? AND ?) "
-					+ "AND transaction_type_id=? "
-					+ "AND account_id=? "
-					+ "")) {
-		ps.setDate(1, Date.valueOf(from));
-		ps.setDate(2, Date.valueOf(to));
-		ps.setInt(3, transactionTypeDAO.getIdByTranscationType(TransactionType.INCOME));
-		ps.setLong(4, accountId);
-		try (ResultSet rs = ps.executeQuery()) {
-			while (rs.next()) {
-					transactions.add(new Income(rs.getDouble("amount"),
-							categoryDAO.getCategoryByID(rs.getInt("category_id"))));
-
-			}
-		}
-
-	}
-	return transactions;
-	}
-
-
-	@Override
 	public ArrayList<Transaction> getIncomeByUserFromToDate(LocalDate from, LocalDate to, long userId)
 			throws Exception {
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();

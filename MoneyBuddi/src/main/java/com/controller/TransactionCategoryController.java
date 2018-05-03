@@ -31,29 +31,28 @@ public class TransactionCategoryController {
 	CategoryDAO categoryDao;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public String showTransactionTypes(HttpServletRequest request,HttpSession session) throws Exception {
+	public String showTransactionTypes(HttpServletRequest request, HttpSession session) throws Exception {
 
-        User user=(User) session.getAttribute("user");
-		
-		ArrayList<Category> incomeCategories=(ArrayList<Category>) categoryDao.getAllCategoriesByUserAndType(user, TransactionType.INCOME);
-		ArrayList<Category> expenseCategories=(ArrayList<Category>) categoryDao.getAllCategoriesByUserAndType(user, TransactionType.EXPENSE);
-		
-		ArrayList<TransactionType> types=(ArrayList<TransactionType>) transactionTypeDao.getAllTransactionTypes();
-		
+		User user = (User) session.getAttribute("user");
+
+		ArrayList<Category> incomeCategories = (ArrayList<Category>) categoryDao.getAllCategoriesByUserAndType(user,
+				TransactionType.INCOME);
+		ArrayList<Category> expenseCategories = (ArrayList<Category>) categoryDao.getAllCategoriesByUserAndType(user,
+				TransactionType.EXPENSE);
+
+		ArrayList<TransactionType> types = (ArrayList<TransactionType>) transactionTypeDao.getAllTransactionTypes();
+
 		request.setAttribute("expenses", categoryOrderer(expenseCategories));
-		
+
 		request.setAttribute("incomes", categoryOrderer(incomeCategories));
-        request.setAttribute("types", types);
-        
+		request.setAttribute("types", types);
+
 		return "createCategory";
 	}
 
 	@RequestMapping(value = "/createCategory", method = RequestMethod.POST)
-	public String createCategory(HttpServletRequest request,
-			@RequestParam String name,
-			@RequestParam String type
-			) throws Exception {
-		
+	public String createCategory(HttpServletRequest request, @RequestParam String name, @RequestParam String type)
+			throws Exception {
 
 		TransactionType transactionType = null;
 
@@ -68,53 +67,37 @@ public class TransactionCategoryController {
 		request.setAttribute("Success", category);
 		categoryDao.addCategory(category);
 
-		
 		return "redirect:/categories";
 	}
-	
-	
-	@RequestMapping(value="/categoryUpdate",method=RequestMethod.POST)
-	public String updateCategory(
-			@RequestParam long id,
-			@RequestParam String name
-			) throws Exception {
-		
-		 Category category=categoryDao.getCategoryByID(id);
-		 category.setCategory(name);
-		 categoryDao.updateCategory(category);
-		 
-		 return "redirect:/categories";
-		
-		
+
+	@RequestMapping(value = "/categoryUpdate", method = RequestMethod.POST)
+	public String updateCategory(@RequestParam long id, @RequestParam String name) throws Exception {
+
+		Category category = categoryDao.getCategoryByID(id);
+		category.setCategory(name);
+		categoryDao.updateCategory(category);
+
+		return "redirect:/categories";
 	}
-	
-	@RequestMapping(value="/categoryDelete",method=RequestMethod.POST)
-	public String updateCategory(
-			@RequestParam long id
-			) throws Exception {
-		
-		 
-		 
-		 categoryDao.deleteCategory(id);
-		 
-		 return "redirect:/categories";
-		
-		
+
+	@RequestMapping(value = "/categoryDelete", method = RequestMethod.POST)
+	public String updateCategory(@RequestParam long id) throws Exception {
+
+		categoryDao.deleteCategory(id);
+
+		return "redirect:/categories";
 	}
-	
-	
-	
-	
+
 	private ArrayList<Category> categoryOrderer(ArrayList<Category> categories) {
-		
-		Collections.sort(categories,new Comparator<Category>() {
+
+		Collections.sort(categories, new Comparator<Category>() {
 
 			@Override
 			public int compare(Category o1, Category o2) {
-				return (int) (o1.getUserId()-o2.getUserId());
+				return (int) (o1.getUserId() - o2.getUserId());
 			}
-		});			
-			
+		});
+
 		return categories;
 	}
 

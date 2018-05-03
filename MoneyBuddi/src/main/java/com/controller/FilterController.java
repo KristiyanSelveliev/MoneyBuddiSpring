@@ -39,8 +39,5 @@ public class FilterController {
 		request.setAttribute("accounts", accounts);
 		
 		return "tablelist";
-		
-		
-		
 	}
 }

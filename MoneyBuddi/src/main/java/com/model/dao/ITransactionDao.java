@@ -20,12 +20,10 @@ public interface ITransactionDao {
 	ArrayList<Transaction> getAllIncomeTransactions(User u) throws Exception;
 	ArrayList<Transaction> getAllExpenseTransactions(User u) throws Exception;
 	ArrayList<Transaction> getAllTransactionsByUserAndDate(User u, LocalDate date)throws SQLException, InvalidDataException;
+	
 	ArrayList<Transaction> getIncomeByAccountFromToDate(LocalDate from, LocalDate to,
 			long accountId) throws Exception;
 	ArrayList<Transaction> getExpenseByAccountFromToDate(LocalDate from, LocalDate to,
-			long accountId) throws Exception;
-	
-	ArrayList<Transaction> getShortIncomeByAccountFromToDate(LocalDate from, LocalDate to,
 			long accountId) throws Exception;
 	
 	ArrayList<Transaction> getIncomeByUserFromToDate(LocalDate from, LocalDate to,

@@ -18,8 +18,4 @@ public class Income extends Transaction{
 		
 	}
 	
-	public Income(double amount, Category category)throws InvalidDataException {
-		super(amount,category,TransactionType.INCOME);
-	}
-
 }
