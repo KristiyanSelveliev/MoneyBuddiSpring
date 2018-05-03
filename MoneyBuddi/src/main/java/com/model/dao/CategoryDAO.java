@@ -64,6 +64,23 @@ public class CategoryDAO implements ICategoryDAO{
 		}
 		
 	}
+	
+	@Override
+	public void updateCategory(Category category) throws SQLException {
+		try(PreparedStatement ps=db.getConnection().prepareStatement(
+				"UPDATE categories SET category=? "
+		 	   +"WHERE id=? ")){
+			
+			
+			ps.setString(1, category.getCategory());
+			ps.setLong(2, category.getId());
+			ps.executeUpdate();
+		}
+		
+	}
+	
+	
+	
 
 	@Override
 	public Collection<Category> getAllCategoriesByUser(User user) throws SQLException, InvalidDataException {
@@ -125,7 +142,8 @@ public class CategoryDAO implements ICategoryDAO{
 		}
 		
 	}
-	
+
+
 	
 
 }

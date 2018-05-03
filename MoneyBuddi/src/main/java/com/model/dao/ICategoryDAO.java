@@ -15,6 +15,8 @@ public interface ICategoryDAO {
 	
 	void deleteCategory(long id) throws SQLException; //User can only delete categories that he created and not the default ones
 	
+	void updateCategory(Category category) throws SQLException;
+	
 	Category getCategoryByID(long id) throws SQLException,InvalidDataException;
 	
 	Collection<Category> getAllCategoriesByUser(User user) throws SQLException,InvalidDataException;

@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -71,6 +72,35 @@ public class TransactionCategoryController {
 		return "redirect:/categories";
 	}
 	
+	
+	@RequestMapping(value="/categoryUpdate",method=RequestMethod.POST)
+	public String updateCategory(
+			@RequestParam long id,
+			@RequestParam String name
+			) throws Exception {
+		
+		 Category category=categoryDao.getCategoryByID(id);
+		 category.setCategory(name);
+		 categoryDao.updateCategory(category);
+		 
+		 return "redirect:/categories";
+		
+		
+	}
+	
+	@RequestMapping(value="/categoryDelete",method=RequestMethod.POST)
+	public String updateCategory(
+			@RequestParam long id
+			) throws Exception {
+		
+		 
+		 
+		 categoryDao.deleteCategory(id);
+		 
+		 return "redirect:/categories";
+		
+		
+	}
 	
 	
 	
