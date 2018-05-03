@@ -53,10 +53,11 @@ public class TransactionDao implements ITransactionDao {
 	@Override
 
 	public synchronized void addTransaction(Transaction transaction,Budget budget) throws SQLException {
+		PreparedStatement s=null;
 		try {
 			db.getConnection().setAutoCommit(false);
 
-		PreparedStatement s = db.getConnection().prepareStatement(
+		    s = db.getConnection().prepareStatement(
 				"INSERT INTO transactions (amount, date, currency_id,"
 				+ "account_id, category_id,transaction_type_id) "
 				+ "VALUES (?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
@@ -68,7 +69,6 @@ public class TransactionDao implements ITransactionDao {
 			s.setLong(5, transaction.getCategory().getId());
 			s.setInt(6, transactionTypeDAO.getIdByTranscationType(transaction.getType()));
 
-			System.out.println("transaction type: " + transaction.getType());
 			int rows = s.executeUpdate();
 			if (rows == 0) {
 				// if transaction is not inserted, throw exception
@@ -87,12 +87,13 @@ public class TransactionDao implements ITransactionDao {
 			}
 			db.getConnection().commit();
 
-			s.close();
+			
 			System.out.println("Transaction successfully added in DB");
 		} catch (SQLException e) {
 			db.getConnection().rollback();
 			throw new SQLException("Srry transaction can't be executed");
 		} finally {
+			s.close();
 			db.getConnection().setAutoCommit(true);
 		}
 

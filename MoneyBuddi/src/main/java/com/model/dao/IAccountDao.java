@@ -20,4 +20,5 @@ public interface IAccountDao {
 	Account getAccountByName(String name, User u) throws SQLException,InvalidDataException;
 	
 	List<Account> getAllAccountsForUser(User u) throws Exception;
+	
 }

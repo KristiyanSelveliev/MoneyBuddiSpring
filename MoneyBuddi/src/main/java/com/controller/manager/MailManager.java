@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.model.User;
@@ -33,9 +33,6 @@ public class MailManager {
 	
 	private static final String EMAIL_USERNAME="MoneyBuddii1@gmail.com";
     private static final String PASSWORD="ittstudent-123";
-    
-    
- 
     
     public static void sendMail(String receiver,String subject,String msg) {
     	Properties props = new Properties();
@@ -65,7 +62,7 @@ public class MailManager {
 
             Transport.send(message);//the actual sending
 
-            System.out.println("Done");
+            System.out.println("Email send!");
 
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -74,29 +71,26 @@ public class MailManager {
     }
 
 
-
-
+    //0 0 0/24 1/1 * ? * - cron expression for every 24 hours
+    //sending every minute now for the purpose of testing
+    @Scheduled(fixedRate=60000)
 	public  void sendEmailToAllInactiveUsers()  {
 		try {
         ArrayList<User> users=userDAO.getAllUsers();
-        //TODO
-        //need to add new field in db 
-        //Get the time when the user made  his last transaction 
-        //if it is done more than a certain amount 
-        //an email must be send to the user
         
+        //iterate all users and send email to those, who have not made a transaction in the last day
         for(User u:users) {
-        	sendMail(u.getEmail(),SUBJECT,MESSAGE);
+        	if(u.getLastTransactionDate()==null) {
+        		continue;
+        	}
+        	if(u.getLastTransactionDate().isAfter(u.getLastTransactionDate().plusDays(1))) {
+        		//sendMail(u.getEmail(),SUBJECT,MESSAGE);
+        	}
         }
         
-        
-        
 		}catch(Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
-	
-
-	
-
 }

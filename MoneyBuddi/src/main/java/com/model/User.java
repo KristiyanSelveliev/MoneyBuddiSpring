@@ -1,5 +1,8 @@
 package com.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.exceptions.InvalidDataException;
 
 public class User {
@@ -9,6 +12,8 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	private LocalDate lastTransactionDate;
+	//helds the date when the user made his last transaction
 	
 	//constructor without id
 	public User(String username, String password, String email,int age) throws InvalidDataException {
@@ -39,6 +44,9 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
+	public LocalDate getLastTransactionDate() {
+		return lastTransactionDate;
+	}
 	
 	//=====setters
 	public void setId(long id) {
@@ -68,7 +76,8 @@ public class User {
 		}
 		this.email = email;
 	}
-	
-	
+	public void setLastTransactionDate(LocalDate lastTransactionDate) {
+		this.lastTransactionDate = lastTransactionDate;
+	}
 	
 }
