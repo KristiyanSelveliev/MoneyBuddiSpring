@@ -219,7 +219,7 @@
                                          <c:otherwise > <a class="text-muted" style="font-size: 130%; color:red" > ${budget.getCategory().getType().toString()}</a>
                                           </c:otherwise>
                                        </c:choose> 
-                                      <input type="number" name="amount" class="form-control"  style="font-size: 130%; color:green "value="${budget.getAmount()}">
+                                      <input type="value" name="amount" class="form-control"  style="font-size: 130%; color:green "value="${Math.round( budget.getAmount()* 100) / 100}">
                                       <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
                                       <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
                                       </form>

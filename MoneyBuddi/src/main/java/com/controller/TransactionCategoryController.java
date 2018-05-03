@@ -1,8 +1,12 @@
 package com.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,22 +30,29 @@ public class TransactionCategoryController {
 	CategoryDAO categoryDao;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public String showTransactionTypes(HttpServletRequest request) throws Exception {
+	public String showTransactionTypes(HttpServletRequest request,HttpSession session) throws Exception {
 
-		// get all TransactionTypes
-		List<TransactionType> types = transactionTypeDao.getAllTransactionTypes();
-		request.setAttribute("types", types);
-
+        User user=(User) session.getAttribute("user");
+		
+		ArrayList<Category> incomeCategories=(ArrayList<Category>) categoryDao.getAllCategoriesByUserAndType(user, TransactionType.INCOME);
+		ArrayList<Category> expenseCategories=(ArrayList<Category>) categoryDao.getAllCategoriesByUserAndType(user, TransactionType.EXPENSE);
+		
+		ArrayList<TransactionType> types=(ArrayList<TransactionType>) transactionTypeDao.getAllTransactionTypes();
+		
+		request.setAttribute("expenses", categoryOrderer(expenseCategories));
+		
+		request.setAttribute("incomes", categoryOrderer(incomeCategories));
+        request.setAttribute("types", types);
+        
 		return "createCategory";
 	}
 
-	@RequestMapping(value = "/createcategory", method = RequestMethod.POST)
+	@RequestMapping(value = "/createCategory", method = RequestMethod.POST)
 	public String createCategory(HttpServletRequest request,
 			@RequestParam String name,
 			@RequestParam String type
 			) throws Exception {
-		//String name = request.getParameter("name");
-		//String type = request.getParameter("type");
+		
 
 		TransactionType transactionType = null;
 
@@ -56,10 +67,25 @@ public class TransactionCategoryController {
 		request.setAttribute("Success", category);
 		categoryDao.addCategory(category);
 
-		List<TransactionType> types = transactionTypeDao.getAllTransactionTypes();
-		request.setAttribute("Types", types); // loading types again
+		
+		return "redirect:/categories";
+	}
+	
+	
+	
+	
+	
+	private ArrayList<Category> categoryOrderer(ArrayList<Category> categories) {
+		
+		Collections.sort(categories,new Comparator<Category>() {
 
-		return "createCategory";
+			@Override
+			public int compare(Category o1, Category o2) {
+				return (int) (o1.getUserId()-o2.getUserId());
+			}
+		});			
+			
+		return categories;
 	}
 
 }

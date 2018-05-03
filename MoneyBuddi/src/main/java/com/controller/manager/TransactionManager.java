@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Budget;
+import com.model.Expense;
 import com.model.Transaction;
 import com.model.Transaction.TransactionType;
 import com.model.dao.TransactionDao;
@@ -80,7 +81,6 @@ public class TransactionManager {
 			}
 		
 	}
-	
 	
 	
 

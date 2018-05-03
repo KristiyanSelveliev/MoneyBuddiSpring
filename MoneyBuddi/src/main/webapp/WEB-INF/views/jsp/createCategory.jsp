@@ -162,7 +162,7 @@
                                 <div class="row">
                                  <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                  	<div class="container-fluid">
-			                             <form action="createcategory" method="post"> 
+			                             <form action="createCategory" method="post"> 
 			                             		<div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Category Title </a>
 			                                   </div>
@@ -175,21 +175,118 @@
 			                                   <select class="col-md-8" name="type" placeholder="Category type">
 			                                
 					                                <c:forEach var="type" items="${requestScope.types }">
-					                                 <option>${ type.toString()}  </option>
+					                                 <option >${ type.toString()}  </option>
 					                                
 					                                </c:forEach>
 			                                   </select >
 			                                  
-			                                  <button type="submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Add Category</button>
+			                                  <button type="submit" style="margin:17px "rel="tooltip" title="Create" class="btn btn-success focus"  >Add Category</button>
                         					</form>
                         			</div>
                         		</div>
+                        		
+                        		
+                        <div class="col-md-5" >
+                          <div class="card" >
+                            <div class="header">
+                                <h4 class="title" style="color:green">Income categories</h4>
+                            </div>
+                            
+                            <div class="scroll1">
+                            
+                             <c:forEach var="income" items="${requestScope.incomes }">
+                             <div class="col-md-5" style="margin:10px">
+                               
+                                                               
+                                  <div class="incomes" >
+                                       
+                                     <form action="categoryUpdate" method="post">
+                                       <c:if test="${income.getUserId()!=0 }">
+                                      <input type="hidden" name="id" value="${income.getId() }">
+                                     
+                                       <input name="name"  style="font-size: 130%; color:black; width:80%; margin-left:10px" value="${income.getCategory()}"></input><br>
+                                      </c:if >
+                                     <c:if test="${income.getUserId()==0 }">
+                                       <a   style="font-size: 130%; color:black;  margin-left:20px; float:left" >${income.getCategory().toUpperCase()}</a><br>
+                                      </c:if>
+                                      
+                                    <c:if test="${income.getUserId()==0 }">
+                                    <a style="font-size:105%; ;float:centre;">Default</a>
+                                    </c:if>
+                                    
+                                     <c:if test="${income.getUserId()!=0 }">
+                                    <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                    </c:if>
+                                      
+                                      </form>
+                                 
+                                      
+                                    </div>
+                                     <c:if test="${income.getUserId()!=0 }">
+                                     <form action="deleteCategory" method="post">
+                                     <input type="hidden" name="id" value="${income.getId() }">
+                                    <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
+                                     </form>
+                                   </c:if>
+								</div>
+                               </c:forEach>
+                            
+                            </div>
+                           </div>
+              			 </div>
+              			 
+              			 <div class="col-md-5" >
+                          <div class="card" >
+                            <div class="header">
+                                <h4 class="title" style="color:red">Expense categories</h4>
+                            </div>
+                             <div class="scroll1">
+                            
+                             <c:forEach var="expense" items="${requestScope.expenses }">
+                             <div class="col-md-5" style="margin:10px">
+                               
+                                                               
+                                    <div class="expenses" >
+                                       <form action="categoryUpdate" method="post">
+                                       <c:if test="${expense.getUserId()!=0 }">
+                                      <input type="hidden" name="id" value="${expense.getId() }">
+                                     
+                                       <input name="name"  style="font-size: 130%; color:black; width:80%; margin-left:10px" value="${expense.getCategory()}"></input><br>
+                                      </c:if >
+                                     <c:if test="${expense.getUserId()==0 }">
+                                       <a   style="font-size: 130%; color:black;  margin-left:20px; float:left" >${expense.getCategory().toUpperCase()}</a><br>
+                                      </c:if>
+                                      
+                                    <c:if test="${expense.getUserId()==0 }">
+                                    <a style="font-size:105%; ;float:centre;">Default</a>
+                                    </c:if>
+                                    
+                                     <c:if test="${expense.getUserId()!=0 }">
+                                    <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                    </c:if>
+                                      
+                                      </form>
+                                    </div>
+                                    <c:if test="${expense.getUserId()!=0 }">
+                                     <form action="deleteCategory" method="post">
+                                     <input type="hidden" name="id" value="${expense.getId() }">
+                                    <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
+                                     </form>
+                                     </c:if>
+								</div>
+                               </c:forEach>
+                            
+                            </div>
+                            
+                           </div>
+              			 </div>
                                
                             </div>
                         </div>
                     </div>
 
                 </div>
+                
             </div>
         </div>
 
@@ -223,9 +320,36 @@
 
     </div>
 </div>
+<style>
+.scroll1 {
+      width:100%;
+      height:500px;
+      overflow-x:scroll;
+      
+}
 
+
+
+.incomes {
+    text-align:center;
+    padding: 30px 0px 30px;
+    border: 1px solid #08957B;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+.expenses {
+    text-align:center;
+    padding: 30px 0px 30px;
+    border: 1px solid #FF7171;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+</style>
 
 </body>
+
+
 
        <!--   Core JS Files   -->
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
