@@ -223,7 +223,7 @@
                                       
                                     </div>
                                      <c:if test="${income.getUserId()!=0 }">
-                                     <form action="deleteCategory" method="post">
+                                     <form action="categoryDelete" method="post">
                                      <input type="hidden" name="id" value="${income.getId() }">
                                     <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
