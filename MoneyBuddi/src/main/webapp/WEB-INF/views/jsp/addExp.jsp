@@ -169,7 +169,7 @@
 			                                   <select  class="col-md-11" name="categoryId">
 			                                
 					                                <c:forEach var="category" items="${requestScope.categories }">
-					                                 <option value="${category.getId()}" data-icon="icons/icon-${category.getId()}.png" >${ category.getCategory() } </option>
+					                                 <option value="${category.getId()}" >${ category.getCategory() } </option>
 					                                
 					                                </c:forEach>
 			                                   </select >
