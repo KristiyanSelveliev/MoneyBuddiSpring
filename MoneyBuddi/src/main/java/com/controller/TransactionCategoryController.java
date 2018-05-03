@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,17 +39,15 @@ public class TransactionCategoryController {
 		
 		ArrayList<TransactionType> types=(ArrayList<TransactionType>) transactionTypeDao.getAllTransactionTypes();
 		
-		request.setAttribute("expenses", expenseCategories);
-		for(Category c:incomeCategories) {
-			System.out.println(c.getUserId());
-		}
-		request.setAttribute("incomes", incomeCategories);
+		request.setAttribute("expenses", categoryOrderer(expenseCategories));
+		
+		request.setAttribute("incomes", categoryOrderer(incomeCategories));
         request.setAttribute("types", types);
         
 		return "createCategory";
 	}
 
-	@RequestMapping(value = "/createcategory", method = RequestMethod.POST)
+	@RequestMapping(value = "/createCategory", method = RequestMethod.POST)
 	public String createCategory(HttpServletRequest request,
 			@RequestParam String name,
 			@RequestParam String type
@@ -69,6 +69,23 @@ public class TransactionCategoryController {
 
 		
 		return "redirect:/categories";
+	}
+	
+	
+	
+	
+	
+	private ArrayList<Category> categoryOrderer(ArrayList<Category> categories) {
+		
+		Collections.sort(categories,new Comparator<Category>() {
+
+			@Override
+			public int compare(Category o1, Category o2) {
+				return (int) (o1.getUserId()-o2.getUserId());
+			}
+		});			
+			
+		return categories;
 	}
 
 }

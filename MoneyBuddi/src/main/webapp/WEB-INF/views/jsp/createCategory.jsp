@@ -175,7 +175,7 @@
 			                                   <select class="col-md-8" name="type" placeholder="Category type">
 			                                
 					                                <c:forEach var="type" items="${requestScope.types }">
-					                                 <option>${ type.toString()}  </option>
+					                                 <option >${ type.toString()}  </option>
 					                                
 					                                </c:forEach>
 			                                   </select >
@@ -199,23 +199,35 @@
                                
                                                                
                                   <div class="incomes" >
+                                       
+                                     <form action="categoryUpdate" method="post">
+                                       <c:if test="${income.getUserId()!=0 }">
+                                      <input type="hidden" name="id" value="${income.getId() }">
+                                     
+                                       <input name="name"  style="font-size: 130%; color:black; width:80%; margin-left:10px" value="${income.getCategory()}"></input><br>
+                                      </c:if >
+                                     <c:if test="${income.getUserId()==0 }">
+                                       <a   style="font-size: 130%; color:black;  margin-left:20px; float:left" >${income.getCategory().toUpperCase()}</a><br>
+                                      </c:if>
+                                      
+                                    <c:if test="${income.getUserId()==0 }">
+                                    <a style="font-size:105%; ;float:centre;">Default</a>
+                                    </c:if>
                                     
-		                                       <form ction="categoryUpdate" method="post">
-			                                       <input type="hidden" name="id" value="${income.getId() }">
-			                                       <input "name="name"  style="font-size: 130%; color:black; width:80%; margin-left:10px" value="${income.getCategory()}"></input><br>
-			                                 
-			                                      <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
-		                                      </form>
-                                              
+                                     <c:if test="${income.getUserId()!=0 }">
+                                    <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                    </c:if>
+                                      
+                                      </form>
                                  
                                       
                                     </div>
-                                    
+                                     <c:if test="${income.getUserId()!=0 }">
                                      <form action="deleteCategory" method="post">
                                      <input type="hidden" name="id" value="${income.getId() }">
                                     <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
-                                  
+                                   </c:if>
 								</div>
                                </c:forEach>
                             
@@ -236,19 +248,31 @@
                                                                
                                     <div class="expenses" >
                                        <form action="categoryUpdate" method="post">
+                                       <c:if test="${expense.getUserId()!=0 }">
                                       <input type="hidden" name="id" value="${expense.getId() }">
+                                     
                                        <input name="name"  style="font-size: 130%; color:black; width:80%; margin-left:10px" value="${expense.getCategory()}"></input><br>
+                                      </c:if >
+                                     <c:if test="${expense.getUserId()==0 }">
+                                       <a   style="font-size: 130%; color:black;  margin-left:20px; float:left" >${expense.getCategory().toUpperCase()}</a><br>
+                                      </c:if>
                                       
+                                    <c:if test="${expense.getUserId()==0 }">
+                                    <a style="font-size:105%; ;float:centre;">Default</a>
+                                    </c:if>
                                     
-                                    
-                                      <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                     <c:if test="${expense.getUserId()!=0 }">
+                                    <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
+                                    </c:if>
+                                      
                                       </form>
                                     </div>
+                                    <c:if test="${expense.getUserId()!=0 }">
                                      <form action="deleteCategory" method="post">
                                      <input type="hidden" name="id" value="${expense.getId() }">
                                     <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
                                      </form>
-                                 
+                                     </c:if>
 								</div>
                                </c:forEach>
                             
