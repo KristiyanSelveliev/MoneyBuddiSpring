@@ -436,7 +436,7 @@
         
         	console.log(transactionId);
         	var request=new XMLHttpRequest();
-        	request.open("GET","editTransaction?transactionId=" +transactionId);
+        	request.open("POST","editTransaction?transactionId=" +transactionId);
         	request.onreadystatechange = function() {
         		if(this.readyState == 4 && this.status == 200){
         			var result = this.responseText;
