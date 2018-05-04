@@ -80,7 +80,6 @@ public class TableController {
 			 @RequestParam String end,
 			 @RequestParam long id) throws Exception {
 		
-		System.out.println(id);
 		LocalDate from=LocalDate.parse(begin);
 		LocalDate to=LocalDate.parse(end);
 		
@@ -97,7 +96,6 @@ public class TableController {
 			 @RequestParam String end,
 			 @RequestParam long id) throws Exception {
 		
-		System.out.println(id);
 		LocalDate from=LocalDate.parse(begin);
 		LocalDate to=LocalDate.parse(end);
 		
@@ -112,6 +110,7 @@ public class TableController {
 	public ArrayList<TransactionDTO> showTransactions(
 			@RequestParam String date,
 			HttpSession session ) throws SQLException, InvalidDataException{
+		
 		User user=(User) session.getAttribute("user");
 		ArrayList<Transaction> transactions=transactionDAO.getAllTransactionsByUserAndDate(user,LocalDate.parse(date));
 		return convertToDTO(transactions);
@@ -126,7 +125,6 @@ public class TableController {
 		session.setAttribute("transactionId", transactionId);
 		Transaction transaction=transactionDAO.getTransactionById(transactionId);
 		
-		System.out.println("asasdasdasd");
            if(transaction!=null) {	
 			return new TransactionDTO(
 				      transaction.getId(),
@@ -158,17 +156,11 @@ public class TableController {
 		return dtos;
 	}
 	
-	
-	
+
 	private  void  transactionOrderer(ArrayList<Transaction> transactions) {
 		 
-		Collections.sort(transactions,new Comparator<Transaction>() {
-			@Override
-			public int compare(Transaction o1, Transaction o2) {
+		Collections.sort(transactions,(Transaction o1, Transaction o2)-> o1.getDate().compareTo(o2.getDate()));
 				
-				return o1.getDate().compareTo(o2.getDate());
-			}
-		});
 	}
 
 }

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.sql.DataSource;
@@ -73,6 +74,7 @@ public class UserDao implements IUserDao {
 	@Override
 	public void updateUser(User u) throws SQLException {
 		PreparedStatement ps = null;
+		LocalDate trDate=u.getLastTransactionDate();
 	
 		try {
 			ps = db.getConnection().prepareStatement("UPDATE users SET username=?,"
@@ -81,10 +83,7 @@ public class UserDao implements IUserDao {
 			ps.setString(2, u.getPassword());
 			ps.setString(3, u.getEmail());
 			ps.setInt(4, u.getAge());
-			ps.setDate(5, null);//evades exception when Date.valueOf(null);
-			if(u.getLastTransactionDate()!=null) {
-				ps.setDate(5, Date.valueOf(u.getLastTransactionDate()));
-			}
+			ps.setDate(5, trDate==null?null:Date.valueOf(trDate));
 			ps.setLong(6, u.getId());
 
 			ps.executeUpdate();
