@@ -1,10 +1,9 @@
 package com.controller;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -93,15 +92,12 @@ public class TransactionCategoryController {
 			@RequestParam long id
 			) throws Exception {
 		
-		 
-		 
 		 categoryDao.deleteCategory(id);
 		 
 		 return "redirect:/categories";
 		
 		
 	}
-	
 	
 	
 	

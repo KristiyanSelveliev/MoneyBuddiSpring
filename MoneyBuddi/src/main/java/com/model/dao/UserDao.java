@@ -1,5 +1,6 @@
 package com.model.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,8 +30,8 @@ public class UserDao implements IUserDao {
 		try {
 			 s= db.getConnection().prepareStatement(
 					"INSERT INTO users (username, " + "password, email, age)" 
-			+ " VALUES (?,?,?,?)",
-					Statement.RETURN_GENERATED_KEYS);
+			      + "VALUES (?,?,?,?)",
+			      Statement.RETURN_GENERATED_KEYS);
 			s.setString(1, u.getUsername());
 			s.setString(2, u.getPassword());
 			s.setString(3, u.getEmail());
@@ -72,14 +73,19 @@ public class UserDao implements IUserDao {
 	@Override
 	public void updateUser(User u) throws SQLException {
 		PreparedStatement ps = null;
+	
 		try {
 			ps = db.getConnection().prepareStatement("UPDATE users SET username=?,"
-					+ "password=?, email=?, age=? WHERE id=? ");
+					+ "password=?, email=?, age=?,last_transaction_date=? WHERE id=? ");
 			ps.setString(1, u.getUsername());
 			ps.setString(2, u.getPassword());
 			ps.setString(3, u.getEmail());
 			ps.setInt(4, u.getAge());
-			ps.setLong(5, u.getId());
+			ps.setDate(5, null);//evades exception when Date.valueOf(null);
+			if(u.getLastTransactionDate()!=null) {
+				ps.setDate(5, Date.valueOf(u.getLastTransactionDate()));
+			}
+			ps.setLong(6, u.getId());
 
 			ps.executeUpdate();
 		} catch (Exception e) {

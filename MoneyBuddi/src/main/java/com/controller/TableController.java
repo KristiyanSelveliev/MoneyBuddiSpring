@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.controller.manager.CurrencyConverter;
 import com.exceptions.InvalidDataException;
 import com.model.Currency.CurrencyType;
+import com.model.Account;
 import com.model.Transaction;
 import com.model.TransactionDTO;
 import com.model.User;
@@ -32,6 +34,8 @@ public class TableController {
 	
 	@Autowired 
 	CurrencyDAO currencyDAO;
+	
+	
 	
 	@RequestMapping(value = "/userExpense", method = RequestMethod.GET)
 	@ResponseBody
@@ -98,7 +102,7 @@ public class TableController {
 		return helpers;
 	}
 	
-	@RequestMapping(value = "/accIncome", method = RequestMethod.GET)
+	@RequestMapping(value = "/accountIncome", method = RequestMethod.GET)
 	@ResponseBody
 	 public ArrayList<TransactionDTO> accIncome(
 			 @RequestParam String begin,
@@ -129,7 +133,7 @@ public class TableController {
 		return helpers;
 	}
 	
-	@RequestMapping(value = "/accExpense", method = RequestMethod.GET)
+	@RequestMapping(value = "/accountExpense", method = RequestMethod.GET)
 	@ResponseBody
 	 public ArrayList<TransactionDTO> accExpense(
 			 @RequestParam String begin,
@@ -192,7 +196,7 @@ public class TableController {
 		session.setAttribute("transactionId", transactionId);
 		Transaction transaction=transactionDAO.getTransactionById(transactionId);
 		
-		
+		System.out.println("asasdasdasd");
            if(transaction!=null) {	
 			return new TransactionDTO(
 				      transaction.getId(),

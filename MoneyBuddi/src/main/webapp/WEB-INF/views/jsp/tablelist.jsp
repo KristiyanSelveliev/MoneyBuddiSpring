@@ -520,7 +520,7 @@ function fillTable3(){
 	var end=pole.value;
 	
 	var request=new XMLHttpRequest();
-	request.open("GET","accExpense?begin=" +begin+"&end="+end+"&id="+accountId);
+	request.open("GET","accountExpense?begin=" +begin+"&end="+end+"&id="+accountId);
 	request.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200){
 			var result = this.responseText;
@@ -574,7 +574,7 @@ function fillTable4(){
 	var end=pole.value;
 	
 	var request=new XMLHttpRequest();
-	request.open("GET","accIncome?begin=" +begin+"&end="+end+"&id="+accountId);
+	request.open("GET","accountIncome?begin=" +begin+"&end="+end+"&id="+accountId);
 	request.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200){
 			var result = this.responseText;
