@@ -52,22 +52,7 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getExpenseByUserFromToDate(from, to, user.getId());
 		this.transactionOrderer(transactions);
 		
-		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
-		System.out.println(1);
-		for(Transaction t:transactions) {
-		helpers.add(new TransactionDTO(
-				      t.getId(),
-				      t.getCategory().getCategory(),
-				      t.getAmount(),
-				      CurrencyConverter.convert(
-				    		  t.getAmount(),
-				    		  t.getCurrency(),
-				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
-				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
-				      t.getDate().toLocalDate().toString()));
-		}
-		
-		return helpers;
+		return convertToDTO(transactions);
 	}
 	
 	@RequestMapping(value = "/userIncome", method = RequestMethod.GET)
@@ -84,22 +69,8 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getIncomeByUserFromToDate(from, to, user.getId());
 		this.transactionOrderer(transactions);
 		
-		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
-		
-		for(Transaction t:transactions) {
-		helpers.add(new TransactionDTO(
-				      t.getId(),
-				      t.getCategory().getCategory(),
-				      t.getAmount(),
-				      CurrencyConverter.convert(
-				    		  t.getAmount(),
-				    		  t.getCurrency(),
-				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
-				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
-				      t.getDate().toLocalDate().toString()));
-		}
-		
-		return helpers;
+	
+		return convertToDTO(transactions);
 	}
 	
 	@RequestMapping(value = "/accountIncome", method = RequestMethod.GET)
@@ -116,21 +87,7 @@ public class TableController {
 		ArrayList<Transaction> transactions=transactionDAO.getIncomeByAccountFromToDate(from, to, id);
 		this.transactionOrderer(transactions);
 		
-		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
-		for(Transaction t:transactions) {
-		helpers.add(new TransactionDTO(
-				      t.getId(),
-				      t.getCategory().getCategory(),
-				      t.getAmount(),
-				      CurrencyConverter.convert(
-				    		  t.getAmount(),
-				    		  t.getCurrency(),
-				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
-				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
-				      t.getDate().toLocalDate().toString()));
-		}
-		
-		return helpers;
+		return convertToDTO(transactions);
 	}
 	
 	@RequestMapping(value = "/accountExpense", method = RequestMethod.GET)
@@ -146,21 +103,8 @@ public class TableController {
 		
 		ArrayList<Transaction> transactions=transactionDAO.getExpenseByAccountFromToDate(from, to, id);
 		this.transactionOrderer(transactions);
+		return convertToDTO(transactions);
 		
-		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
-		for(Transaction t:transactions) {
-		helpers.add(new TransactionDTO(
-				      t.getId(),
-				      t.getCategory().getCategory(),
-				      t.getAmount(),
-				      CurrencyConverter.convert(
-				    		  t.getAmount(),
-				    		  t.getCurrency(),
-				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
-				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
-				      t.getDate().toLocalDate().toString()));
-		}	
-		return helpers;
 	}
 	
 	@RequestMapping(value="showTransactions",method=RequestMethod.GET)
@@ -170,21 +114,7 @@ public class TableController {
 			HttpSession session ) throws SQLException, InvalidDataException{
 		User user=(User) session.getAttribute("user");
 		ArrayList<Transaction> transactions=transactionDAO.getAllTransactionsByUserAndDate(user,LocalDate.parse(date));
-		ArrayList<TransactionDTO> helpers =new ArrayList<TransactionDTO> ();
-		for(Transaction t:transactions) {
-			helpers.add(new TransactionDTO(
-					      t.getId(),
-					      t.getCategory().getCategory(),
-					      t.getAmount(),
-					      CurrencyConverter.convert(
-					    		  t.getAmount(),
-					    		  t.getCurrency(),
-					    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
-					      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
-					      t.getDate().toLocalDate().toString(),
-			              t.getType().toString()));
-			}
-			return helpers;
+		return convertToDTO(transactions);
 	}
 	
 	@RequestMapping(value="editTransaction",method=RequestMethod.POST)
@@ -208,6 +138,27 @@ public class TableController {
            }
            return null;
 	}
+	
+	
+	private ArrayList<TransactionDTO> convertToDTO(ArrayList<Transaction> transactions) throws InvalidDataException, SQLException{
+		ArrayList<TransactionDTO> dtos=new ArrayList();
+		for(Transaction t:transactions) {
+			dtos.add(new TransactionDTO(
+					      t.getId(),
+					      t.getCategory().getCategory(),
+					      t.getAmount(),
+					      CurrencyConverter.convert(
+					    		  t.getAmount(),
+					    		  t.getCurrency(),
+					    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
+					      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
+					      t.getDate().toLocalDate().toString(),
+			              t.getType().toString()));
+			}
+		return dtos;
+	}
+	
+	
 	
 	private  void  transactionOrderer(ArrayList<Transaction> transactions) {
 		 
