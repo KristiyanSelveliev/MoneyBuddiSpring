@@ -15,40 +15,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.controller.manager.CurrencyConverter;
 import com.exceptions.InvalidDataException;
+import com.model.Currency.CurrencyType;
 import com.model.Transaction;
+import com.model.TransactionDTO;
 import com.model.User;
+import com.model.dao.CurrencyDAO;
 import com.model.dao.TransactionDao;
 
 @RestController
 public class TableController {
 	
-	public static class TransactionDTO{
-		
-		public long id;
-		public String category;
-		public double amount;
-		public String account;
-		public String date;
-		public String type;
-		
-		public TransactionDTO(long id, String category, double amount, String account, String date) {
-			
-			this.id = id;
-			this.category = category;
-			this.amount = amount;
-			this.account = account;
-			this.date = date;
-		}
-		public TransactionDTO(long id, String category, double amount, String account, String date,String type) {
-			this(id, category, amount, account, date);
-			this.type=type;
-			
-		}
-	}
-	
 	@Autowired
 	TransactionDao transactionDAO;
+	
+	@Autowired 
+	CurrencyDAO currencyDAO;
 	
 	@RequestMapping(value = "/userExpense", method = RequestMethod.GET)
 	@ResponseBody
@@ -72,6 +55,10 @@ public class TableController {
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
+				      CurrencyConverter.convert(
+				    		  t.getAmount(),
+				    		  t.getCurrency(),
+				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
 				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
 				      t.getDate().toLocalDate().toString()));
 		}
@@ -100,6 +87,10 @@ public class TableController {
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
+				      CurrencyConverter.convert(
+				    		  t.getAmount(),
+				    		  t.getCurrency(),
+				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
 				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
 				      t.getDate().toLocalDate().toString()));
 		}
@@ -127,6 +118,10 @@ public class TableController {
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
+				      CurrencyConverter.convert(
+				    		  t.getAmount(),
+				    		  t.getCurrency(),
+				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
 				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
 				      t.getDate().toLocalDate().toString()));
 		}
@@ -154,10 +149,13 @@ public class TableController {
 				      t.getId(),
 				      t.getCategory().getCategory(),
 				      t.getAmount(),
+				      CurrencyConverter.convert(
+				    		  t.getAmount(),
+				    		  t.getCurrency(),
+				    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
 				      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
 				      t.getDate().toLocalDate().toString()));
-		}
-		
+		}	
 		return helpers;
 	}
 	
@@ -174,6 +172,10 @@ public class TableController {
 					      t.getId(),
 					      t.getCategory().getCategory(),
 					      t.getAmount(),
+					      CurrencyConverter.convert(
+					    		  t.getAmount(),
+					    		  t.getCurrency(),
+					    		  currencyDAO.getCurrencyByType(CurrencyType.EUR)),
 					      t.getAccount().getName()+"-"+t.getAccount().getCurrency().getType().toString(),
 					      t.getDate().toLocalDate().toString(),
 			              t.getType().toString()));
@@ -186,7 +188,7 @@ public class TableController {
 	public TransactionDTO editTransaction(
 			@RequestParam long transactionId,
 			HttpSession session ) throws SQLException, InvalidDataException{
-		User user=(User) session.getAttribute("user");
+	
 		session.setAttribute("transactionId", transactionId);
 		Transaction transaction=transactionDAO.getTransactionById(transactionId);
 		
@@ -195,7 +197,7 @@ public class TableController {
 			return new TransactionDTO(
 				      transaction.getId(),
 				      transaction.getCategory().getCategory(),
-				      transaction.getAmount(),
+				      transaction.getAmount(), 
 				      transaction.getAccount().getName()+"-"+transaction.getAccount().getCurrency().getType().toString(),
 				      transaction.getDate().toLocalDate().toString(),
 			          transaction.getType().toString());

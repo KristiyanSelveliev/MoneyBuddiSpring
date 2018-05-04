@@ -24,9 +24,6 @@
     <link href="css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
 
 
- 
-
-
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
@@ -144,9 +141,12 @@
                                 
                                 
                                           
-                                             <p>
+                                             <p >
                                              <a style="color:purple"> <b> Begin-></b></a>
                                              <a style="color:purple"> <b> End</b></a>
+                                                   <div id="total1">
+                                                   </div>
+			                                   
                                              </p>
 			                                   <input id="begin1" type="date"  name="begin"   style="font-size: 130%;"> 
 			                           
@@ -196,6 +196,8 @@
                                             <p>
                                              <a style="color:purple"> <b> Begin-></b></a>
                                              <a style="color:purple"> <b> End</b></a>
+                                             <div id="total2">
+                                                   </div>
                                              </p>
 			                                   <input id="begin2" type="date"  name="begin"   style="font-size: 130%;"> 
 			                              
@@ -249,14 +251,14 @@
                                         <div class="col-md-4">
                                         <label><a style="color:purple"> <b>Account</b></a></label>
                                             <div class="form-group">
-                                          
+                                             
                                                 <select id="ddlViewBy1"  class="col-md-11" name="accountId">
 			                                       
 					                                <c:forEach var="account" items="${requestScope.accounts }">
 					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
 					                                
 					                               </c:forEach>
-			                                   
+			                                  
 			                                  </select>
                                             </div>
                                         </div>
@@ -276,7 +278,8 @@
                                       <button onclick="fillTable3()" class=" btn  btn-danger ">Show </button>
                                    
                                 
-                                
+                                 <div id="total3">
+                                    </div>
                                 
                             </div>
                             <div class="content table-responsive">
@@ -325,8 +328,9 @@
 					                                 <option value="${account.getId()}">${ account.getName() }-${account.getBalance()}-${account.getCurrency().getType().toString()} </option>
 					                                
 					                               </c:forEach>
-			                                   
+			                                     
 			                                  </select>
+			                                 
                                             </div>
                                         </div>
                                         <div >
@@ -343,7 +347,8 @@
                                         </div>
                                       </div>
                                      <button onclick="fillTable4()"  class=" btn  btn-success">Show</button>
-                                   
+                                    <div id="total4">
+                                        </div>
                                    </div>
                             <div class="content table-responsive">
                                 <div class="scroll1">
@@ -421,7 +426,10 @@ function fillTable1(){
 		if(this.readyState == 4 && this.status == 200){
 			var result = this.responseText;
 			result = JSON.parse(result);
+			var total=0;
+			var totalBody=document.getElementById("total1");
 			var body = document.getElementById("body1");
+			
 			body.innerHTML = "";
 			for(var i=0;i<result.length;i++){
 				var tr="<tr>";
@@ -435,10 +443,13 @@ function fillTable1(){
 				
 				tr+='<td>'+result[i]['date']+'</td>';
 				tr+="</tr>";
+				
+				total+=result[i]['amount_converted'];
 				body.innerHTML+=tr;
 				
 			}
-			
+			totalBody.innerHTML="";
+			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
 			
 			
 			
@@ -452,7 +463,7 @@ function fillTable2(){
 	var pole=document.getElementById("begin2");
 	var begin=pole.value;
 	
-     pole=document.getElementById("end2");
+    pole=document.getElementById("end2");
 	var end=pole.value;
 	
 	var request=new XMLHttpRequest();
@@ -461,7 +472,10 @@ function fillTable2(){
 		if(this.readyState == 4 && this.status == 200){
 			var result = this.responseText;
 			result = JSON.parse(result);
+			var total=0;
+			var totalBody=document.getElementById("total2");
 			var body = document.getElementById("body2");
+			
 			body.innerHTML = "";
 			for(var i=0;i<result.length;i++){
 				var tr="<tr>";
@@ -476,11 +490,13 @@ function fillTable2(){
 				tr+='<td>'+result[i]['date']+'</td>';
 				
 				tr+="</tr>";
-				
+			   
+				total+=result[i]['amount_converted'];
 				body.innerHTML+=tr;
 				
 			}
-			
+			totalBody.innerHTML="";
+			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
 			
 			
 			
@@ -495,7 +511,7 @@ function fillTable3(){
 	
 	var e = document.getElementById("ddlViewBy1");
 	var accountId = e.options[e.selectedIndex].value;
-	console.log(accountId);
+	
 	
 	var pole=document.getElementById("begin3");
 	var begin=pole.value;
@@ -509,7 +525,10 @@ function fillTable3(){
 		if(this.readyState == 4 && this.status == 200){
 			var result = this.responseText;
 			result = JSON.parse(result);
+			var total=0;
+			var totalBody=document.getElementById("total3");
 			var body = document.getElementById("body3");
+			console.log(accountId);
 			body.innerHTML ="";
 			for(var i=0;i<result.length;i++){
 				var tr="<tr>";
@@ -525,10 +544,12 @@ function fillTable3(){
 				
 				tr+="</tr>";
 				
+				total+=result[i]['amount_converted'];
 				body.innerHTML+=tr;
 			
 			}
-			
+			totalBody.innerHTML="";
+			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
 			
 			
 			
@@ -558,6 +579,8 @@ function fillTable4(){
 		if(this.readyState == 4 && this.status == 200){
 			var result = this.responseText;
 			result = JSON.parse(result);
+			var total=0;
+			var totalBody=document.getElementById("total4");
 			var body = document.getElementById("body4");
 			body.innerHTML ="";
 			for(var i=0;i<result.length;i++){
@@ -573,10 +596,12 @@ function fillTable4(){
 				tr+='<td>'+result[i]['date']+'</td>';
 				
 				tr+="</tr>";
-				
+				total+=result[i]['amount_converted'];
 				body.innerHTML+=tr;
 				
 			}
+			totalBody.innerHTML="";
+			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
 			
 			
 			
