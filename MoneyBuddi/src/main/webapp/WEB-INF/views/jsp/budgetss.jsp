@@ -256,12 +256,25 @@
                                         
                                            
                                         	<td>${budget.getCategory().getCategory().toString()}</td>
-                                        	<td>${budget.getCategory().getType().toString()}</td>
+                                        	
+                                        	<c:choose>
+                                        	<c:when test="${budget.getCategory().getType().toString()=='INCOME'}">
+                                        	<td style="color:green">${budget.getCategory().getType().toString()}</td>
+                                        	</c:when>
+                                        	<c:otherwise>
+                                        	<td style="color:red">${budget.getCategory().getType().toString()}</td>
+                                        	</c:otherwise>
+                                        	</c:choose>
+                                        	
+                                        	
                                         	<td>+<a style="color:green"><input type="value" style="max-width:70px" name="amount" value="${Math.round( budget.getAmount()* 100) / 100}"></a></td>
                                         	<td>${budget.getCurrency().getType().toString()}</td>
                                         	<c:choose>
                                         	     <c:when test="${budget.getEndDate().compareTo(requestScope.now)>3}">
                                         	     <td style="color:green">${budget.getEndDate().compareTo(requestScope.now)}&nbspdays left</td>
+                                        	     </c:when>
+                                        	     <c:when test="${budget.getEndDate().compareTo(requestScope.now)==1}">
+                                        	     <td style="color:red">${budget.getEndDate().compareTo(requestScope.now)}&nbspday left</td>
                                         	     </c:when>
                                         	     <c:otherwise>
                                         	     <td style="color:red">${budget.getEndDate().compareTo(requestScope.now)}&nbspdays left</td>
