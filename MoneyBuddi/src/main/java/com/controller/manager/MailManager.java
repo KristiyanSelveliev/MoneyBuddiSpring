@@ -87,7 +87,7 @@ public class MailManager {
         		//sendMail(u.getEmail(),SUBJECT,MESSAGE);
         	}
         }
-        
+        //sendMail("mimigenomir@gmail.com",SUBJECT,MESSAGE);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
