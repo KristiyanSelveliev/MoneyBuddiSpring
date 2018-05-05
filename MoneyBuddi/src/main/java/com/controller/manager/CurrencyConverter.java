@@ -19,6 +19,8 @@ public static double convert(double amount,Currency from,Currency to) throws Inv
 		if(from.getType().equals(to.getType())){
 			return amount;
 		}
+		System.out.println(from.getType());
+		System.out.println(to.getType());
 		try {
 		URL url=new URL("http://data.fixer.io/api/latest?access_key=3f529a134e44b9e698123926bbc9a537&symbols="+
 	    from.getType().toString()+","+to.getType().toString());
