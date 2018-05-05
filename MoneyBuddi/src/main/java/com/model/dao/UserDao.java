@@ -225,4 +225,38 @@ public class UserDao implements IUserDao {
 		return users;
 	}
 	
+	@Override
+	public ArrayList<String> getAllEmailsToSendEmail() throws SQLException {
+		ArrayList<String> emails=new ArrayList<String>();
+		LocalDate yesterday=LocalDate.now().minusDays(1);
+		//get all user`s emails that have been inactive in the last 24 hours to send them remindr via email
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT email FROM users"
+				+ "WHERE last_transaction_date < ? ;")){
+			ps.setDate(1, Date.valueOf(yesterday));
+			try(ResultSet rs=ps.executeQuery()){
+				while(rs.next()) {
+					emails.add(rs.getString("email"));
+				}
+			}
+		}
+		return emails;
+	}
+	
+	@Override
+	public void updateLastTransactionDateForUser(User u) throws SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = db.getConnection().prepareStatement("UPDATE users SET "
+					+ "last_transaction_date=? WHERE id=? ");
+			ps.setDate(1, Date.valueOf(LocalDate.now()));
+			ps.setLong(2, u.getId());
+
+			ps.executeUpdate();
+		} catch (Exception e) {
+			throw new SQLException("Could not update last transaction date.");
+		} finally {
+			ps.close();
+		}
+
+	}
 }

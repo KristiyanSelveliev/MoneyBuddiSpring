@@ -76,18 +76,12 @@ public class MailManager {
     @Scheduled(fixedRate=60000)
 	public  void sendEmailToAllInactiveUsers()  {
 		try {
-        ArrayList<User> users=userDAO.getAllUsers();
-        
-        //iterate all users and send email to those, who have not made a transaction in the last day
-        for(User u:users) {
-        	if(u.getLastTransactionDate()==null) {
-        		continue;
-        	}
-        	if(u.getLastTransactionDate().isAfter(u.getLastTransactionDate().plusDays(1))) {
-        		//sendMail(u.getEmail(),SUBJECT,MESSAGE);
-        	}
-        }
-        //sendMail("mimigenomir@gmail.com",SUBJECT,MESSAGE);
+	        ArrayList<String> emails=userDAO.getAllEmailsToSendEmail();
+	        
+	        //iterate all users and send email to those, who have not made a transaction in the last day
+	        for(String email : emails) {
+	        	//sendMail(email,SUBJECT,MESSAGE);
+	        }
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

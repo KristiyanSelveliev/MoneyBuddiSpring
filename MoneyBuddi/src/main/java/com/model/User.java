@@ -13,7 +13,7 @@ public class User {
 	private String password;
 	private String email;
 	private LocalDate lastTransactionDate;
-	//helds the date when the user made his last transaction
+	//holds the date when the user made his last transaction
 	
 	//constructor without id
 	public User(String username, String password, String email,int age) throws InvalidDataException {

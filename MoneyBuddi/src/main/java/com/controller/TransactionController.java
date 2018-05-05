@@ -20,12 +20,15 @@ import com.exceptions.InvalidDataException;
 import com.model.Transaction;
 import com.model.User;
 import com.model.dao.TransactionDao;
+import com.model.dao.UserDao;
 
 @Controller
 public class TransactionController {
 
 	@Autowired
 	private TransactionDao transactionDao;
+	@Autowired
+	private UserDao userDao;
 	
 	private static final int DEFAULT_NUM_DAYS = 7;
 
@@ -127,11 +130,6 @@ public class TransactionController {
 		transactionDao.deleteTransaction(transaction);
 
 		return "redirect:/transactions";
-	}
-
-	private void setLastTransactionDateToUser(User u) {
-		// set new last transaction date for user
-		u.setLastTransactionDate(LocalDate.now());
 	}
 
 	private TreeMap<LocalDate, MyEntry> getTransactionsForStatistics(User user, LocalDate begin, LocalDate end)

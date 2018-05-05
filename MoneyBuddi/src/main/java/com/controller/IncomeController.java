@@ -87,8 +87,8 @@ public class IncomeController {
 				CurrencyConverter.convert(amount, transactionCurrency, account.getCurrency()));
 		request.setAttribute("currency", account.getCurrency());
 
-		//User u = (User) session.getAttribute("user");
-		//u.setLastTransactionDate(LocalDate.now());
+		User u = (User) session.getAttribute("user");
+		userDao.updateLastTransactionDateForUser(u);
 
 		return income(session, request);
 	}
@@ -114,8 +114,8 @@ public class IncomeController {
 		request.setAttribute("currency", account.getCurrency());
 		request.setAttribute("budgetCurrency", budget.getCurrency());
 
-		//User u = (User) session.getAttribute("user");
-		//setLastTransactionDateToUser(u);
+		User u = (User) session.getAttribute("user");
+		userDao.updateLastTransactionDateForUser(u);
 
 		return income(session, request);
 	}
