@@ -189,7 +189,7 @@
                         					</form>
                         			</div>
                         		</div>
-                               <c:forEach var="account" items="${requestScope.accounts }">
+                             <!--   <c:forEach var="account" items="${requestScope.accounts }">
                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                 
                                    <div class="font-icon-detail">
@@ -216,31 +216,78 @@
                                 </div>
                                    
                                 </c:forEach>
-                                 </div>
+                                -->
+                                
+                                                   
+                                    <div class="content table-responsive">
+		                              <div class="scroll1">
+		                                <table  class="table table-responsive table-hover " >
+		                                 <colgroup span="2"></colgroup>
+		                                    <tr>
+		                                        
+		                                    	<th>Name</th>
+		                                    	<th>Balance</th>
+		                                    	<th>Currency</th>
+		                                       <th colspan="2" scope="colgroup" ></th>
+					                                    	
+			                                    	
+			                                    </tr>
+			                                    <tbody  >
+			                                      <c:forEach var="account" items="${requestScope.accounts }">
+			                                        <tr>
+			                                      <form  action="updateAccount" method="post">
+			                                       <input type="hidden" name="id" value="${account.getId()}">
+			                                        
+			                                           
+			                                        	<td>${account.name}</td>
+			                                             <c:choose>
+			                                             <c:when test="${account.balance>=0 }">
+			                                                <td><a style="color:green"><input type="value" style="max-width:70px" name="balance" value="${Math.round(account.balance* 100) / 100}"></a></td>
+			                                             
+			                                             </c:when>
+			                                             <c:otherwise>
+			                                             	<td><a style="color:red"><input type="value" style="max-width:70px" name="balance" value="${Math.round(account.balance* 100) / 100}"></a></td>
+			                                             
+			                                             </c:otherwise>
+			                                             </c:choose>
+			                                        	<td>${account.getCurrency().getType().toString()}</td>
+			                                           <td ><button type="submit" class="btn btn-info btn-fill ">Update</button></td>
+			                                          
+			                                         </form>
+				                                         <form action="deleteAccount" method="post">
+				                                           <input type="hidden" name="id" value="${account.getId() }"> 
+				                                           <td ><button type="submit" class="btn btn-danger btn-fill">Delete</button></td>
+				                                        </form>
+				                                      </tr>
+                                      </c:forEach>
+                                    
+                                    </tbody>
+                                </table>
+                                 
+                             </div>
+                                
+                                </div>
+                              </div>
+                           </div>
                                
                             </div>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="profile">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="profile">
-                                Privacy Policy
-                            </a>
-                        </li>
-                        <li>
+			        		<footer class="footer">
+			            <div class="container-fluid">
+			                <nav class="pull-left">
+			                    <ul>
+			                        <li>
+			                            <a href="profile">
+			                                Home
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="profile">
+			                                Privacy Policy
+			                            </a>
+			                        </li>
+                        			<li>
                             <a href="https://github.com/KristiyanSelveliev/MoneyBuddiSpring">
                                GitHub
                             </a>
@@ -252,12 +299,24 @@
         </footer>
 
 
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
-
+<style>
+ .scroll1 {
+      width=100%;
+      max-width:1200px;
+      height:500px;
+      overflow-y:scroll;
+      
+}
+</style>
 
 </body>
-
        <!--   Core JS Files   -->
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>

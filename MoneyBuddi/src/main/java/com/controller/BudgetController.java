@@ -64,6 +64,9 @@ public class BudgetController {
 		 
 		LocalDate beginDate=LocalDate.parse(begin);
 		LocalDate endDate=LocalDate.parse(end);
+		if(endDate.isBefore(LocalDate.now())) {
+			throw new InvalidDataException("Srry you can't create budgets previous to now");
+		}
 		
 		     budgetDAO.addBudget(new Budget(
 		    		 categoryDAO.getCategoryByID(categoryId),
