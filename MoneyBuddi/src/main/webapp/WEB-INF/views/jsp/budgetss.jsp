@@ -202,6 +202,7 @@
                         					</form>
                         			</div>
                         		</div>
+                        		<!--
                                <c:forEach var="budget" items="${requestScope.budgets }">
                                 <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                 
@@ -231,9 +232,55 @@
                                 </div>
 								
                                </c:forEach>
+                               -->
+                                 <div class="content table-responsive">
+                              <div class="scroll1">
+                                <table id="table2" class="table table-responsive table-hover " >
+                                 <colgroup span="2"></colgroup>
+                                    <tr>
+                                        
+                                    	<th>Category</th>
+                                    	<th>Type</th>
+                                    	<th>Amount</th>
+                                    	<th>Currency</th>
+                                    	<th>DeadLine</th>
+                                    	<th  colspan="2" scope="colgroup" ></th>
+                                    	
+                                    	
+                                    </tr>
+                                    <tbody id="body2" >
+                                      <c:forEach var="budget" items="${requestScope.budgets }">
+                                        <tr>
+                                      <form  action="budgetUpdate" method="post">
+                                       <input type="hidden" name="id" value="${budget.getId()}">
+                                        
+                                           
+                                        	<td>${budget.getCategory().getCategory().toString()}</td>
+                                        	<td>${budget.getCategory().getType().toString()}</td>
+                                        	<td>+<a style="color:green"><input type="value" style="max-width:70px" name="amount" value="${Math.round( budget.getAmount()* 100) / 100}"></a></td>
+                                        	<td>${budget.getCurrency().getType().toString()}</td>
+                                        	<td>${budget.getEndDate().compareTo(budget.getBeginDate())}&nbspdays left</td>
+                                        	<td style="padding-right:0px;"><button type="submit" class="btn btn-info btn-fill ">Update</button></td>
+                                          
+                                         </form>
+                                         <form action="budgetDelete" method="post">
+                                         <input type="hidden" name="id" value="${budget.getId() }"> 
+                                           <td style="padding-right:5px; padding-left:0px"><button type="submit" class="btn btn-danger btn-fill">Delete</button></td>
+                                        	</form>
+                                          </tr>
+                                      </c:forEach>
+                                    
+                                    </tbody>
+                                </table>
+                                 
+                             </div>
+                                
+                                </div>
                                  </div>
                                
                             </div>
+                            
+                           
                         </div>
                     </div>
 
@@ -269,9 +316,40 @@
 
     </div>
 </div>
+<style>
+
+.flexy {
+            display:block;
+            max-height: 350px;
+            overflow: auto;
+        }
+        
+ .scroll1 {
+      width=100%;
+      max-width:1200px;
+      height:500px;
+      overflow-y:scroll;
+      
+}
+
+
+</style>
 
 
 </body>
+
+<script>
+
+function deleteBudget(id){
+	
+	console.log(id);
+	var request=new XMLHttpRequest();
+	request.open("Post","budgetDelete?id="+id);
+	request.send();
+}
+
+
+</script>
 
        <!--   Core JS Files   -->
     <script src="js/jquery.3.2.1.min.js" type="text/javascript"></script>
