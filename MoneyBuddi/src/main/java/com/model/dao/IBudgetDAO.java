@@ -14,6 +14,8 @@ public interface IBudgetDAO {
 	
 	void deleteBudget(int id) throws SQLException;
 	
+	void deleteExpiredBudgets() throws SQLException;
+	
 	Budget getBudgetById(long id)throws Exception;
 	
 	Collection <Budget> getAllBudgetsForUser(long userId) throws Exception;

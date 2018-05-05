@@ -47,6 +47,7 @@ public class BudgetController {
 		request.setAttribute("budgets",budgets);
 		request.setAttribute("categories",categories);
 		request.setAttribute("currencies",currencies);
+		request.setAttribute("now", LocalDate.now());
 		
 		return "budgetss";
 		

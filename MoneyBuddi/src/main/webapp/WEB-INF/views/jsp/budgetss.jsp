@@ -248,7 +248,7 @@
                                     	
                                     	
                                     </tr>
-                                    <tbody id="body2" >
+                                    <tbody  >
                                       <c:forEach var="budget" items="${requestScope.budgets }">
                                         <tr>
                                       <form  action="budgetUpdate" method="post">
@@ -259,7 +259,15 @@
                                         	<td>${budget.getCategory().getType().toString()}</td>
                                         	<td>+<a style="color:green"><input type="value" style="max-width:70px" name="amount" value="${Math.round( budget.getAmount()* 100) / 100}"></a></td>
                                         	<td>${budget.getCurrency().getType().toString()}</td>
-                                        	<td>${budget.getEndDate().compareTo(budget.getBeginDate())}&nbspdays left</td>
+                                        	<c:choose>
+                                        	     <c:when test="${budget.getEndDate().compareTo(requestScope.now)>3}">
+                                        	     <td style="color:green">${budget.getEndDate().compareTo(requestScope.now)}&nbspdays left</td>
+                                        	     </c:when>
+                                        	     <c:otherwise>
+                                        	     <td style="color:red">${budget.getEndDate().compareTo(requestScope.now)}&nbspdays left</td>
+                                        	     </c:otherwise>
+                                        	</c:choose>
+                                        	
                                         	<td style="padding-right:0px;"><button type="submit" class="btn btn-info btn-fill ">Update</button></td>
                                           
                                          </form>
@@ -286,9 +294,7 @@
 
                 </div>
             </div>
-        </div>
-
-        <footer class="footer">
+            <footer class="footer">
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
@@ -312,17 +318,12 @@
                 
             </div>
         </footer>
-
+        </div>
 
     </div>
 </div>
 <style>
 
-.flexy {
-            display:block;
-            max-height: 350px;
-            overflow: auto;
-        }
         
  .scroll1 {
       width=100%;
