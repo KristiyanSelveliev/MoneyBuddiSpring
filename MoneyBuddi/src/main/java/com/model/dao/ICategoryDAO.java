@@ -1,6 +1,7 @@
 package com.model.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.exceptions.InvalidDataException;
@@ -19,9 +20,9 @@ public interface ICategoryDAO {
 	
 	Category getCategoryByID(long id) throws SQLException,InvalidDataException;
 	
-	Collection<Category> getAllCategoriesByUser(User user) throws SQLException,InvalidDataException;
+	ArrayList<Category> getAllCategoriesByUser(User user) throws SQLException,InvalidDataException;
 	
-	Collection<Category> getAllCategoriesByUserAndType(User user,TransactionType type) throws SQLException,InvalidDataException;
+	ArrayList<Category> getAllCategoriesByUserAndType(User user,TransactionType type) throws SQLException,InvalidDataException;
 	
 	
 	

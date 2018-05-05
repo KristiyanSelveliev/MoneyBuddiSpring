@@ -234,7 +234,7 @@ public class UserDao implements IUserDao {
 				+ "WHERE last_transaction_date < ? ;")){
 			ps.setDate(1, Date.valueOf(yesterday));
 			try(ResultSet rs=ps.executeQuery()){
-				while(rs.next()) {
+				if(rs.next()) {
 					emails.add(rs.getString("email"));
 				}
 			}

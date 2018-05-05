@@ -394,4 +394,78 @@ public class TransactionDao implements ITransactionDao {
 		
 	}
 
+	@Override
+	public ArrayList<Transaction> getExpenseByUserAndCategoryFromToDate(LocalDate from, LocalDate to, long userId,
+			long categoryId) throws Exception {
+		
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+		try (PreparedStatement ps =db.getConnection().prepareStatement(
+				"SELECT id,amount,date,currency_id,account_id,category_id,"
+		                         + "transaction_type_id FROM transactions "
+						         + "WHERE (date BETWEEN ? AND ?) "
+						         + "AND account_id in(select id FROM accounts WHERE user_id=?)"
+						         + "AND transaction_type_id=? "
+						         + "AND category_id=? ")){
+			
+			ps.setDate(1, Date.valueOf(from));
+			ps.setDate(2, Date.valueOf(to));
+			ps.setLong(3, userId);
+			ps.setInt(4, transactionTypeDAO.getIdByTranscationType(TransactionType.EXPENSE));
+			ps.setLong(5, categoryId);
+			
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+						transactions.add(new Expense(
+								rs.getInt("id"), 
+								rs.getDouble("amount"),
+								currencyDAO.getCurrencyById(rs.getInt("currency_id")),
+								accountDAO.getAccountById(rs.getInt("account_id")),
+								rs.getDate("date").toLocalDate(),
+								categoryDAO.getCategoryByID(categoryId)));
+
+				}
+			}
+			
+		}
+		
+		return transactions;
+	}
+	
+	@Override
+	public ArrayList<Transaction> getIncomeByUserAndCategoryFromToDate(LocalDate from, LocalDate to, long userId,
+			long categoryId) throws Exception {
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+		try (PreparedStatement ps =db.getConnection().prepareStatement(
+				"SELECT id,amount,date,currency_id,account_id,category_id,"
+		                         + "transaction_type_id FROM transactions "
+						         + "WHERE (date BETWEEN ? AND ?) "
+						         + "AND account_id in(select id FROM accounts WHERE user_id=?)"
+						         + "AND transaction_type_id=? "
+						         + "AND category_id=? ")){
+			
+			ps.setDate(1, Date.valueOf(from));
+			ps.setDate(2, Date.valueOf(to));
+			ps.setLong(3, userId);
+			ps.setInt(4, transactionTypeDAO.getIdByTranscationType(TransactionType.INCOME));
+			ps.setLong(5, categoryId);
+			
+			
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+						transactions.add(new Expense(
+								rs.getInt("id"), 
+								rs.getDouble("amount"),
+								currencyDAO.getCurrencyById(rs.getInt("currency_id")),
+								accountDAO.getAccountById(rs.getInt("account_id")),
+								rs.getDate("date").toLocalDate(),
+								categoryDAO.getCategoryByID(categoryId)));
+
+				}
+			}
+			
+		}
+		
+		return transactions;
+	}
 }

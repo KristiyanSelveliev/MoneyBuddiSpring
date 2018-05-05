@@ -137,9 +137,25 @@ public class TableController {
            return null;
 	}
 	
+	@RequestMapping(value = "/categoryIncome", method = RequestMethod.GET)
+	@ResponseBody
+	 public ArrayList<TransactionDTO> categoryIncome(
+			 @RequestParam String begin,
+			 @RequestParam String end,
+			 @RequestParam long id, HttpSession session) throws Exception {
+		
+		LocalDate from=LocalDate.parse(begin);
+		LocalDate to=LocalDate.parse(end);
+		
+		User u=(User)session.getAttribute("user");
+		ArrayList<Transaction> transactions=transactionDAO.getIncomeByUserAndCategoryFromToDate(from, to, u.getId(), id);
+		this.transactionOrderer(transactions);
+		
+		return convertToDTO(transactions);
+	}
 	
 	private ArrayList<TransactionDTO> convertToDTO(ArrayList<Transaction> transactions) throws InvalidDataException, SQLException{
-		ArrayList<TransactionDTO> dtos=new ArrayList();
+		ArrayList<TransactionDTO> dtos=new ArrayList<TransactionDTO>();
 		for(Transaction t:transactions) {
 			dtos.add(new TransactionDTO(
 					      t.getId(),

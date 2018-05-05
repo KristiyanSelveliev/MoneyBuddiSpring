@@ -83,8 +83,8 @@ public class CategoryDAO implements ICategoryDAO{
 	
 
 	@Override
-	public Collection<Category> getAllCategoriesByUser(User user) throws SQLException, InvalidDataException {
-			 Collection<Category> categories=new ArrayList<>();	
+	public ArrayList<Category> getAllCategoriesByUser(User user) throws SQLException, InvalidDataException {
+		ArrayList<Category> categories=new ArrayList<>();	
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,category,transaction_type_id,user_id FROM categories "
 				                                             +"WHERE user_id IS NULL or user_id=?" )){
 
@@ -103,11 +103,10 @@ public class CategoryDAO implements ICategoryDAO{
 	}
 
 	@Override
-	//changed the return type from Collection to List
-	public List<Category> getAllCategoriesByUserAndType(User user, TransactionType type)
+	public ArrayList<Category> getAllCategoriesByUserAndType(User user, TransactionType type)
 			throws SQLException, InvalidDataException {
 		
-		 List<Category> categories=new ArrayList<>();	
+		ArrayList<Category> categories=new ArrayList<>();	
 		 int id=transactionTypeDAO.getIdByTranscationType(type);
 		 System.out.println(1);
 		 try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,category,transaction_type_id,user_id FROM categories "

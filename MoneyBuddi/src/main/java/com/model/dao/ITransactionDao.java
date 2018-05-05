@@ -32,5 +32,10 @@ public interface ITransactionDao {
 	ArrayList<Transaction> getExpenseByUserFromToDate(LocalDate from, LocalDate to,
 			long userId) throws Exception;
 	
+	ArrayList<Transaction> getIncomeByUserAndCategoryFromToDate(LocalDate from, LocalDate to,
+			long userId, long categoryId) throws Exception;
+	
+	ArrayList<Transaction> getExpenseByUserAndCategoryFromToDate(LocalDate from, LocalDate to,
+			long userId, long categoryId) throws Exception;
 	
 }
