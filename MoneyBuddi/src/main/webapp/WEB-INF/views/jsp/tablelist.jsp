@@ -415,7 +415,7 @@
                                         </div>
                                       </div>
                                      <button onclick="fillTable6()"  class=" btn  btn-success">Show</button>
-                                    <div id="total5">
+                                    <div id="total6">
                                         </div>
                                    </div>
                             <div class="content table-responsive">
