@@ -271,13 +271,13 @@
                                         	<td>${budget.getCurrency().getType().toString()}</td>
                                         	<c:choose>
                                         	     <c:when test="${budget.getEndDate().compareTo(requestScope.now)>3}">
-                                        	     <td style="color:green">${budget.getEndDate().compareTo(requestScope.now)}&nbspdays left</td>
+                                        	     <td style="color:green"><input type="value" name="duration" style="max-width:25px" value="${budget.getEndDate().compareTo(requestScope.now)}">&nbspdays left</td>
                                         	     </c:when>
                                         	     <c:when test="${budget.getEndDate().compareTo(requestScope.now)==1}">
-                                        	     <td style="color:red">${budget.getEndDate().compareTo(requestScope.now)}&nbspday left</td>
+                                        	     <td style="color:red"><input type="value" name="duration" style="max-width:25px" value="${budget.getEndDate().compareTo(requestScope.now)}">&nbspday left</td>
                                         	     </c:when>
                                         	     <c:otherwise>
-                                        	     <td style="color:red">${budget.getEndDate().compareTo(requestScope.now)}&nbspdays left</td>
+                                        	     <td style="color:red"><input type="value "name="duration" style="max-width:25px" value="${budget.getEndDate().compareTo(requestScope.now)}">&nbspdays left</td>
                                         	     </c:otherwise>
                                         	</c:choose>
                                         	

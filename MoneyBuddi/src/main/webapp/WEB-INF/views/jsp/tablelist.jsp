@@ -414,7 +414,7 @@
                                             </div>
                                         </div>
                                       </div>
-                                     <button onclick="fillTable6()"  class=" btn  btn-success">Show</button>
+                                     <button onclick="fillTable6()"  class=" btn  btn-danger">Show</button>
                                     <div id="total6">
                                         </div>
                                    </div>
@@ -827,7 +827,7 @@ function fillTable6(){
 				
 				tr+='<td>'+result[i]['category']+'</td>';
 				
-				tr+='<td> +<a style="color:green">'+result[i]['amount']+'</a></td>';
+				tr+='<td> -<a style="color:red">'+result[i]['amount']+'</a></td>';
 
 				
 				tr+='<td>'+result[i]['date']+'</td>';
@@ -838,7 +838,7 @@ function fillTable6(){
 				
 			}
 			totalBody.innerHTML="";
-			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
+			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
 			
 			
 			

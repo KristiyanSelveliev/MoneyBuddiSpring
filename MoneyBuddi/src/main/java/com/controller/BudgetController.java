@@ -83,8 +83,14 @@ public class BudgetController {
 	
 	@RequestMapping(value= "/budgetUpdate", method = RequestMethod.POST)
 	public String updateBudget(@RequestParam int  id,
-			@RequestParam double  amount) throws Exception {
+			@RequestParam double  amount,
+			@RequestParam int duration) throws Exception {
+		
 		Budget budget=budgetDAO.getBudgetById(id);
+	    if(duration<=0) {
+	    	throw new InvalidDataException("You probably entered wrong value");
+	    }
+	    budget.setEndDate(LocalDate.now().plusDays(duration));
 		budget.setAmount(amount);
 		budgetDAO.updateBudget(budget);
 		
