@@ -3,7 +3,6 @@ package com.controller;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,15 +19,12 @@ import com.exceptions.InvalidDataException;
 import com.model.Transaction;
 import com.model.User;
 import com.model.dao.TransactionDao;
-import com.model.dao.UserDao;
 
 @Controller
 public class TransactionController {
 
 	@Autowired
 	private TransactionDao transactionDao;
-	@Autowired
-	private UserDao userDao;
 	
 	private static final int DEFAULT_NUM_DAYS = 7;
 

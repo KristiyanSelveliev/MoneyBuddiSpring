@@ -378,7 +378,79 @@
                         </div>
                     </div>
                     
-
+			
+			<div class="col-md-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title" style="color:green">Filter for  Incomes by category</h4>
+                                
+                            
+                                     <div class="row">
+                                        <div class="col-md-4">
+                                        <label><a style="color:purple"> <b>Category</b></a></label>
+                                            <div class="form-group" >
+                                          
+                                                <select id="ddlViewBy5" class="col-md-11" name="categoryId">
+			                                       
+					                                <c:forEach var="category" items="${requestScope.incomeCategories }">
+					                                 <option value="${category.getId()}" >${ category.getCategory() } </option>
+					                                
+					                               </c:forEach>
+			                                     
+			                                  </select>
+			                                 
+                                            </div>
+                                        </div>
+                                        <div >
+                                            <div  >
+                                                <label><a style="color:purple"> <b>Begin</b></a></label>
+                                                  <input id="begin5" type="date"  name="begin"   style="font-size: 130%;"> 
+                                            </div>
+                                        </div>
+                                        <div >
+                                            <div  >
+                                              <label>  <a style="color:purple"> <b>End&nbsp&nbsp&nbsp&nbsp</b></a></label>
+                                                 <input id="end5"  type="date"  name="end"   style="font-size: 130%;" > 
+                                            </div>
+                                        </div>
+                                      </div>
+                                     <button onclick="fillTable5()"  class=" btn  btn-success">Show</button>
+                                    <div id="total5">
+                                        </div>
+                                   </div>
+                            <div class="content table-responsive">
+                                <div class="scroll1">
+                                <table id="table5" class="table table-hover " >
+                                    <tr>
+                                        <th>ID</th>
+                                    	<th>Category</th>
+                                    	<th>Amount</th>
+                                    	<th>Account</th>
+                                    	<th>Date</th>
+                                    </tr>
+                                    <tbody id="body5" >
+                                      <c:forEach var="income" items="${requestScope.incomesByCategory }">
+                                          <tr >
+                                            <td>${income.getId() }</td>
+                                        	<td>${income.getCategory().getCategory() }</td>
+                                        	<td>+<a style="color:green">${income.getAmount()}</a></td>
+                                        	<td>${income.getAccount().getName()}-${income.getCurrency().getType().toString() }</td>
+                                        	<td>${income.getDate()}</td>
+                                         <tr>	
+                                      </c:forEach>
+                                    
+                                    </tbody>
+                                </table>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+			
 
                 </div>
             </div>
@@ -559,8 +631,6 @@ function fillTable3(){
 	}
 
 
-
-
 function fillTable4(){
 	
 	var e = document.getElementById("ddlViewBy");
@@ -610,6 +680,56 @@ function fillTable4(){
 	}
 	request.send();
 	}
+
+function fillTable5(){
+	
+	var e = document.getElementById("ddlViewBy5");
+	var categoryId = e.options[e.selectedIndex].value;
+	console.log(categoryId);
+	
+	var pole=document.getElementById("begin5");
+	var begin=pole.value;
+	
+     pole=document.getElementById("end5");
+	var end=pole.value;
+	
+	var request=new XMLHttpRequest();
+	request.open("GET","categoryIncome?begin=" +begin+"&end="+end+"&id="+categoryId);
+	request.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			var result = this.responseText;
+			result = JSON.parse(result);
+			var total=0;
+			var totalBody=document.getElementById("total5");
+			var body = document.getElementById("body5");
+			body.innerHTML ="";
+			for(var i=0;i<result.length;i++){
+				var tr="<tr>";
+				tr+='<td>'+result[i]['id']+'</td>';
+				
+				tr+='<td>'+result[i]['category']+'</td>';
+				
+				tr+='<td> +<a style="color:green">'+result[i]['amount']+'</a></td>';
+
+				
+				tr+='<td>'+result[i]['date']+'</td>';
+				
+				tr+="</tr>";
+				total+=result[i]['amount_converted'];
+				body.innerHTML+=tr;
+				
+			}
+			totalBody.innerHTML="";
+			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
+			
+			
+			
+			
+		}
+	}
+	request.send();
+	}
+
 
 
 
