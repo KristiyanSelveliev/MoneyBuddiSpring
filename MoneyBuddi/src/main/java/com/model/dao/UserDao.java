@@ -230,7 +230,7 @@ public class UserDao implements IUserDao {
 		ArrayList<String> emails=new ArrayList<String>();
 		LocalDate yesterday=LocalDate.now().minusDays(1);
 		//get all user`s emails that have been inactive in the last 24 hours to send them remindr via email
-		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT email FROM users"
+		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT email FROM users "
 				+ "WHERE last_transaction_date < ? ;")){
 			ps.setDate(1, Date.valueOf(yesterday));
 			try(ResultSet rs=ps.executeQuery()){

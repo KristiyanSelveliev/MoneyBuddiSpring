@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -87,6 +88,17 @@ public class BudgetDao implements IBudgetDAO{
 		
 		}
 	}
+	
+	@Override
+	public void deleteExpiredBudgets() throws SQLException {
+		try(PreparedStatement ps=db.getConnection().prepareStatement("DELETE FROM budgets WHERE ?>end_date")){
+			ps.setDate(1, Date.valueOf(LocalDate.now()));
+			ps.executeUpdate();
+		}
+		
+	}
+	
+	
 
 	@Override
 	public Collection<Budget> getAllBudgetsForUser(long userId) throws SQLException,InvalidDataException {//can throw SQL OR INVALID DATA EXCEPTION
@@ -160,6 +172,8 @@ public class BudgetDao implements IBudgetDAO{
 		}
 		return incomeBudgets;
 	}
+
+	
 	
 	
 	
