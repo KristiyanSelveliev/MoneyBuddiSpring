@@ -136,7 +136,7 @@
                 <div class="row">
                     <div class="col-md-6">
                        <div class="card"> 
-                            <div class="header">
+                            <div class="header" >
                                 <h4 class="title" style="color:red">Filter for Expenses</h4>
                                 
                                 
@@ -188,7 +188,7 @@
 
                      <div class="col-md-6">
                         <div class="card">
-                            <div class="header">
+                            <div class="header" >
                                 <h4 class="title" style="color:green">Filter for Incomes</h4>
                                 
                                 
@@ -242,7 +242,7 @@
                     
                     <div class="col-md-6">
                         <div class="card">
-                            <div class="header">
+                            <div class="header"  >
                                 <h4 class="title" style="color:red">Filter for  Expenses by account</h4>
                                 
                                      
@@ -278,8 +278,9 @@
                                       <button onclick="fillTable3()" class=" btn  btn-danger ">Show </button>
                                    
                                 
-                                 <div id="total3">
+                                 <div id="total3" style="max-width:500px; height:40px; float:right">
                                     </div>
+                                    
                                 
                             </div>
                             <div class="content table-responsive">
@@ -313,7 +314,7 @@
                     
                      <div class="col-md-6">
                         <div class="card">
-                            <div class="header">
+                            <div class="header" >
                                 <h4 class="title" style="color:green">Filter for  Incomes by account</h4>
                                 
                             
@@ -347,8 +348,8 @@
                                         </div>
                                       </div>
                                      <button onclick="fillTable4()"  class=" btn  btn-success">Show</button>
-                                    <div id="total4">
-                                        </div>
+                                    <div id="total4"  style="max-width:500px; height:40px; float:right">
+                                        </div> 
                                    </div>
                             <div class="content table-responsive">
                                 <div class="scroll1">
@@ -381,7 +382,7 @@
                     
             <div class="col-md-6">
                         <div class="card">
-                            <div class="header">
+                            <div class="header"  >
                                 <h4 class="title" style="color:red">Filter for  Expenses by category</h4>
                                 
                             
@@ -415,8 +416,10 @@
                                         </div>
                                       </div>
                                      <button onclick="fillTable6()"  class=" btn  btn-danger">Show</button>
-                                    <div id="total6">
+                                      <div id="total6"  style="max-width:500px; height:40px; float:right">
                                         </div>
+                                        
+                                        
                                    </div>
                             <div class="content table-responsive">
                                 <div class="scroll1">
@@ -449,7 +452,7 @@
 			
 			<div class="col-md-6">
                         <div class="card">
-                            <div class="header">
+                            <div class="header" >
                                 <h4 class="title" style="color:green">Filter for  Incomes by category</h4>
                                 
                             
@@ -483,7 +486,7 @@
                                         </div>
                                       </div>
                                      <button onclick="fillTable5()"  class=" btn  btn-success">Show</button>
-                                    <div id="total5">
+                                    <div id="total5"  style="max-width:500px; height:40px; float:right" >
                                         </div>
                                    </div>
                             <div class="content table-responsive">
@@ -541,7 +544,8 @@
       width=95%;
       max-width:750px;
       height:350px;
-      overflow-x:scroll;
+     
+      overflow-y:scroll;
       
 }
 
@@ -689,7 +693,7 @@ function fillTable3(){
 			
 			}
 			totalBody.innerHTML="";
-			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
+			totalBody.innerHTML+='<h3  float:left ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
 			
 			
 			
@@ -739,7 +743,7 @@ function fillTable4(){
 				
 			}
 			totalBody.innerHTML="";
-			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
+			totalBody.innerHTML+='<h3  float:left ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
 			
 			
 			
@@ -788,7 +792,7 @@ function fillTable5(){
 				
 			}
 			totalBody.innerHTML="";
-			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
+			totalBody.innerHTML+='<h3  float:left ;margin-right:50px;font-size: 130%;">  Total:&nbsp+<a style="color:green">'+total+'</a>  EURO</h3>';
 			
 			
 			
@@ -838,7 +842,7 @@ function fillTable6(){
 				
 			}
 			totalBody.innerHTML="";
-			totalBody.innerHTML+='<h3  float:right ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
+			totalBody.innerHTML+='<h3 float:left ;margin-right:50px;font-size: 130%;">  Total:&nbsp-<a style="color:red">'+total+'</a>  EURO</h3>';
 			
 			
 			

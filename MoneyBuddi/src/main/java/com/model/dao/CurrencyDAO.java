@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.exceptions.InvalidDataException;
 import com.model.Currency;
 import com.model.Currency.CurrencyType;
 
@@ -29,16 +30,11 @@ public class CurrencyDAO implements ICurrencyDAO{
 			try(ResultSet rs=ps.executeQuery();){
 				if(rs.next()) {//if there is such a row
 					String currency_type=rs.getString("type");//String type from table currencies
-					for(CurrencyType type:Currency.CurrencyType.values()) {
-						if(type.toString().equals(currency_type)) {
-											//checking if there is an enum which 
-						                    //string value equals the type from the table in DB
-						                    //because type in table is String whereas in class is enum
-					   
-						return new Currency(rs.getInt("id"), type);
-						}
-					}
-					
+					try {
+						return new Currency(rs.getInt("id"),CurrencyType.valueOf(currency_type));
+					}catch(Exception e) {
+						throw new SQLException("Something went wrong with the currencies");
+					}			
 				}
 			}
 		}
@@ -52,8 +48,7 @@ public class CurrencyDAO implements ICurrencyDAO{
 			ps.setString(1, type.toString());
 			
 			try(ResultSet rs=ps.executeQuery();){
-				if(rs.next()) {//if there is such a row
-
+				if(rs.next()) {
 				  return new Currency(rs.getLong("id"),type);
 						
 				}
