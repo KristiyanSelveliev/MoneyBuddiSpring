@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -95,10 +96,15 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
+                       <form action="generatePDF" method="post">
+                        <button class="btn  btn-danger" type="submit" > PDF </button>
+                        </form>
                      
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
+                    
+                       
                         <li>
                            <a href="profile">
                                <p>My Profile</p>

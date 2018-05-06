@@ -114,7 +114,7 @@ public class AccountDao implements IAccountDao {
 		PreparedStatement ps=null;
 		try {
 			ps=db.getConnection().prepareStatement("SELECT id, name, "
-					+ "balance,user_id, currency_id FROM accounts WHERE user_id=?");
+					+ "balance,user_id, currency_id FROM accounts WHERE user_id=? ORDER BY balance desc");
 			ps.setLong(1, u.getId());
 			
 			ResultSet rs=ps.executeQuery();
