@@ -190,7 +190,7 @@
 			                                    <div class="row">
 			                                   		<a style="font-size: 125%;" class="col-md-10">Date </a>
 			                                   </div>
-			                                   <input type="date"  name="date"  class="col-md-7"   style="font-size: 115%; required" > 
+			                                   <input type="date"  name="date"  class="col-md-7"   style="font-size: 115%;" required> 
 			                                 
 			                                   <div class="row">
 			                                        <div class="col-md-8">

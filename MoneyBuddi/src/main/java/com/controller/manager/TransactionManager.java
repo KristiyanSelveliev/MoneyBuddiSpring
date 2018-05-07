@@ -74,11 +74,7 @@ public class TransactionManager {
 		  
 			transactionDAO.addTransaction(transaction, budget);
 			
-			System.out.println("Transaction "+transaction.getCurrency().getType().toString()+" "+transaction.getAmount());
-			System.out.println("Account " +transaction.getAccount().getCurrency().getType().toString()+" "+accountAmount);	
-			if(budget!=null) {
-		    System.out.println("Budget "+budget.getCurrency().getType().toString()+" "+budgetAmount);
-			}
+			
 		
 	}
 	

@@ -166,7 +166,7 @@
 			                             		<div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Category Title </a>
 			                                   </div>
-			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" placeholder="Category title"> 
+			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" placeholder="Category title" required> 
 			                                       
 			                                   <div class="row">
 			                                    <a style="font-size: 140%;" class="col-md-10" >Type </a>

@@ -188,7 +188,7 @@
 			                                   <div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-9">Amount </a>
 			                                   </div>
-			                                   <input type="number"  name="amount" class="col-md-7" style="font-size: 115%;" value="100"> 
+			                                   <input type="number"  name="amount" class="col-md-7" style="font-size: 115%;" value="100" required> 
 			                                    <div class="row" class="col-md-5">
 			                                   		<a style="font-size: 125%;" class="col-md-9">Date </a>
 			                                   </div>

@@ -188,15 +188,15 @@
 			                                   <div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Amount </a>
 			                                   </div>
-			                                   <input type="number"  name="amount" class="form-control"  style="font-size: 130%;" value="100"> 
+			                                   <input type="number"  name="amount" class="form-control"  style="font-size: 130%;" value="100" required> 
 			                                    <div class="row">
 			                                   		<a style="font-size: 125%;" class="col-md-10">Begin </a>
 			                                   </div>
-			                                   <input type="date"  name="begin" class="form-control"  style="font-size: 130%;" > 
+			                                   <input type="date"  name="begin" class="form-control"  style="font-size: 130%;" required> 
 			                                   <div class="row">
 			                                  		 <a style="font-size: 125%;" class="col-md-10">End </a>
 			                                   </div>
-			                                   	<input type="date"  name="end" class="form-control"  style="font-size: 130%;"> 
+			                                   	<input type="date"  name="end" class="form-control"  style="font-size: 130%;" required> 
 			                                   
 			                                  <button type="submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Create </button>
                         					</form>

@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.sql.SQLException;
+import java.time.format.DateTimeParseException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,12 @@ public class ExceptionHandlerController {
 	     request.setAttribute("exception",ex);
 	     return "error";
 	   
+	}
+	@ExceptionHandler(value=DateTimeParseException.class)
+	public String  dateHandler(HttpServletRequest request,DateTimeParseException e) {
+		InvalidDataException ex=new InvalidDataException("You probably entered wrong date");
+		request.setAttribute("exception",ex);
+		return "error";
 	}
 	
 	@ExceptionHandler(value=TypeMismatchException.class)
