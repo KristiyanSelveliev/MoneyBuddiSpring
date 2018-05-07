@@ -166,7 +166,7 @@
 			                             		<div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Name </a>
 			                                   </div>
-			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" placeholder="Account name"> 
+			                                   <input type="text"  name="name" class="form-control"  style="font-size: 130%;" placeholder="Account name" required> 
 			                                       
 			                                   <div class="row">
 			                                    <a style="font-size: 140%;" class="col-md-10" >Currencies </a>
@@ -183,7 +183,7 @@
 			                                   <div class="row">
 			                                   		<a style="font-size: 140%;" class="col-md-10">Balance </a>
 			                                   </div>
-			                                   <input type="number"  name="balance" class="form-control" min="0" step=".01" style="font-size: 130%;" placeholder="Balance"> 
+			                                   <input type="number"  name="balance" class="form-control" min="0" step=".01" style="font-size: 130%;" placeholder="Balance" required> 
 			                                   
 			                                  <button type="submit" rel="tooltip" title="Create" class="btn btn-success focus"  >Create Account</button>
                         					</form>

@@ -57,11 +57,18 @@ public class TransactionCategoryController {
 
 		User user = (User) request.getSession().getAttribute("user");
 		long userId = user.getId();
+		
 		try {
 			transactionType = TransactionType.valueOf(type);
 		} catch (IllegalArgumentException e) {
 			throw new InvalidDataException("No such caregory");
 		}
+		
+		if(name.trim().equals("")) {
+			throw new InvalidDataException("Name cant be empty");
+		}
+		
+		
 		Category category = new Category(name, transactionType, userId);
 		request.setAttribute("Success", category);
 		categoryDao.addCategory(category);
@@ -71,7 +78,7 @@ public class TransactionCategoryController {
 
 	@RequestMapping(value = "/categoryUpdate", method = RequestMethod.POST)
 	public String updateCategory(@RequestParam long id, @RequestParam String name) throws Exception {
-
+		
 		Category category = categoryDao.getCategoryByID(id);
 		category.setCategory(name);
 		categoryDao.updateCategory(category);

@@ -38,7 +38,6 @@ public class TableController {
 	
 	
 	@RequestMapping(value = "/userExpense", method = RequestMethod.GET)
-	@ResponseBody
 	 public ArrayList<TransactionDTO> userExpense(
 			 @RequestParam String begin,
 			 @RequestParam String end,
@@ -56,7 +55,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value = "/userIncome", method = RequestMethod.GET)
-	@ResponseBody
 	 public ArrayList<TransactionDTO> userIncome(
 			 @RequestParam String begin,
 			 @RequestParam String end,
@@ -74,7 +72,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value = "/accountIncome", method = RequestMethod.GET)
-	@ResponseBody
 	 public ArrayList<TransactionDTO> accIncome(
 			 @RequestParam String begin,
 			 @RequestParam String end,
@@ -90,7 +87,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value = "/accountExpense", method = RequestMethod.GET)
-	@ResponseBody
 	 public ArrayList<TransactionDTO> accExpense(
 			 @RequestParam String begin,
 			 @RequestParam String end,
@@ -106,7 +102,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value="showTransactions",method=RequestMethod.GET)
-	@ResponseBody
 	public ArrayList<TransactionDTO> showTransactions(
 			@RequestParam String date,
 			HttpSession session ) throws SQLException, InvalidDataException{
@@ -117,7 +112,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value="editTransaction",method=RequestMethod.POST)
-	@ResponseBody
 	public TransactionDTO editTransaction(
 			@RequestParam long transactionId,
 			HttpSession session ) throws SQLException, InvalidDataException{
@@ -138,7 +132,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value = "/categoryIncome", method = RequestMethod.GET)
-	@ResponseBody
 	 public ArrayList<TransactionDTO> categoryIncome(
 			 @RequestParam String begin,
 			 @RequestParam String end,
@@ -155,7 +148,6 @@ public class TableController {
 	}
 	
 	@RequestMapping(value = "/categoryExpense", method = RequestMethod.GET)
-	@ResponseBody
 	 public ArrayList<TransactionDTO> categoryExpense(
 			 @RequestParam String begin,
 			 @RequestParam String end,

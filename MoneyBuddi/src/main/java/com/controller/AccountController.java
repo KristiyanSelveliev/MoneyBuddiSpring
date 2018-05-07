@@ -46,14 +46,10 @@ public class AccountController {
 			@RequestParam String name,
 			@RequestParam double balance
 			) throws SQLException,InvalidDataException {
-		List<Currency> currencies=(List<Currency>) currencyDao.getAllCurrencies(); 
-		request.setAttribute("currencies", currencies);         //loading categories again                                
-																//because the user stays on the same page 
-															    //after pressing create 
 		
-		//String name=request.getParameter("name");
-		//String amount=request.getParameter("amount");
-		//double value=Double.parseDouble(amount);
+		if(name.trim().equals("")) {
+			throw new InvalidDataException("Name cant be empty ");
+		}
 		
 		User user=(User)request.getSession().getAttribute("user");
 	
