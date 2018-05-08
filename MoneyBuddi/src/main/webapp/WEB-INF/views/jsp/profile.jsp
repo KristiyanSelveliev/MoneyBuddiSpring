@@ -192,7 +192,7 @@
                     <div class="col-md-4" >
                         <div class="card card-user">
                             <div class="image">
-                                <img src="img/Insert-Photo-Here.jpg" alt="..."/>
+                             <!--    <img src="img/Insert-Photo-Here.jpg" alt="..."/> -->
                             </div>
                             <div class="content">
                                 <div class="author">

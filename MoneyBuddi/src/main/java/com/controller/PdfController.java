@@ -145,7 +145,7 @@ public class PdfController {
     	}else {
     		
     		Font highActivityFont = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.GREEN);
-       	    Chunk highActivity = new Chunk("MEDIUM",highActivityFont);
+       	    Chunk highActivity = new Chunk("HIGH",highActivityFont);
        	    document.add(highActivity);
     	}
 		
@@ -169,8 +169,9 @@ public class PdfController {
 			if(counter>maxCounter) {
 				bestCategory=transactions.get(i).getCategory().getCategory();
 				maxCounter=counter;
-				counter=0;
+				
 			}
+			counter=0;
 		}
 		return bestCategory;
 	}
@@ -193,8 +194,8 @@ public class PdfController {
 			if(counter>maxCounter) {
 				bestAccount=transactions.get(i).getAccount();
 				maxCounter=counter;
-				counter=0;
 			}
+			counter=0;
 		}
 		return bestAccount.getName();	
 	}
