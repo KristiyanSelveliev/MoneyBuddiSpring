@@ -202,37 +202,7 @@
                         					</form>
                         			</div>
                         		</div>
-                        		<!--
-                               <c:forEach var="budget" items="${requestScope.budgets }">
-                                <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
-                                
-                                   
-                                    <div class="font-icon-detail">
-                                       <form action="budgetUpdate" method="post">
-                                       <input type="hidden" name="id" value="${budget.getId() }">
-                                       <p class="text-muted" style="font-size: 130%;">${budget.getCategory().getCategory()}</p>
-                                       
-                                        
-                                         <c:choose >
-                                         <c:when test="${budget.getCategory().getType().toString()=='INCOME'}"> 
-                                         <a class="text-muted" style="font-size: 130%; color:green" > ${budget.getCategory().getType().toString()}</a>
-                                          </c:when>
-                                         <c:otherwise > <a class="text-muted" style="font-size: 130%; color:red" > ${budget.getCategory().getType().toString()}</a>
-                                          </c:otherwise>
-                                       </c:choose> 
-                                      <input type="value" name="amount" class="form-control"  style="font-size: 130%; color:green "value="${Math.round( budget.getAmount()* 100) / 100}">
-                                      <a style="font-size: 130%;">${budget.getCurrency().getType().toString()} </a>
-                                      <button type="submit" rel="tooltip" title="Update" class="btn btn-info btn-fill pull-right">Update </button>
-                                      </form>
-                                    </div>
-                                     <form action=budgetDelete method="post">
-                                     <input type="hidden" name="id" value="${budget.getId() }">
-                                    <button type="submit" rel="tooltip" title="Remove" class="btn btn-danger pull-top">Remove </button>
-                                     </form>
-                                </div>
-								
-                               </c:forEach>
-                               -->
+                        		
                                  <div class="content table-responsive">
                               <div class="scroll1">
                                 <table id="table2" class="table table-responsive table-hover " >

@@ -30,6 +30,8 @@ public class AccountController {
 	
 	@RequestMapping(value= "/accounts", method = RequestMethod.GET)
 	public String showCategories(HttpServletRequest request,HttpSession session) throws Exception {
+		//prepares the page for next step - adding account
+		//shows user`s accounts and all currencies
 		List<Currency> currencies = (List<Currency>) currencyDao.getAllCurrencies();
 		request.setAttribute("currencies", currencies);
 

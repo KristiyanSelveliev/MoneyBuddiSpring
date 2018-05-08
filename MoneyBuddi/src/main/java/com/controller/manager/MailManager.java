@@ -70,8 +70,6 @@ public class MailManager {
 
     }
 
-
-    //0 0 0/24 1/1 * ? * - cron expression for every 24 hours
     //sending every minute now for the purpose of testing
     @Scheduled(fixedRate=60000)
 	public  void sendEmailToAllInactiveUsers()  {

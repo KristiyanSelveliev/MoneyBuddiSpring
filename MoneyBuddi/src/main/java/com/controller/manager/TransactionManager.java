@@ -30,9 +30,7 @@ public class TransactionManager {
 	}
 	
 	
-	private TransactionManager() {
-		
-	}
+	private TransactionManager() {}
 	
 	
 	public void addTransaction(Transaction transaction,Budget budget) throws InvalidDataException, SQLException {
@@ -43,6 +41,7 @@ public class TransactionManager {
 					transaction.getCurrency(), 
 					transaction.getAccount().getCurrency()
 					);
+		
 		double budgetAmount=0;
 		 if(budget!=null) {
 		 budgetAmount=CurrencyConverter.convert(

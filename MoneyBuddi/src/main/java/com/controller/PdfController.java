@@ -26,8 +26,6 @@ import com.model.Account;
 import com.model.Transaction;
 import com.model.User;
 import com.model.dao.AccountDao;
-import com.model.dao.CategoryDAO;
-import com.model.dao.CurrencyDAO;
 import com.model.dao.TransactionDao;
 
 
@@ -81,7 +79,6 @@ public class PdfController {
 		 
 		}
 
-	
 
 	private void generateIncomeInfo(Document document,HttpSession session) throws Exception {
 		User user=(User) session.getAttribute("user");

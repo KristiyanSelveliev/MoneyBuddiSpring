@@ -4,22 +4,18 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.controller.manager.CurrencyConverter;
 import com.exceptions.InvalidDataException;
 import com.model.Currency.CurrencyType;
-import com.model.Account;
 import com.model.Transaction;
 import com.model.TransactionDTO;
 import com.model.User;
@@ -31,11 +27,8 @@ public class TableController {
 	
 	@Autowired
 	TransactionDao transactionDAO;
-	
 	@Autowired 
 	CurrencyDAO currencyDAO;
-	
-	
 	
 	@RequestMapping(value = "/userExpense", method = RequestMethod.GET)
 	 public ArrayList<TransactionDTO> userExpense(
@@ -97,6 +90,7 @@ public class TableController {
 		
 		ArrayList<Transaction> transactions=transactionDAO.getExpenseByAccountFromToDate(from, to, id);
 		this.transactionOrderer(transactions);
+		
 		return convertToDTO(transactions);
 		
 	}
@@ -108,27 +102,8 @@ public class TableController {
 		
 		User user=(User) session.getAttribute("user");
 		ArrayList<Transaction> transactions=transactionDAO.getAllTransactionsByUserAndDate(user,LocalDate.parse(date));
-		return convertToDTO(transactions);
-	}
-	
-	@RequestMapping(value="editTransaction",method=RequestMethod.POST)
-	public TransactionDTO editTransaction(
-			@RequestParam long transactionId,
-			HttpSession session ) throws SQLException, InvalidDataException{
-	
-		session.setAttribute("transactionId", transactionId);
-		Transaction transaction=transactionDAO.getTransactionById(transactionId);
 		
-           if(transaction!=null) {	
-			return new TransactionDTO(
-				      transaction.getId(),
-				      transaction.getCategory().getCategory(),
-				      transaction.getAmount(), 
-				      transaction.getAccount().getName()+"-"+transaction.getAccount().getCurrency().getType().toString(),
-				      transaction.getDate().toLocalDate().toString(),
-			          transaction.getType().toString());
-           }
-           return null;
+		return convertToDTO(transactions);
 	}
 	
 	@RequestMapping(value = "/categoryIncome", method = RequestMethod.GET)

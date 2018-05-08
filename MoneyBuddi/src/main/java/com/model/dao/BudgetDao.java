@@ -18,6 +18,7 @@ import com.model.Budget;
 import com.model.Transaction.TransactionType;
 @Component
 public class BudgetDao implements IBudgetDAO{
+	
 	@Autowired
 	private CurrencyDAO currencyDAO;
 	
@@ -30,12 +31,11 @@ public class BudgetDao implements IBudgetDAO{
 	@Autowired
 	private DataSource db;
 	
-	
-	
 	@Override
 	public void addBudget(Budget budget) throws SQLException  {
 		
-		try(PreparedStatement ps=db.getConnection().prepareStatement("INSERT INTO budgets (amount,begin_date,end_date,user_id,currency_id,category_id)"
+		try(PreparedStatement ps=db.getConnection().prepareStatement("INSERT INTO budgets "
+				+ " (amount,begin_date,end_date,user_id,currency_id,category_id)"
 		+ "VALUES(?,?,?,?,?,?)");){
 		ps.setDouble(1, budget.getAmount());
 		ps.setDate(2, Date.valueOf(budget.getBeginDate()));
@@ -47,7 +47,6 @@ public class BudgetDao implements IBudgetDAO{
 		
 		int rows=ps.executeUpdate();
 		if(rows==0) {
-			
 			throw new SQLException("Cannot add budget in DB");
 			}
 		
@@ -56,7 +55,8 @@ public class BudgetDao implements IBudgetDAO{
 
 	@Override
 	public void updateBudget(Budget budget) throws SQLException {
-		try(PreparedStatement ps=db.getConnection().prepareStatement("UPDATE budgets SET amount=?,begin_date=?,end_date=?,user_id=?,currency_id=?,category_id=? "
+		try(PreparedStatement ps=db.getConnection().prepareStatement("UPDATE budgets "
+				+ " SET amount=?,begin_date=?,end_date=?,user_id=?,currency_id=?,category_id=? "
 	    +"WHERE id=?");){
 		ps.setDouble(1, budget.getAmount());
 		ps.setDate(2, Date.valueOf(budget.getBeginDate()));
@@ -97,11 +97,10 @@ public class BudgetDao implements IBudgetDAO{
 		}
 		
 	}
-	
-	
 
 	@Override
-	public Collection<Budget> getAllBudgetsForUser(long userId) throws SQLException,InvalidDataException {//can throw SQL OR INVALID DATA EXCEPTION
+	public Collection<Budget> getAllBudgetsForUser(long userId)
+			throws SQLException,InvalidDataException {
 		Collection<Budget> budgets=new ArrayList<>();
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id , amount , begin_date, "
 				                                             +"end_date , user_id , currency_id , category_id "
@@ -172,10 +171,5 @@ public class BudgetDao implements IBudgetDAO{
 		}
 		return incomeBudgets;
 	}
-
-	
-	
-	
-	
 
 }

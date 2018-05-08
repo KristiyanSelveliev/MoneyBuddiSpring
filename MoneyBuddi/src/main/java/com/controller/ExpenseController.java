@@ -32,7 +32,6 @@ import com.model.dao.UserDao;
 
 @Controller
 public class ExpenseController {
-
 	
 	@Autowired
 	private CategoryDAO categoryDao;
@@ -49,6 +48,8 @@ public class ExpenseController {
 	
 	@RequestMapping(value = "/addExpense", method = RequestMethod.GET)
 	public String expense(HttpSession session, HttpServletRequest request) throws Exception {
+		//the method fills the page with info needed to create expense
+		
 		User u = (User) session.getAttribute("user");
 
 		List<Category> categories = categoryDao.getAllCategoriesByUserAndType(u, TransactionType.EXPENSE);
@@ -77,6 +78,7 @@ public class ExpenseController {
 		Expense expense = new Expense(amount, transactionCurrency, account, LocalDate.parse(date),
 				categoryDao.getCategoryByID(categoryId));
 
+		//expense is not tied to any budget so we pass null
 		transactionManager.addTransaction(expense, null);
 		request.setAttribute("accountAmount",
 				CurrencyConverter.convert(amount, transactionCurrency, account.getCurrency()));
@@ -96,6 +98,8 @@ public class ExpenseController {
 			@RequestParam String date,HttpSession session,
 			HttpServletRequest request) throws Exception {
 
+		//this method creates expense that is tied to budget
+		
 		Account account = accountDao.getAccountById(accountId);
 		Currency transactionCurrency = currencyDAO.getCurrencyById(currencyId);
 		Budget budget = budgetDAO.getBudgetById(budgetId);

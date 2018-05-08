@@ -17,6 +17,7 @@ import com.model.User;
 
 @Component
 public class AccountDao implements IAccountDao {
+	
 	@Autowired
     private CurrencyDAO currencyDAO;
 	
@@ -25,8 +26,6 @@ public class AccountDao implements IAccountDao {
 	
 	@Autowired
 	private DataSource db;
-	
-	
 	
 	@Override
 	public void addAccount(Account account) throws SQLException {
@@ -78,7 +77,6 @@ public class AccountDao implements IAccountDao {
 		try(PreparedStatement ps=db.getConnection().prepareStatement("DELETE FROM accounts WHERE id=?");){
 			ps.setLong(1, id);
 			ps.executeUpdate();
-			ps.close();
 		}
 	}
 

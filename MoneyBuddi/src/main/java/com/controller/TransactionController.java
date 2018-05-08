@@ -3,6 +3,7 @@ package com.controller;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.exceptions.InvalidDataException;
 import com.model.Transaction;
+import com.model.TransactionDTO;
 import com.model.User;
 import com.model.dao.TransactionDao;
 
@@ -51,24 +53,9 @@ public class TransactionController {
 	@RequestMapping(value = "/transactions", method = RequestMethod.GET)
 	public String transactions(HttpSession session, HttpServletRequest request) throws Exception {
 		User u = (User) session.getAttribute("user");
-
-		ArrayList<Transaction> expenses = transactionDao.getAllExpenseTransactions(u);
-		ArrayList<Transaction> incomes = transactionDao.getAllIncomeTransactions(u);
-
-		// count number of all transactions
-		int transactionsCountIncome = 0;
-		int transactionsCountExpense = 0;
-		// income
-		for (Transaction t : incomes) {
-			transactionsCountIncome++;
-		}
-		// expense
-		for (Transaction t : expenses) {
-			transactionsCountExpense++;
-		}
-
-		request.setAttribute("numExpenses", transactionsCountExpense);
-		request.setAttribute("numIncomes", transactionsCountIncome);
+		
+		request.setAttribute("numExpenses", getNumberOfIncomesAndExpenses(u).get("numExpenses"));
+		request.setAttribute("numIncomes", getNumberOfIncomesAndExpenses(u).get("numIncomes"));
 
 		request.setAttribute("statistics",
 				this.getTransactionsForStatistics(u, LocalDate.now().minusDays(DEFAULT_NUM_DAYS), LocalDate.now()));
@@ -82,24 +69,8 @@ public class TransactionController {
 
 		User u = (User) session.getAttribute("user");
 
-		ArrayList<Transaction> expenses = transactionDao.getAllExpenseTransactions(u);
-		ArrayList<Transaction> incomes = transactionDao.getAllIncomeTransactions(u);
-
-		int transactionsCountIncome = 0;
-		int transactionsCountExpense = 0;
-		// income
-		for (Transaction t : incomes) {
-
-			transactionsCountIncome++;
-		}
-		// expense
-		for (Transaction t : expenses) {
-
-			transactionsCountExpense++;
-		}
-
-		request.setAttribute("numExpenses", transactionsCountExpense);
-		request.setAttribute("numIncomes", transactionsCountIncome);
+		request.setAttribute("numExpenses", getNumberOfIncomesAndExpenses(u).get("numExpenses"));
+		request.setAttribute("numIncomes", getNumberOfIncomesAndExpenses(u).get("numIncomes"));
 
 		request.setAttribute("statistics",
 				this.getTransactionsForStatistics(u, LocalDate.parse(beginDate), LocalDate.parse(endDate)));
@@ -127,9 +98,30 @@ public class TransactionController {
 
 		return "redirect:/transactions";
 	}
+	
+	@RequestMapping(value="editTransaction",method=RequestMethod.POST)
+	public TransactionDTO editTransaction(
+			@RequestParam long transactionId,
+			HttpSession session ) throws SQLException, InvalidDataException{
+	
+		session.setAttribute("transactionId", transactionId);
+		Transaction transaction=transactionDao.getTransactionById(transactionId);
+		
+           if(transaction!=null) {	
+			return new TransactionDTO(
+				      transaction.getId(),
+				      transaction.getCategory().getCategory(),
+				      transaction.getAmount(), 
+				      transaction.getAccount().getName()+"-"+transaction.getAccount().getCurrency().getType().toString(),
+				      transaction.getDate().toLocalDate().toString(),
+			          transaction.getType().toString());
+           }
+           return null;
+	}
 
 	private TreeMap<LocalDate, MyEntry> getTransactionsForStatistics(User user, LocalDate begin, LocalDate end)
 			throws Exception {
+		//date -> number of incomes and expenses
 		TreeMap<LocalDate, MyEntry> transactionCount = new TreeMap<LocalDate, MyEntry>();
 
 		int incomes = 0;
@@ -149,4 +141,26 @@ public class TransactionController {
 		return transactionCount;
 	}
 
+	private HashMap<String, Integer> getNumberOfIncomesAndExpenses(User u) throws Exception{
+		ArrayList<Transaction> expenses = transactionDao.getAllExpenseTransactions(u);
+		ArrayList<Transaction> incomes = transactionDao.getAllIncomeTransactions(u);
+
+		// key is income or expense, value is the number of each
+		HashMap<String, Integer> numberTransactions=new HashMap<String, Integer>();
+		// count number of all transactions
+		int transactionsCountIncome = 0;
+		int transactionsCountExpense = 0;
+		// income
+		for (Transaction t : incomes) {
+			transactionsCountIncome++;
+		}
+		numberTransactions.put("numIncomes", transactionsCountIncome);
+		// expense
+		for (Transaction t : expenses) {
+			transactionsCountExpense++;
+		}
+		numberTransactions.put("numExpenses", transactionsCountExpense);
+		
+		return numberTransactions;
+	}
 }

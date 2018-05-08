@@ -1,11 +1,9 @@
-package com.model.dao;
+ package com.model.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -48,7 +46,7 @@ public class CategoryDAO implements ICategoryDAO{
 
 	@Override
 	public void addCategory(Category category) throws SQLException {
-													  //could be done with join 		//transaction type id
+											
 		try(PreparedStatement ps=db.getConnection().prepareStatement("INSERT INTO categories (category,transaction_type_id,user_id)"
 															+"VALUES (?,?,?)");){
 			
@@ -59,7 +57,7 @@ public class CategoryDAO implements ICategoryDAO{
 			//
 			int rows=ps.executeUpdate();
 			if(rows==0) {
-				throw new SQLException("Srry category cant be inserted ");
+				throw new SQLException("Srry category can`t be inserted ");
 			}
 		}
 		
@@ -71,7 +69,6 @@ public class CategoryDAO implements ICategoryDAO{
 				"UPDATE categories SET category=? "
 		 	   +"WHERE id=? ")){
 			
-			
 			ps.setString(1, category.getCategory());
 			ps.setLong(2, category.getId());
 			ps.executeUpdate();
@@ -79,16 +76,13 @@ public class CategoryDAO implements ICategoryDAO{
 		
 	}
 	
-	
-	
-
 	@Override
 	public ArrayList<Category> getAllCategoriesByUser(User user) throws SQLException, InvalidDataException {
 		ArrayList<Category> categories=new ArrayList<>();	
 		try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,category,transaction_type_id,user_id FROM categories "
 				                                             +"WHERE user_id IS NULL or user_id=?" )){
 
-			ps.setLong(1, user.getId());//what if user id is null
+			ps.setLong(1, user.getId());
 			try(ResultSet rs=ps.executeQuery();){
 				while(rs.next()) {
 					
@@ -108,11 +102,10 @@ public class CategoryDAO implements ICategoryDAO{
 		
 		ArrayList<Category> categories=new ArrayList<>();	
 		 int id=transactionTypeDAO.getIdByTranscationType(type);
-		 System.out.println(1);
 		 try(PreparedStatement ps=db.getConnection().prepareStatement("SELECT id,category,transaction_type_id,user_id FROM categories "
                  +"WHERE (user_id IS NULL OR user_id=?) and "
                  + "transaction_type_id=? " )){
-			 ps.setLong(1, user.getId());//what if user id is null
+			 ps.setLong(1, user.getId());
 			 ps.setInt(2, id);
 		
 			 try(ResultSet rs=ps.executeQuery();){
@@ -141,8 +134,5 @@ public class CategoryDAO implements ICategoryDAO{
 		}
 		
 	}
-
-
-	
 
 }

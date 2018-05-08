@@ -21,9 +21,6 @@ public class Currency {
 		this.type = type;
 	}
 	
-	
-	
-	
 	public long getId() {
 		return id;
 	}

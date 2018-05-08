@@ -14,10 +14,6 @@ public class Budget {
 	private LocalDate beginDate;
 	private LocalDate endDate;
 	
-	
-	//TODO ADD validations in setters 
-	
-	
 	public Budget(long id,Category category,double amount, User user, Currency currency, LocalDate beginDate, LocalDate endDate) throws InvalidDataException {
 		this(category,amount, user, currency, beginDate, endDate);
 		this.setId(id);

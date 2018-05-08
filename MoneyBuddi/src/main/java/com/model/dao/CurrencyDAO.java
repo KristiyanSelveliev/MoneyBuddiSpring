@@ -75,7 +75,4 @@ public class CurrencyDAO implements ICurrencyDAO{
 		return currencies;
 	}
 	
-	
-	
-
 }

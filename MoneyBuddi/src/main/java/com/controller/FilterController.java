@@ -19,10 +19,10 @@ import com.model.dao.AccountDao;
 import com.model.dao.CategoryDAO;
 import com.model.dao.TransactionDao;
 
-
-
 @Controller
 public class FilterController {
+	//this controller provides data needed to fill the tables in tablelist.jsp
+	
 	@Autowired
 	TransactionDao transactionDAO;
 	@Autowired

@@ -5,8 +5,6 @@ import com.model.Transaction.TransactionType;
 
 public class Category {
 	
-	
-
 	private long id;
 	private String  category;
 	private TransactionType type;

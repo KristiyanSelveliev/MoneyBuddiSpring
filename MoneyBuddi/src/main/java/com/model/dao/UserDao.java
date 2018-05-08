@@ -148,7 +148,7 @@ public class UserDao implements IUserDao {
 	@Override
 	public boolean checkIfEmailExists(String email) throws SQLException {
 		// checks if the email already exists in DB
-		// returns number of affected rows from the query
+		
 		try(PreparedStatement ps =db.getConnection().prepareStatement("SELECT id FROM" + " users WHERE email=?");){
 			ps.setString(1, email);
 			ResultSet rs= ps.executeQuery();

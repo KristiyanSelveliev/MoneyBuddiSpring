@@ -2,7 +2,6 @@ package com.model;
 
 public class TransactionDTO {
 	
-	
 	public long id;
 	public String category;
 	public double amount;
@@ -29,11 +28,10 @@ public class TransactionDTO {
 		this(id,category,amount,account,date);
 		this.amount_converted=amount_converted;
 	}
+	
 	public TransactionDTO(long id, String category, double amount,double amount_converted, String account, String date,String type) {
 		this(id, category, amount,amount_converted, account, date);
-		this.type=type;
-		
+		this.type=type;	
 	}
-
 
 }

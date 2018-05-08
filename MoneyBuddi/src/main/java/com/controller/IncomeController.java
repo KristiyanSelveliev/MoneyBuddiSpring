@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,27 +14,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.controller.manager.CurrencyConverter;
 import com.controller.manager.TransactionManager;
-import com.exceptions.InvalidDataException;
 import com.model.Account;
 import com.model.Budget;
 import com.model.Category;
 import com.model.Currency;
 import com.model.Income;
-import com.model.Transaction;
 import com.model.User;
 import com.model.Transaction.TransactionType;
 import com.model.dao.AccountDao;
 import com.model.dao.BudgetDao;
 import com.model.dao.CategoryDAO;
 import com.model.dao.CurrencyDAO;
-import com.model.dao.TransactionDao;
 import com.model.dao.UserDao;
 
 @Controller
 public class IncomeController {
 
-	@Autowired
-	private TransactionDao transactionDao;
 	@Autowired
 	private CategoryDAO categoryDao;
 	@Autowired
@@ -52,6 +46,8 @@ public class IncomeController {
 	
 	@RequestMapping(value = "/addIncome", method = RequestMethod.GET)
 	public String income(HttpSession session, HttpServletRequest request) throws Exception {
+		//the method fills the page with info needed to create income
+		
 		User u = (User) session.getAttribute("user");
 
 		List<Category> categories = categoryDao.getAllCategoriesByUserAndType(u, TransactionType.INCOME);
@@ -81,6 +77,7 @@ public class IncomeController {
 		Income income = new Income(amount, transactionCurrency, account, LocalDate.parse(date),
 				categoryDao.getCategoryByID(categoryId));
 
+		//income is not tied to any budget so we pass null
 		transactionManager.addTransaction(income, null);
 
 		request.setAttribute("accountAmount",
@@ -100,6 +97,8 @@ public class IncomeController {
 			@RequestParam String date,HttpSession session,
 			HttpServletRequest request) throws Exception {
 
+
+		//this method creates expense that is tied to budget
 		Account account = accountDao.getAccountById(accountId);
 		Currency transactionCurrency = currencyDAO.getCurrencyById(currencyId);
 		Budget budget = budgetDAO.getBudgetById(budgetId);
